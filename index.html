@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" defer></script>
+    <script src="https://www.youtube.com/iframe_api" defer></script>
+</head>
+<body>
+    <main id="main-content">
+      <!-- Apartado de Inicio -->
+<section id="home-section" class="section">
+    <h1>Inicio - Spottrack 2.0</h1>
+
+    <!-- Sección de Novedades -->
+    <div class="news-section">
+        <h2 class="section-title">Novedades</h2>
+        <div class="news-card">
+            <p>¡La actualización 2.0 ya está disponible con nuevas funciones
+</p>
+            <p>Descubre las últimas Novedades y cambios importantes en Spottrack</p>
+        </div>
+    </div>
+
+    <!-- Sección de Canciones Populares -->
+    <div class="popular-songs">
+        <h2 class="section-title">Canciones Más Populares</h2>
+        <ul>
+            <li>Hoy  - Valentino Merlo</li>
+            <li>Perdonarte ¿Para que? - Los angeles Azules</li>
+            <li>AGORA - Maria Becerra</li>
+        </ul>
+    </div>
+<button class="btn discord-btn" onclick="window.location.href='https://discord.gg/CJ9TdPmX'">
+    <img src="https://encrypted-tbn0.gstatic.com/favicon-tbn?q=tbn:ANd9GcT1q_TvMvaNWuSRBgr3Ku__4lF3c9iqMlxP7XUzqrNmqlXJGjM3fcgfL5piywV9D4L5xByJtRd17l3ZZcVBleW7BIjMFDFNvNQ4nrUVkqVQ" alt="Discord" class="icon">
+</button>
+-------------------------------------o----------------------------------
+<button class="btn donate-btn" onclick="window.location.href='https://tu-pagina-de-donaciones.com'">
+    <img src="https://img.icons8.com/?size=32&id=22431&format=png" alt="Donar" class="icon">
+</button>
+      </section>
+  </main>
+
+
+        <!-- Apartado de Buscar -->
+        <section id="search-section" class="section hidden">
+            <div id="warning-message" class="warning-message" style="display: none;">
+                ⚠ Aún No Has Escrito Ninguna Canción. Escribe tu canción y dale al Botón de Buscar.
+            </div>
+            <header>
+                <h1>Buscar</h1>
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Buscar canciones...">
+                    <button id="search-button">Buscar</button>
+                </div>
+            </header>
+            <section id="search-results">
+                <ul id="result-list"></ul>
+            </section>
+            <section id="player">
+                <div id="youtube-player"></div>
+                <div id="song-info">
+                    <h3 id="song-title">Nada Agregado</h3>
+                    <p id="artist-name">Busca Una Canción</p>
+                </div>
+                <div class="controls">
+                    <button id="prev-button" class="control-button"><i class="fas fa-backward"></i></button>
+                    <button id="playpause-button" class="control-button"><i class="fas fa-play"></i></button>
+                    <button id="next-button" class="control-button"><i class="fas fa-forward"></i></button>
+                </div>
+                <input id="seek-bar" type="range" value="0" min="0" step="1">
+                <div id="current-time">0:00</div> / <div id="duration">0:00</div>
+            </section>
+        </section>
+
+        <!-- Apartado de Playlist -->
+        <section id="playlist-section" class="section hidden">
+            <h1>Aqui Playlist</h1>
+</h1>🔒 Categoria En Desarollo 🔒
+        </section>
+
+<!-- Apartado de Ajustes -->
+<section id="settings-section" class="section hidden">
+    <h1>Ajusta a Spottrack</h1>
+
+    <!-- Sección de perfil del usuario -->
+    <div class="profile-settings">
+        <div class="profile-picture-container">
+            <img id="profile-picture" src="default-profile.png" alt="Foto de perfil" class="profile-picture">
+        </div>
+        <div class="profile-name-container">
+            <p id="profile-name-display">Nombre de usuario</p>
+        </div>
+
+        <div class="profile-buttons">
+            <button id="upload-picture-btn" class="btn">Cambiar foto de perfil</button>
+            <input type="file" id="profile-picture-input" accept="image/*" class="hidden">
+
+            <button id="change-name-btn" class="btn">Cambiar nombre</button>
+            <input type="text" id="profile-name-input" class="hidden" placeholder="Nuevo nombre">
+        </div>
+    </div>
+
+    <!-- Opción para detener música cuando el dispositivo se apaga -->
+    <div class="settings-option">
+        <h2>Control de reproducción</h2>
+        <div class="toggle-container">
+            <label for="pause-on-lock">Pausar música al apagar dispositivo</label>
+            <input type="checkbox" id="pause-on-lock" checked>
+        </div>
+    </div>
+
+    <!-- Opción de ahorro de datos -->
+    <div class="settings-option">
+        <h2></h2>
+        <div class="toggle-container">
+            <label for="data-saving-mode">Activar ahorro de datos</label>
+            <input type="checkbox" id="data-saving-mode">
+        </div>
+    </div>
+
+</section>
+  </main>
+🛠
+    <div class="bottom-bar">
+        <button class="tab" id="home-tab">Inicio</button>
+        <button class="tab" id="search-tab">Buscar</button>
+        <button class="tab" id="playlist-tab">Playlist</button>
+        <button class="tab" id="settings-tab">Ajustes</button>
+    </div>
+
+    <div id="error-message" style="display:none; background-color: red; color: white; padding: 10px; border-radius: 5px; margin-bottom: 10px; position: fixed; top: 0; left: 0; width: 100%; text-align: center; z-index: 1000;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24px" height="24px" style="vertical-align: middle; margin-right: 10px;">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        </svg>
+        **No Hay Ninguna Canción Agregada o Reproduciéndose**
+    </div>
+
+    <script src="script.js"></script>
+</body>
+  </html>
+🛠
