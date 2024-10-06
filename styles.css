@@ -495,3 +495,206 @@ body {
     width: 20px;
     height: 20px;
 }
+/* Ajusta el ancho del reproductor de YouTube en el apartado de buscar */
+#youtube-player {
+    width: 90%; /* Cambia el ancho a un 90% del contenedor */
+    max-width: 350px; /* Limita el ancho máximo para dispositivos más grandes */
+    aspect-ratio: 16 / 9; /* Mantiene la relación de aspecto de YouTube */
+    margin: 0 auto; /* Centra el reproductor */
+    border-radius: 8px; /* Opcional: Bordes redondeados */
+    overflow: hidden;
+}
+/* Contenedor general del reproductor en el apartado de buscar */
+#player {
+    width: 90%; /* Ajusta el ancho total del contenedor */
+    max-width: 350px; /* Limita el ancho máximo */
+    margin: 0 auto; /* Centra el contenedor */
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #1e1e1e; /* Fondo oscuro para modo oscuro */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para darle profundidad */
+}
+
+/* Ajuste del reproductor de YouTube */
+#youtube-player {
+    width: 100%; /* Ocupa el ancho completo del contenedor del reproductor */
+    aspect-ratio: 16 / 9;
+    border-radius: 8px; /* Bordes redondeados */
+    overflow: hidden;
+}
+
+/* Información de la canción */
+#song-info {
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Barra de progreso de la canción */
+#seek-bar {
+    width: 100%; /* Ajuste al ancho completo del contenedor */
+    height: 8px;
+    margin-top: 10px;
+    border-radius: 5px; /* Bordes redondeados */
+    background: linear-gradient(90deg, #ff00cc, #3333ff); /* Color de progreso */
+    appearance: none;
+}
+
+#seek-bar::-webkit-slider-thumb {
+    width: 12px;
+    height: 12px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    appearance: none;
+}
+
+#seek-bar::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Tiempo de la canción */
+#current-time,
+#duration {
+    display: inline-block;
+    font-size: 14px;
+    color: #cccccc;
+    margin: 5px;
+}
+/* Contenedor general del reproductor en el apartado de buscar */
+#player {
+    width: 85%; /* Achicar más el ancho total del contenedor */
+    max-width: 320px; /* Limitar el ancho máximo para adaptarse a móviles */
+    margin: 0 auto; /* Centrar el contenedor */
+    padding: 8px;
+    border-radius: 10px;
+    background-color: #1e1e1e; /* Fondo oscuro */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para darle profundidad */
+}
+/* Ajuste exclusivo para el reproductor de YouTube */
+#youtube-player {
+    width: 85%; /* Reduce el ancho del reproductor de YouTube */
+    max-width: 320px; /* Limita el ancho máximo para móviles */
+    margin: 0 auto; /* Centra el reproductor */
+    aspect-ratio: 16 / 9;
+    border-radius: 8px; /* Bordes redondeados */
+    overflow: hidden;
+}
+/* Estilo para centrar y aplicar bordes al reproductor de YouTube */
+#player {
+    width: 90%; /* Ajusta el ancho del contenedor principal */
+    max-width: 350px; /* Limita el ancho máximo para móviles */
+    margin: 0 auto; /* Centra horizontalmente */
+    padding: 15px; /* Espacio alrededor del reproductor */
+    background-color: #1a1a1a; /* Color de fondo */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Sombra para darle profundidad */
+}
+
+#youtube-player {
+    width: 100%; /* Asegura que el reproductor ocupe el ancho completo del contenedor */
+    aspect-ratio: 16 / 9;
+    border-radius: 8px; /* Bordes redondeados en el reproductor */
+    overflow: hidden;
+}
+/* Contenedor de búsqueda centrado y más pequeño */
+.search-container {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    gap: 10px; /* Espacio entre el input y el botón */
+    margin: 20px auto; /* Separación y centrado del contenedor */
+    max-width: 300px; /* Ajusta el ancho máximo según lo necesites */
+}
+
+/* Estilo del input de búsqueda */
+#search-input {
+    padding: 8px; /* Reduce el padding */
+    font-size: 14px; /* Ajusta el tamaño de la fuente */
+    border-radius: 8px 0 0 8px;
+    border: 1px solid #ccc; /* Añade un borde */
+    outline: none;
+    flex: 1; /* Permite que el input ocupe todo el espacio disponible */
+}
+
+/* Estilo del botón de búsqueda */
+#search-button {
+    padding: 8px 16px; /* Reduce el padding del botón */
+    font-size: 14px; /* Ajusta el tamaño de la fuente */
+    background: linear-gradient(45deg, #9b59b6, #3498db);
+    color: #fff;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+}
+/* Contenedor de búsqueda con ancho específico */
+.search-container {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    gap: 4px; /* Espacio entre el input y el botón */
+    margin: 20px auto; /* Centramos el contenedor */
+    width: 300px; /* Ajusta el ancho total al que necesitas */
+}
+
+/* Estilo del input de búsqueda */
+#search-input {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 8px 0 0 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    width: 70%; /* Ajusta el ancho para que coincida con las rayas azules */
+}
+
+/* Estilo del botón de búsqueda */
+#search-button {
+    padding: 10px 15px;
+    font-size: 14px;
+    background: linear-gradient(45deg, #9b59b6, #3498db);
+    color: #fff;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    width: 30%; /* Ajusta el ancho para que coincida con las rayas azules */
+}
+/* Contenedor de búsqueda con ancho específico */
+.search-container {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    gap: 4px; /* Espacio entre el input y el botón */
+    margin: 20px auto; /* Centramos el contenedor */
+    width: 300px; /* Ajusta el ancho total al que necesitas */
+}
+
+/* Estilo del input de búsqueda */
+#search-input {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 8px 0 0 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    width: 70%; /* Ajusta el ancho para que coincida con las rayas azules */
+}
+
+/* Estilo del botón de búsqueda con nuevo gradiente */
+#search-button {
+    padding: 10px 15px;
+    font-size: 14px;
+    background: linear-gradient(45deg, #a64bf4, #f464c4, #4bf4e1);
+    color: #fff;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    width: 30%; /* Ajusta el ancho para que coincida con las rayas azules */
+    transition: background 0.3s; /* Efecto de transición */
+}
+
+/* Efecto hover para el botón */
+#search-button:hover {
+    background: linear-gradient(45deg, #4bf4e1, #f464c4, #a64bf4);
+}
