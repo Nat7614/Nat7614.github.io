@@ -186,7 +186,7 @@ function displaySearchResults(videos) {
 
 // Función de búsqueda usando la API de YouTube
 function searchSongs(query) {
-    const apiKey = 'AIzaSyCiEjKo8cps3pDY1XeatDdVhQHfZfrYahE';  // Asegúrate de mantener tu API Key segura
+    const apiKey = 'AIzaSyABClQa94HWAt0QlrXcFnrMHqsJ-axBN9E';  // Asegúrate de mantener tu API Key segura
     const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${encodeURIComponent(query)}&key=${apiKey}`;
 
     fetch(apiUrl)
@@ -265,7 +265,7 @@ function showError(message) {
             </span>
         </span>`;
 
-    const messageHTML = `<strong style="color: white; font-size: 16px;">${message}</strong>`;
+    const mensajeHTML = `<strong style="color: white; font-size: 16px;">${message}</strong>`;
 
     // Actualizar el contenido del mensaje de error con el texto centrado
     errorMessageElement.innerHTML = `
@@ -274,7 +274,7 @@ function showError(message) {
             align-items: center; 
             justify-content: center; 
             width: 100%;">
-            ${iconHTML}${messageHTML}
+            ${iconHTML}${message}
         </div>`;
     errorMessageElement.style.display = 'block';
 
@@ -394,3 +394,92 @@ function setYouTubePlayerQuality(quality) {
     // Suponiendo que hay un reproductor de YouTube controlado por la API de YouTube
     // player.setPlaybackQuality(quality);
 }
+// Función para mostrar el mensaje de error con sonido
+function showError(message) {
+    const errorSound = document.getElementById('error-sound');
+    errorSound.play(); // Reproduce el sonido de error
+
+    const errorMessageElement = document.getElementById('error-message');
+
+    // HTML para el ícono de error cuadrado con una "X" en el centro
+    const iconHTML = `
+        <span style="
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 30px; 
+            height: 30px; 
+            background-color: white; 
+            border-radius: 4px; 
+            margin-right: 10px;">
+            <span style="
+                color: red; 
+                font-size: 18px; 
+                font-weight: bold;">
+                X
+            </span>
+        </span>`;
+
+    const mensajeHTML = `<strong style="color: white; font-size: 16px;">${message}</strong>`;
+
+    // Actualizar el contenido del mensaje de error con el texto centrado
+    errorMessageElement.innerHTML = `
+        <div style="
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 100%;">
+            ${iconHTML}${mensajeHTML}
+        </div>`;
+    errorMessageElement.style.display = 'block';
+
+    // Ocultar el mensaje después de 5 segundos
+    setTimeout(() => {
+        errorMessageElement.style.display = 'none';
+    }, 5000);
+}
+// Función para mostrar el mensaje de advertencia con sonido
+function showWarningMessage(message) {
+    const warningSound = document.getElementById('warning-sound');
+    warningSound.play(); // Reproduce el sonido de advertencia
+
+    const warningMessageElement = document.getElementById('warning-message');
+
+    // HTML para el ícono de advertencia cuadrado con el símbolo ⚠ en el centro
+    const iconHTML = `
+        <span style="
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 30px; 
+            height: 30px; 
+            background-color: white; 
+            border-radius: 4px; 
+            margin-right: 10px;">
+            <span style="
+                color: yellow; 
+                font-size: 18px; 
+                font-weight: bold;">
+                ⚠
+            </span>
+        </span>`;
+
+    const messageHTML = `<strong style="color: white; font-size: 16px;">${message}</strong>`;
+
+    // Actualizar el contenido del mensaje de advertencia con el texto centrado
+    warningMessageElement.innerHTML = `
+        <div style="
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 100%;">
+            ${iconHTML}${messageHTML}
+        </div>`;
+    warningMessageElement.style.display = 'block';
+
+    // Ocultar el mensaje después de 5 segundos
+    setTimeout(() => {
+        warningMessageElement.style.display = 'none';
+    }, 5000);
+}
+

@@ -9,7 +9,7 @@
 /* Estilos del cuerpo */
 body {
     background-color: #121212;
-    color: #421a1a;
+    color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,18 +33,19 @@ h1 {
 .search-container {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: -888810px;
 }
 
 #search-input {
-    width: 300px;
-    padding: 10px 20px;
-    border-radius: 50px;
+    width: 300px; /* Ajuste de tamaño */
+    padding: 10px 20px; /* Ajuste del padding */
+    border-radius: 50px; /* Bordes redondeados */
     border: none;
     outline: none;
     background-color: #1e1e1e;
     color: #fff;
 }
+
 
 #search-button {
     padding: 10px 20px;
@@ -540,13 +541,15 @@ body {
 }
 
 #seek-bar::-webkit-slider-thumb {
-    width: 12px;
-    height: 12px;
+    width: 13px; /* Aumenta el tamaño del ancho */
+    height: 13px; /* Aumenta el tamaño de la altura */
     background-color: #ffffff;
     border-radius: 50%;
+    border: 2px solid #FF00FF; /* Puedes agregar un borde para resaltarlo más */
     cursor: pointer;
     appearance: none;
 }
+
 
 #seek-bar::-moz-range-thumb {
     width: 12px;
@@ -561,7 +564,7 @@ body {
 #duration {
     display: inline-block;
     font-size: 14px;
-    color: #cccccc;
+    color: #ffffff;
     margin: 5px;
 }
 /* Contenedor general del reproductor en el apartado de buscar */
@@ -671,14 +674,14 @@ body {
     width: 300px; /* Ajusta el ancho total al que necesitas */
 }
 
-/* Estilo del input de búsqueda */
 #search-input {
-    padding: 10px;
-    font-size: 14px;
-    border-radius: 8px 0 0 8px;
-    border: 1px solid #ccc;
+    width: 300px;
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: none;
     outline: none;
-    width: 70%; /* Ajusta el ancho para que coincida con las rayas azules */
+    background-color: #1e1e1e;
+    color: #fff;
 }
 
 /* Estilo del botón de búsqueda con nuevo gradiente */
@@ -698,3 +701,38 @@ body {
 #search-button:hover {
     background: linear-gradient(45deg, #4bf4e1, #f464c4, #a64bf4);
 }
+/* Estilo del mensaje de advertencia */
+.warning-message {
+    position: fixed;
+    top: 0; /* Aparece en la parte superior */
+    left: 0;
+    width: 100%; /* Ancho completo de la pantalla */
+    background-color: #FFC107; /* Amarillo fuerte */
+    color: white;
+    padding: 15px 0; /* Añadí más espacio para que el mensaje sea más grande */
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px; /* Tamaño de texto un poco más grande */
+    z-index: 1000;
+    animation: fadeInOutWarning 5s forwards;
+}
+
+@keyframes fadeInOutWarning {
+    0% { opacity: 0; transform: translateY(-20px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
+}
+
+.warning-message i {
+    margin-right: 10px;
+}
+#search-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(45deg, #a64bf4, #f464c4, #4bf4e1);
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s;
+

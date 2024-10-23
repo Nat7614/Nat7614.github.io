@@ -12,15 +12,16 @@
     <main id="main-content">
       <!-- Apartado de Inicio -->
 <section id="home-section" class="section">
-    <h1>Spottrack 2.1</h1>
+    <h1>Spottrack 2.2</h1>
 
     <!-- Sección de Novedades -->
     <div class="news-section">
         <h2 class="section-title">Novedades</h2>
         <div class="news-card">
-            <p>¡Actualizacion 2.1!
-<p>✅ Solucionado Algunos Bugs
-<p>✅ Boton de Donacion Funcionando
+            <p>¡Actualizacion 2.2!
+<p>✅ Solucionado algunos bugs
+<p>✅ Solucionado mas bugs visuales
+<p>✅ Mejorado el sistema de mensajes
 <p>🔥 Unete al Discord Donde Cuento
 <p>Todo Mas A Detalle De la Update 
 </p>
@@ -107,11 +108,13 @@
         </div>
     </div>
 
+  <p>_______________________________
+
     <!-- Opción para detener música cuando el dispositivo se apaga -->
     <div class="settings-option">
         <h2>Control de reproducción</h2>
         <div class="toggle-container">
-            <label for="pause-on-lock">Pausar música al apagar dispositivo</label>
+            <label for="pause-on-lock">Pausar cancion al apagar movil</label>
             <input type="checkbox" id="pause-on-lock" checked>
         </div>
     </div>
@@ -157,3 +160,11 @@
     <script src="script.js"></script>
 </body>
   </html>
+<!-- Elementos de audio para los sonidos de error y advertencia -->
+<audio id="error-sound" src="sounds/error.mp3"></audio>
+<audio id="warning-sound" src="sounds/warning.mp3"></audio>
+
+<!-- Mensajes de advertencia y error -->
+<div id="warning-message" style="display: none; background-color: orange; padding: 10px; border-radius: 5px; margin-bottom: 10px;"></div>
+<div id="error-message" style="display: none; background-color: red; padding: 10px; border-radius: 5px; margin-bottom: 10px;"></div>
+
