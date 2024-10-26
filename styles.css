@@ -1,3 +1,73 @@
+/* Estilo del mensaje de bienvenida */
+.welcome-message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #28a745; /* Verde */
+    color: white; /* Texto blanco */
+    padding: 15px 0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    z-index: 1000;
+    animation: fadeInOutWelcome 5s forwards;
+    border-radius: 0 0 10px 10px; /* Bordes redondeados en la parte inferior */
+}
+
+/* Animaciones para el mensaje de bienvenida */
+@keyframes fadeInOutWelcome {
+    0% { opacity: 0; transform: translateY(-20px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
+}
+
+/* Contenedor de los enlaces sociales */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 0;
+    background-color: transparent; /* Fondo completamente transparente */
+    border: none; /* Sin bordes */
+    margin: 0; /* Sin margen superior */
+}
+
+/* Estilo de los botones */
+.social-btn {
+    width: 50px; /* Tamaño de los botones */
+    height: 50px;
+    display: flex;
+    justify-content: center; /* Centrar la imagen horizontalmente */
+    align-items: center;    /* Centrar la imagen verticalmente */
+    background-color: #444; /* Añadimos de nuevo el fondo gris */
+    border: none; /* Sin borde */
+    border-radius: 10px; /* Bordes ligeramente redondeados */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.social-btn img {
+    width: 24px; /* Tamaño de los iconos */
+    height: 24px;
+}
+
+/* Efecto hover para el botón */
+.social-btn:hover {
+    background-color: rgba(68, 68, 68, 0.5); /* Fondo gris más oscuro al hacer hover */
+    border-radius: 10px; /* Mantener el redondeado en el hover */
+}
+
+/* Eliminar todo el fondo del contenedor de la barra inferior */
+.footer {
+    background-color: transparent !important; /* Fuerza que sea transparente */
+    border: none;
+    box-shadow: none; /* Sin sombras */
+    margin: 0; /* Sin márgenes */
+    padding: 0; /* Sin relleno */
+}
+
 /* Reset de estilos básicos */
 * {
     box-sizing: border-box;

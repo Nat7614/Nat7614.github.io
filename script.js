@@ -483,3 +483,20 @@ function showWarningMessage(message) {
     }, 5000);
 }
 
+window.onload = function() {
+    const message = document.getElementById('welcomeMessage');
+    const sound = document.getElementById('welcomeSound');
+    
+    // Mostrar el mensaje de bienvenida
+    message.style.display = 'block';
+    
+    // Reproducir el sonido cuando aparece el mensaje
+    sound.play().catch(error => {
+        console.error("No se pudo reproducir el sonido automáticamente:", error);
+    });
+    
+    // Ocultar el mensaje después de 5 segundos
+    setTimeout(function() {
+        message.style.display = 'none';
+    }, 5000);
+};

@@ -12,18 +12,17 @@
     <main id="main-content">
       <!-- Apartado de Inicio -->
 <section id="home-section" class="section">
-    <h1>Spottrack 2.2</h1>
+    <h1>Spottrack 2.3</h1>
 
     <!-- Sección de Novedades -->
     <div class="news-section">
         <h2 class="section-title">Novedades</h2>
         <div class="news-card">
-            <p>¡Actualizacion 2.2!
-<p>✅ Solucionado algunos bugs
-<p>✅ Solucionado mas bugs visuales
-<p>✅ Mejorado el sistema de mensajes
-<p>🔥 Unete al Discord Donde Cuento
-<p>Todo Mas A Detalle De la Update 
+            <p>¡Actualizacion 2.3!
+<p>✅ Solucionado bugs visuales
+<p>✅ Nuevo mensaje de bienvenida 
+<p>✅ Mejorado algunos botones
+<p>✅ Boton para ingresar ala web
 </p>
         </div>
     </div>
@@ -35,15 +34,22 @@
             <li>Hoy  - Valentino Merlo</li>
             <li>FORCE! - Eternxlkz</li>
             <li>AGORA - Maria Becerra</li>
-        </ul>
-    </div>
-<button class="btn discord-btn" onclick="window.location.href='https://discord.gg/CJ9TdPmX'">
-    <img src="https://encrypted-tbn0.gstatic.com/favicon-tbn?q=tbn:ANd9GcT1q_TvMvaNWuSRBgr3Ku__4lF3c9iqMlxP7XUzqrNmqlXJGjM3fcgfL5piywV9D4L5xByJtRd17l3ZZcVBleW7BIjMFDFNvNQ4nrUVkqVQ" alt="Discord" class="icon">
-</button>
--------O-------
-<button class="btn donate-btn" onclick="window.location.href='https://patreon.com/Spottrack'">
-    <img src="https://img.icons8.com/?size=32&id=22431&format=png" alt="Donar" class="icon">
-</button>
+        <div class="social-links">
+    <button class="social-btn" onclick="window.location.href='https://discord.gg/gkhFs4AUn6'">
+        <img src="images/discord-icon.png" alt="Discord">
+    </button>
+    <button class="social-btn" onclick="window.location.href='https://nat07site.github.io'">
+        <img src="images/spottrack-icon.png" alt="Spottrack Web">
+    </button>
+    <button class="social-btn" onclick="window.location.href='https://patreon.com/Spottrack'">
+        <img src="images/donation-icon.png" alt="Donar">
+    </button>
+</div>
+
+</div>
+
+</div>
+
       </section>
   </main>
 
@@ -108,7 +114,7 @@
         </div>
     </div>
 
-  <p>_______________________________
+  <p>_________________________________
 
     <!-- Opción para detener música cuando el dispositivo se apaga -->
     <div class="settings-option">
@@ -168,3 +174,24 @@
 <div id="warning-message" style="display: none; background-color: orange; padding: 10px; border-radius: 5px; margin-bottom: 10px;"></div>
 <div id="error-message" style="display: none; background-color: red; padding: 10px; border-radius: 5px; margin-bottom: 10px;"></div>
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensaje de Bienvenida</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <!-- Mensaje de bienvenida -->
+    <div id="welcomeMessage" class="welcome-message">¡¡¡Bienvenido/a de vuelta a Spottrack!!!</div>
+    
+    <!-- El elemento de audio -->
+    <audio id="welcomeSound" src="sounds/welcome.mp3"></audio>
+    
+    <!-- Enlace al archivo JS externo -->
+    <script src="scripts.js"></script>
+    
+</body>
+</html>
