@@ -12,17 +12,17 @@
     <main id="main-content">
       <!-- Apartado de Inicio -->
 <section id="home-section" class="section">
-    <h1>Spottrack 2.3</h1>
+    <h1>Spottrack 2.4</h1>
 
     <!-- Sección de Novedades -->
     <div class="news-section">
         <h2 class="section-title">Novedades</h2>
         <div class="news-card">
-            <p>¡Actualizacion 2.3!
+            <p>¡Actualizacion 2.4!
 <p>✅ Solucionado bugs visuales
-<p>✅ Nuevo mensaje de bienvenida 
-<p>✅ Mejorado algunos botones
-<p>✅ Boton para ingresar ala web
+<p>✅ Mejorado el modo offline 
+<p>✅ Escuchar musicas del movil
+<p>✅ Seccion playlist ( nuevo )
 </p>
         </div>
     </div>
@@ -89,12 +89,38 @@
         <!-- Apartado de Playlist -->
         <section id="playlist-section" class="section hidden">
             <h1></h1>
-</h1>🛠 Categoria En Desarollo 🛠
+</h1>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spottrack - Lista de Canciones</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="song-container">
+        <h2>Mi Biblioteca de Música</h2>
+        <p id="no-songs">No hay lista de canciones</p>
+        <ul id="song-list"></ul>
+        <button class="add-song-button" onclick="document.getElementById('file-input').click();">Añadir Canción</button>
+        <input type="file" id="file-input" accept="audio/*" style="display: none;" onchange="handleFileSelect(event)">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+</html>
+
+</html>
+
         </section>
 
 <!-- Apartado de Ajustes -->
 <section id="settings-section" class="section hidden">
-    <h1>Ajusta a Spottrack</h1>
+    <h1>‎ Ajusta a Spottrack</h1>
 
     <!-- Sección de perfil del usuario -->
     <div class="profile-settings">
@@ -114,7 +140,7 @@
         </div>
     </div>
 
-  <p>_________________________________
+  <p>_________________________________<p>
 
     <!-- Opción para detener música cuando el dispositivo se apaga -->
     <div class="settings-option">
@@ -136,7 +162,7 @@
 
 </section>
   </main>
-<p>Espera Las Siguientes Updates
+<p>‎ ‎ 
 <p>
 <p>⚠⚠⚠
 
