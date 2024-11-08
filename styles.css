@@ -1,7 +1,7 @@
 /* styles.css */
 body {
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Puedes cambiar este valor para alinear a la izquierda o derecha */
     align-items: center;
     height: 100vh;
     margin: 0;
@@ -17,6 +17,9 @@ body {
     max-width: 400px;
     border-radius: 10px;
     text-align: center;
+    /* Para mover el contenedor: ajusta el margen izquierdo (para derecha) o derecho (para izquierda) */
+    margin-left: auto; /* Alinea hacia la derecha */
+    margin-right: auto; /* Alinea hacia la izquierda */
 }
 
 .song-container h2 {
@@ -906,4 +909,4 @@ body {
     color: white;
     cursor: pointer;
     transition: transform 0.2s;
-
+}
