@@ -1,3 +1,431 @@
+/* Estilo general para el contenedor */
+body {
+    background-color: #121212;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.settings-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    width: 300px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #1f1f1f;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+label {
+    font-size: 16px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/* Checkbox oculto para personalizar su apariencia */
+input[type="checkbox"] {
+    display: none;
+}
+
+/* Estilo del ícono del checkbox */
+input[type="checkbox"] + .icon {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #aaa;
+    border-radius: 50%;
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+/* Animación e icono al activarse */
+input[type="checkbox"]:checked + .icon {
+    border-color: #4caf50;
+    background-color: #4caf50;
+    box-shadow: 0 0 10px #4caf50;
+}
+
+input[type="checkbox"]:checked + .icon::before {
+    content: '\2714'; /* Icono de check */
+    color: white;
+    font-size: 16px;
+    animation: checkmark 0.3s ease;
+}
+
+/* Animación e icono al desactivarse */
+input[type="checkbox"]:not(:checked) + .icon {
+    border-color: #f44336;
+    background-color: #333;
+    box-shadow: 0 0 10px rgba(244, 67, 54, 0);
+}
+
+input[type="checkbox"]:not(:checked) + .icon::before {
+    content: '\2716'; /* Icono de X */
+    color: #f44336;
+    font-size: 16px;
+    animation: crossmark 0.3s ease;
+}
+
+/* Animaciones para el ícono */
+@keyframes checkmark {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes crossmark {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Estilo general del body */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: #1e1e1e; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end; /* Inicia el selector en la parte inferior */
+}
+
+/* Contenedor del traductor */
+.translate-container {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    text-align: center;
+    background: #2c2c2c;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: top 0.3s ease;
+}
+
+/* Estilo del selector de idiomas */
+#google_translate_element select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    background-color: #000; /* Color negro */
+    color: #fff; /* Texto blanco */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Efecto al pasar el mouse */
+#google_translate_element select:hover {
+    background-color: #444; /* Un gris más claro */
+}
+
+/* Slider para mover el contenedor */
+.slider-container {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-container input[type="range"] {
+    width: 300px;
+    appearance: none;
+    background: #444;
+    height: 5px;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+}
+
+.slider-container input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    background: #00ff7f;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.slider-container input[type="range"]::-moz-range-thumb {
+    background: #00ff7f;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Estilo general para la sección de eventos */
+.events-section {
+    font-family: Arial, sans-serif;
+    background: rgba(30, 30, 30, 0.9);
+    padding: 15px;
+    border-radius: 10px;
+    max-width: 320px; /* Compacto para dispositivos móviles */
+    margin: 0 auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    color: #fff;
+}
+
+.events-section .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #f464c4;
+}
+
+/* Botón de selección */
+.events-toggle {
+    position: relative;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#toggle-button {
+    background: linear-gradient(45deg, #a64bf4, #f464c4, #4bf4e1);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.3s ease, transform 0.3s ease;
+    width: 100%; /* Ancho completo para alineación con el menú */
+}
+
+#toggle-button:hover {
+    transform: scale(1.03);
+    background: linear-gradient(45deg, #4bf4e1, #f464c4, #a64bf4);
+}
+
+.arrow-down {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+#toggle-button.active .arrow-down {
+    transform: rotate(180deg); /* Rotar flecha al activar */
+}
+
+/* Menú de opciones */
+#event-options {
+    position: absolute;
+    top: 100%; /* Al ras del botón */
+    left: 0;
+    right: 0;
+    background: #2c2c2c;
+    padding: 10px;
+    border-bottom-left-radius: 8px; /* Solo esquinas inferiores redondeadas */
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 0; /* Esquinas superiores cuadradas */
+    border-top-right-radius: 0;
+    animation: slideDown 0.3s ease-out;
+    z-index: 10;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.event-option {
+    background: none;
+    border: none;
+    padding: 8px 10px;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.event-option:hover {
+    background: #444;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Contenido de eventos */
+#event-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#event-content li {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre la imagen y el texto */
+    background: #333;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#event-content li:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Imágenes de los eventos */
+.event-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+/* Animación del menú */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ajustes responsivos */
+@media (max-width: 600px) {
+    .events-section {
+        max-width: 90%; /* Ocupa el 90% del ancho */
+    }
+
+    #toggle-button {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    .event-img {
+        width: 40px;
+        height: 40px;
+    }
+
+    #event-content li {
+        padding: 8px;
+    }
+}
+
+/* Estilos para la sección de canciones populares */
+.popular-songs {
+    font-family: Arial, sans-serif;
+    background: rgba(30, 30, 30, 0.9);
+    padding: 15px;
+    border-radius: 10px;
+    color: #fff;
+    max-width: 320px; /* Más pequeño para dispositivos móviles */
+    margin: 0 auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.popular-songs .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #f464c4;
+}
+
+.popular-songs ul {
+    list-style: none;
+    padding: 0;
+}
+
+.popular-songs li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #2c2c2c;
+    margin-bottom: 8px; /* Espaciado menor */
+    padding: 8px; /* Reducción de padding */
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.popular-songs li:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.popular-songs .ranking {
+    font-size: 0.8rem; /* Tamaño más pequeño */
+    font-weight: bold;
+    padding: 3px 8px; /* Reducción del tamaño */
+    border-radius: 12px;
+    color: #fff;
+    text-align: center;
+}
+
+/* Colores de los rankings */
+.popular-songs .ranking.top-1 {
+    background: gold;
+    color: black;
+}
+
+.popular-songs .ranking.top-2 {
+    background: silver;
+    color: black;
+}
+
+.popular-songs .ranking.top-3 {
+    background: #cd7f32; /* Bronce */
+    color: black;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 600px) {
+    .popular-songs {
+        max-width: 90%; /* Ocupa el 90% del ancho de la pantalla */
+    }
+
+    .popular-songs li {
+        padding: 6px; /* Reducir más el espacio en dispositivos pequeños */
+    }
+
+    .popular-songs .ranking {
+        font-size: 0.7rem; /* Texto más pequeño en móviles */
+    }
+}
+
 /* styles.css */
 body {
     display: flex;

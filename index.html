@@ -12,31 +12,94 @@
     <main id="main-content">
       <!-- Apartado de Inicio -->
 <section id="home-section" class="section">
-    <h1>Spottrack 2.4</h1>
+    <h1>Spottrack 3.0</h1>
 
     <!-- Sección de Novedades -->
     <div class="news-section">
         <h2 class="section-title">Novedades</h2>
         <div class="news-card">
-            <p>¡Actualizacion 2.4!
-<p>✅ Solucionado bugs visuales
-<p>✅ Mejorado el modo offline 
-<p>✅ Escuchar musicas del movil
-<p>✅ Nueva funcion en playlist
-<p>¡Parche - 2.4!
-<p>✅ Solucionado bug visual
-<p>✅ Reproduccion en bucle
+            <p>¡Actualizacion 3.0!
+<p>✅ Solucionado errores visuales
+<p>✅ Nuevo sistema de eventos
+<p>✅ Nuevo top 3 de artistas
+<p>✅ Adelantar cancion con la barra
+<p>✅ Los ajustes a hora se guardan
+<p>✅ Mejorado el estilo de ajustes
+<p>✅ Nuevos idiomas (Beta)
 </p>
         </div>
     </div>
 
     <!-- Sección de Canciones Populares -->
-    <div class="popular-songs">
-        <h2 class="section-title">Canciones Más Populares</h2>
-        <ul>
-            <li>Hoy  - Valentino Merlo</li>
-            <li>FORCE! - Eternxlkz</li>
-            <li>AGORA - Maria Becerra</li>
+<div class="popular-songs">
+    <h2 class="section-title">Artistas Populares 2024</h2>
+    <ul>
+        <li>
+            Mejor - Emilia Mernes
+            <span class="ranking top-1">Top 1</span>
+        </li>
+        <li>
+            Mejor - María Becerra
+            <span class="ranking top-2">Top 2</span>
+        </li>
+        <li>
+            Mejor - Nicki Nicole
+            <span class="ranking top-3">Top 3</span>
+        </li>
+    </ul>
+  </div>
+<p>‎ 
+<div class="events-section">
+    <h2 class="section-title">Eventos</h2>
+    <div class="events-toggle">
+        <button id="toggle-button">
+            <span>‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ Seleccionar Evento</span> <i class="arrow-down">▼</i>
+        </button>
+        <div id="event-options" class="hidden">
+            <button class="event-option" data-type="spottrack">Eventos de Spottrack</button>
+            <button class="event-option" data-type="artist">Eventos de Artistas</button>
+        </div>
+    </div>
+
+    <div id="event-content">
+        <!-- Eventos de SpotTrack -->
+        <ul id="spottrack-events">
+            <li>
+                <img src="images/spottrack1.jpg" alt="SpotTrack Music Fest" class="event-img">
+                <div>
+                    <strong>Navidad en spottrack</strong>
+                    <p>¡¡¡Spottrack te tiene preparado cosas para ti exclusivas e increibles para este 8 - 30 de diciembre🎄!!!</p>
+                </div>
+            </li>
+            <li>
+                <img src="images/spottrack2.jpg" alt="SpotTrack Live Party" class="event-img">
+                <div>
+                    <strong>Spottrack + discord nitro</strong>
+                    <p>¡¡¡Spottrack te ofrece una mision para obtener discord nitro gratis unete al servidor de discord y acepta YA la mision para obtenerlo📩!!!</p>
+                </div>
+            </li>
+        </ul>
+        <!-- Eventos de Artistas -->
+        <ul id="artist-events" class="hidden">
+            <li>
+                <img src="images/artist1.jpg" alt="Coldplay en Concierto" class="event-img">
+                <div>
+                    <strong>Karol G - recital</strong>
+                    <p>¡¡¡La artista colombiana se presentará el 27 de abril de 2025 en el Estadio de Vélez ARG!!!</p>
+                </div>
+            </li>
+            <li>
+                <img src="images/artist2.jpg" alt="Festival Primavera Sound" class="event-img">
+                <div>
+                    <strong>Buenos Aires Trap - recital</strong>
+                    <p>El festival contará con la participación de Duki Bizarrap y Nicki Nicole. Se realizará los días 7 y 8 de diciembre en el Parque de la Ciudad.</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<p>‎‎ <p>
         <div class="social-links">
     <button class="social-btn" onclick="window.location.href='https://discord.gg/gkhFs4AUn6'">
         <img src="images/discord-icon.png" alt="Discord">
@@ -123,7 +186,7 @@
 
 <!-- Apartado de Ajustes -->
 <section id="settings-section" class="section hidden">
-    <h1>‎ Ajusta a Spottrack</h1>
+    <h1>‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ Ajustes</h1>
 
     <!-- Sección de perfil del usuario -->
     <div class="profile-settings">
@@ -143,25 +206,52 @@
         </div>
     </div>
 
-  <p>_________________________________<p>
-
-    <!-- Opción para detener música cuando el dispositivo se apaga -->
-    <div class="settings-option">
-        <h2>Control de reproducción</h2>
-        <div class="toggle-container">
-            <label for="pause-on-lock">Pausar cancion al apagar movil</label>
-            <input type="checkbox" id="pause-on-lock" checked>
-        </div>
+  <p>__________________________________<p>
+<p>‎ 
+  <h2>‎ ‎Ajustes de reproduccion</h2>
+<!-- Opción para detener música cuando el dispositivo se apaga -->
+<div class="settings-option">
+    <div class="toggle-container">
+        <label for="pause-on-lock">Parar cancion al apagar movil</label>
+        <input type="checkbox" id="pause-on-lock" checked>
+        <span class="icon"></span>
     </div>
+</div>
 
-    <!-- Opción de ahorro de datos -->
-    <div class="settings-option">
-        <h2></h2>
-        <div class="toggle-container">
-            <label for="data-saving-mode">Activar ahorro de datos</label>
-            <input type="checkbox" id="data-saving-mode">
-        </div>
+<!-- Opción de ahorro de datos -->
+<div class="settings-option">
+    <div class="toggle-container">
+        <label for="data-saving-mode">Activar Economizador de datos</label>
+        <input type="checkbox" id="data-saving-mode">
+        <span class="icon"></span>
     </div>
+</div>
+
+</body>
+</html>
+<p>__________________________________<p>
+<p>‎ 
+<h2>‎ ‎ ‎ ‎ ‎ ‎ ‎‎ ‎ ‎‎‎ Cambiar idioma
+<p>‎ 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambiar Idioma</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="translate-container">
+        <div id="google_translate_element"></div>
+    </div>
+</body>
+</html>
+<p>‎ <p>
+<p>‎ <p>
+<p>‎ <p>
+<p>‎ <p>
 
 </section>
   </main>

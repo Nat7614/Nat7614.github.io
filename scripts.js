@@ -612,3 +612,70 @@ function deleteSong(songItem, songID) {
         currentSongURL = null;
     }
 }
+// Alternar menú de opciones
+document.getElementById("toggle-button").addEventListener("click", function () {
+    const options = document.getElementById("event-options");
+    options.classList.toggle("hidden");
+    this.classList.toggle("active"); // Rotar flecha
+});
+
+// Cambiar entre eventos
+document.querySelectorAll(".event-option").forEach(button => {
+    button.addEventListener("click", function () {
+        const type = this.getAttribute("data-type");
+        document.getElementById("spottrack-events").classList.toggle("hidden", type !== "spottrack");
+        document.getElementById("artist-events").classList.toggle("hidden", type !== "artist");
+        document.getElementById("event-options").classList.add("hidden");
+    });
+});
+
+// Función para adelantar el video cuando se mueve la barra de progreso
+document.getElementById('seek-bar').addEventListener('input', function() {
+    const seekTo = parseFloat(this.value);
+    player.seekTo(seekTo, true); // Adelantar el video al tiempo seleccionado
+});
+// Cargar Google Translate Widget
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'es', // Idioma original
+        includedLanguages: 'en,es', // Idiomas disponibles
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false // Desactiva la barra de herramientas
+    }, 'google_translate_element');
+}
+
+// Cargar el script de Google Translate
+(function loadGoogleTranslate() {
+    const script = document.createElement('script');
+    script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    document.head.appendChild(script);
+})();
+
+// Función para cargar configuraciones al abrir la app
+function loadSettings() {
+    // Recuperar configuraciones de localStorage
+    const pauseOnLock = localStorage.getItem('pauseOnLock') === 'true'; // Convertir a booleano
+    const dataSavingMode = localStorage.getItem('dataSavingMode') === 'true'; // Convertir a booleano
+
+    // Aplicar configuraciones a los checkboxes
+    document.getElementById('pause-on-lock').checked = pauseOnLock;
+    document.getElementById('data-saving-mode').checked = dataSavingMode;
+}
+
+// Función para guardar configuraciones cuando cambien
+function saveSettings() {
+    // Obtener el estado de los checkboxes
+    const pauseOnLock = document.getElementById('pause-on-lock').checked;
+    const dataSavingMode = document.getElementById('data-saving-mode').checked;
+
+    // Guardar los estados en localStorage
+    localStorage.setItem('pauseOnLock', pauseOnLock);
+    localStorage.setItem('dataSavingMode', dataSavingMode);
+}
+
+// Añadir eventos a los checkboxes para guardar configuraciones al cambiar
+document.getElementById('pause-on-lock').addEventListener('change', saveSettings);
+document.getElementById('data-saving-mode').addEventListener('change', saveSettings);
+
+// Cargar configuraciones al inicio
+document.addEventListener('DOMContentLoaded', loadSettings);
