@@ -122,39 +122,6 @@ body {
     justify-content: flex-end; /* Inicia el selector en la parte inferior */
 }
 
-/* Contenedor del traductor */
-.translate-container {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0);
-    text-align: center;
-    background: #2c2c2c;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    transition: top 0.3s ease;
-}
-
-/* Estilo del selector de idiomas */
-#google_translate_element select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 8px;
-    border: none;
-    background-color: #000; /* Color negro */
-    color: #fff; /* Texto blanco */
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-/* Efecto al pasar el mouse */
-#google_translate_element select:hover {
-    background-color: #444; /* Un gris más claro */
-}
-
 /* Slider para mover el contenedor */
 .slider-container {
     margin: 10px 0;

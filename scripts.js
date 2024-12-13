@@ -634,22 +634,7 @@ document.getElementById('seek-bar').addEventListener('input', function() {
     const seekTo = parseFloat(this.value);
     player.seekTo(seekTo, true); // Adelantar el video al tiempo seleccionado
 });
-// Cargar Google Translate Widget
-function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-        pageLanguage: 'es', // Idioma original
-        includedLanguages: 'en,es', // Idiomas disponibles
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-        autoDisplay: false // Desactiva la barra de herramientas
-    }, 'google_translate_element');
-}
 
-// Cargar el script de Google Translate
-(function loadGoogleTranslate() {
-    const script = document.createElement('script');
-    script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-    document.head.appendChild(script);
-})();
 
 // Función para cargar configuraciones al abrir la app
 function loadSettings() {
