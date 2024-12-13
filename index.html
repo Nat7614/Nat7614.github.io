@@ -12,35 +12,37 @@
     <main id="main-content">
       <!-- Apartado de Inicio -->
 <section id="home-section" class="section">
-    <h1>Spottrack pre 3.0</h1>
+    <h1>Spottrack 3.0</h1>
 
     <!-- Sección de Novedades -->
     <div class="news-section">
         <h2 class="section-title">Novedades</h2>
         <div class="news-card">
             <p>¡Actualizacion 3.0!
-<p>✅ Solucionado bugs visuales
-<p>✅ Mejorado el modo offline 
-<p>✅ Escuchar musicas del movil
-<p>✅ Nueva funcion en playlist
+<p>✅ Solucionado errores visuales
+<p>✅ Nuevo sistema de eventos
+<p>✅ Nuevo top 3 de artistas
+<p>✅ Adelantar cancion con la barra
+<p>✅ Los ajustes a hora se guardan
+<p>✅ Mejorado el estilo de ajustes
 </p>
         </div>
     </div>
 
     <!-- Sección de Canciones Populares -->
 <div class="popular-songs">
-    <h2 class="section-title">Populares</h2>
+    <h2 class="section-title">Artistas Populares</h2>
     <ul>
         <li>
-            Hoy - Valentino Merlo 
+            Mejor - Emilia Mernes
             <span class="ranking top-1">Top 1</span>
         </li>
         <li>
-            FORCE! - Eternxlkz 
+            Mejor - María Becerra
             <span class="ranking top-2">Top 2</span>
         </li>
         <li>
-            AGORA - Maria Becerra 
+            Mejor - Nicki Nicole
             <span class="ranking top-3">Top 3</span>
         </li>
     </ul>
@@ -50,7 +52,7 @@
     <h2 class="section-title">Eventos</h2>
     <div class="events-toggle">
         <button id="toggle-button">
-            <span>‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ Seleccionar Evento</span> <i class="arrow-down">▼</i>
+            <span>‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ Seleccionar Evento</span> <i class="arrow-down">▼</i>
         </button>
         <div id="event-options" class="hidden">
             <button class="event-option" data-type="spottrack">Eventos de Spottrack</button>
@@ -65,7 +67,7 @@
                 <img src="images/spottrack1.jpg" alt="SpotTrack Music Fest" class="event-img">
                 <div>
                     <strong>Navidad en spottrack</strong>
-                    <p>¡¡¡Spottrack te tiene preparado cosas para ti exclusivas e increibles para este 8 de diciembre🎄!!!</p>
+                    <p>¡¡¡Spottrack te tiene preparado cosas para ti exclusivas e increibles para este 8 - 30 de diciembre🎄!!!</p>
                 </div>
             </li>
             <li>
@@ -95,28 +97,8 @@
         </ul>
     </div>
 </div>
-<p>‎ <p>
 
-<p>
-<div class="categories-section">
-    <div id="categories-selector">
-        <p>Selecciona tus categorías favoritas</p>
-        <div class="categories-list">
-            <!-- Categorías dinámicas generadas por JavaScript -->
-        </div>
-        <button id="done-button" class="hidden">Listo</button>
-    </div>
-
-    <div id="categories-results" class="hidden">
-        <h3>‎ Tus Categorías</h3>
-        <div id="category-lists">
-            <!-- Listas dinámicas generadas por JavaScript -->
-        </div>
-        <button id="edit-categories-button">Editar Categorías</button>
-    </div>
-</div>
-
-
+<p>‎‎ <p>
         <div class="social-links">
     <button class="social-btn" onclick="window.location.href='https://discord.gg/gkhFs4AUn6'">
         <img src="images/discord-icon.png" alt="Discord">
@@ -203,7 +185,7 @@
 
 <!-- Apartado de Ajustes -->
 <section id="settings-section" class="section hidden">
-    <h1>‎ Ajusta a Spottrack</h1>
+    <h1>‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎‎Ajustes</h1>
 
     <!-- Sección de perfil del usuario -->
     <div class="profile-settings">
@@ -223,26 +205,32 @@
         </div>
     </div>
 
-  <p>_________________________________<p>
-
-    <!-- Opción para detener música cuando el dispositivo se apaga -->
-    <div class="settings-option">
-        <h2>Control de reproducción</h2>
-        <div class="toggle-container">
-            <label for="pause-on-lock">Pausar cancion al apagar movil</label>
-            <input type="checkbox" id="pause-on-lock" checked>
-        </div>
+  <p>______________________________________<p>
+<p>‎ 
+  <h2>‎ ‎‎ ‎ ‎‎  ‎‎  Ajustes de reproduccion</h2>
+<!-- Opción para detener música cuando el dispositivo se apaga -->
+<div class="settings-option">
+    <div class="toggle-container">
+        <label for="pause-on-lock">Parar cancion al apagar movil</label>
+        <input type="checkbox" id="pause-on-lock" checked>
+        <span class="icon"></span>
     </div>
+</div>
 
-    <!-- Opción de ahorro de datos -->
-    <div class="settings-option">
-        <h2></h2>
-        <div class="toggle-container">
-            <label for="data-saving-mode">Activar ahorro de datos</label>
-            <input type="checkbox" id="data-saving-mode">
-        </div>
+<!-- Opción de ahorro de datos -->
+<div class="settings-option">
+    <div class="toggle-container">
+        <label for="data-saving-mode">‎Activar Economizador de datos</label>
+        <input type="checkbox" id="data-saving-mode">
+        <span class="icon"></span>
     </div>
+</div>
 
+</body>
+</html>
+<p>______________________________________<p>
+</body>
+</html>
 </section>
   </main>
 <p>‎ ‎ 
