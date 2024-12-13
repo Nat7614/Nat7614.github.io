@@ -108,87 +108,7 @@ input[type="checkbox"]:not(:checked) + .icon::before {
     }
 }
 
-/* Estilo general del body */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    background-color: #1e1e1e; /* Fondo oscuro */
-    color: #fff; /* Texto blanco */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end; /* Inicia el selector en la parte inferior */
-}
 
-/* Contenedor del traductor */
-.translate-container {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0);
-    text-align: center;
-    background: #2c2c2c;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    transition: top 0.3s ease;
-}
-
-/* Estilo del selector de idiomas */
-#google_translate_element select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 8px;
-    border: none;
-    background-color: #000; /* Color negro */
-    color: #fff; /* Texto blanco */
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-/* Efecto al pasar el mouse */
-#google_translate_element select:hover {
-    background-color: #444; /* Un gris más claro */
-}
-
-/* Slider para mover el contenedor */
-.slider-container {
-    margin: 10px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.slider-container input[type="range"] {
-    width: 300px;
-    appearance: none;
-    background: #444;
-    height: 5px;
-    border-radius: 5px;
-    outline: none;
-    cursor: pointer;
-}
-
-.slider-container input[type="range"]::-webkit-slider-thumb {
-    appearance: none;
-    background: #00ff7f;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.slider-container input[type="range"]::-moz-range-thumb {
-    background: #00ff7f;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    cursor: pointer;
-}
 
 /* Estilo general para la sección de eventos */
 .events-section {
@@ -196,7 +116,7 @@ body {
     background: rgba(30, 30, 30, 0.9);
     padding: 15px;
     border-radius: 10px;
-    max-width: 320px; /* Compacto para dispositivos móviles */
+    max-width: 360px; /* Compacto para dispositivos móviles */
     margin: 0 auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     color: #fff;
@@ -353,7 +273,7 @@ body {
     padding: 15px;
     border-radius: 10px;
     color: #fff;
-    max-width: 320px; /* Más pequeño para dispositivos móviles */
+    max-width: 430px; /* Más pequeño para dispositivos móviles */
     margin: 0 auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
