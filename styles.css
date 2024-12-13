@@ -1,3 +1,36 @@
+/* Estilos para la sección de inicio */
+.section {
+    padding: 20px;
+    color: white;
+}
+
+.section-title {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #f464c4;
+}
+
+/* Novedades */
+.news-section {
+    background: linear-gradient(90deg, #a64bf4, #f464c4, #4bf4e1);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.news-card {
+    background-color: #2c2c2c;
+    padding: 15px;
+    border-radius: 8px;
+    color: #ddd;
+}
+
+.news-card p {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
 /* Estilo general para el contenedor */
 body {
     background-color: #121212;
@@ -115,7 +148,7 @@ input[type="checkbox"]:not(:checked) + .icon::before {
     font-family: Arial, sans-serif;
     background: rgba(30, 30, 30, 0.9);
     width: 140%; /* Siempre ocupa el 100% del ancho del dispositivo */
-    max-width: 370px; /* Ancho máximo fijo para pantallas grandes */
+    max-width: 290px; /* Ancho máximo fijo para pantallas grandes */
     margin: 0 auto; /* Centrado en la pantalla */
     padding: 20px;
     background: #1e1e1e;
@@ -277,8 +310,8 @@ input[type="checkbox"]:not(:checked) + .icon::before {
 .popular-songs {
     font-family: Arial, sans-serif;
     background: rgba(30, 30, 30, 0.9);
-    width: 100%; /* Siempre ocupa el 100% del ancho del dispositivo */
-    max-width: 400px; /* Ancho máximo fijo para pantallas grandes */
+    width: 140%; /* Siempre ocupa el 100% del ancho del dispositivo */
+    max-width: 290px; /* Ancho máximo fijo para pantallas grandes */
     margin: 0 auto; /* Centrado en la pantalla */
     padding: 20px;
     background: #1e1e1e;
