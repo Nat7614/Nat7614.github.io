@@ -114,8 +114,8 @@ input[type="checkbox"]:not(:checked) + .icon::before {
 .events-section {
     font-family: Arial, sans-serif;
     background: rgba(30, 30, 30, 0.9);
-    width: 10%; /* Siempre ocupa el 100% del ancho del dispositivo */
-    max-width: 400px; /* Ancho máximo fijo para pantallas grandes */
+    width: 140%; /* Siempre ocupa el 100% del ancho del dispositivo */
+    max-width: 370px; /* Ancho máximo fijo para pantallas grandes */
     margin: 0 auto; /* Centrado en la pantalla */
     padding: 20px;
     background: #1e1e1e;
