@@ -1,114 +1,596 @@
-/* Estilo general para el contenedor */
-body {
-    background-color: #121212;
-    color: white;
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-}
-
-.settings-option {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 20px 0;
-    width: 300px;
-    padding: 15px;
+/* Contenedor Principal de Categorías */
+.categories-container {
+    width: 100%; /* Siempre ocupa el 100% del ancho del dispositivo */
+    max-width: 400px; /* Ancho máximo fijo para pantallas grandes */
+    margin: 0 auto; /* Centrado en la pantalla */
+    padding: 20px;
+    background: #1e1e1e;
     border-radius: 10px;
-    background-color: #1f1f1f;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box; /* Garantiza que padding no afecta el tamaño */
+    overflow: hidden; /* Evita que el contenido haga crecer el contenedor */
 }
 
-.toggle-container {
+/* Lista de Categorías (Checkboxes) */
+.categories-list {
     display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Espaciado entre categorías */
+    justify-content: center; /* Centrado dentro del contenedor */
+}
+
+/* Categorías Individuales */
+.category {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
+    justify-content: center;
+    flex: 1 1 45%; /* Ocupa el 45% del contenedor (adaptable) */
+    max-width: 120px; /* Tamaño máximo para evitar que crezca mucho */
+    padding: 10px;
+    background: #2a2a2a;
+    border-radius: 8px;
+    transition: transform 0.3s, background 0.3s;
+    box-sizing: border-box;
+    text-align: center; /* Centra el texto */
 }
 
-label {
-    font-size: 16px;
-    margin-right: 10px;
-    cursor: pointer;
-}
-
-/* Checkbox oculto para personalizar su apariencia */
-input[type="checkbox"] {
+/* Ocultar el Checkbox y Estilizar el Span */
+.category input {
     display: none;
 }
 
-/* Estilo del ícono del checkbox */
-input[type="checkbox"] + .icon {
-    position: relative;
-    width: 24px;
-    height: 24px;
-    border: 2px solid #aaa;
-    border-radius: 50%;
-    background-color: #333;
+.category span {
+    display: block;
+    cursor: pointer;
+    padding: 10px 15px;
+    background: #1e1e1e;
+    border-radius: 5px;
+    color: #fff;
+    transition: background 0.3s, color 0.3s;
+}
+
+.category input:checked + span {
+    background: linear-gradient(45deg, #ff66c4, #ff8a00);
+    color: #fff;
+}
+
+/* Botones */
+.action-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background: #ff66c4;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.action-btn:hover {
+    background: #ff8a00;
+}
+
+/* Adaptación para Dispositivos Móviles */
+@media (max-width: 7px) {
+    .categories-container {
+        padding: 15px;
+        max-width: 9%; /* Ocupa casi todo el ancho del dispositivo */
+    }
+
+    .category {
+        flex: 1 1 10%; /* Una categoría por fila en pantallas pequeñas */
+        max-width: none; /* Elimina el límite de ancho */
+    }
+
+    .categories-list {
+        gap: 5px; /* Reduce el espacio entre categorías */
+    }
+}
+
+
+/* Resultados de las categorías seleccionadas */
+#categories-results {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Título de "Tus Categorías" */
+#categories-results h3 {
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+/* Contenedor de listas dinámicas */
+#category-lists {
     display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaciado entre las listas */
+}
+
+/* Botón de editar categorías */
+#edit-categories-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background: #ff66c4;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#edit-categories-button:hover {
+    background: #ff8a00;
+}
+
+/* Adaptación a móviles */
+@media (max-width: 76px) {
+    .categories-section {
+        max-width: 9%; /* Ocupa casi todo el ancho del dispositivo */
+        padding: 15px;
+    }
+
+    .categories-list {
+        gap: 5px; /* Reduce el espacio entre categorías */
+    }
+
+    .category {
+        flex: 1 1 100%; /* Una categoría por fila en pantallas pequeñas */
+    }
+}
+
+/* Contenedor principal de categorías */
+.categories-container {
+    max-width: 40px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #181818;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Encabezado del contenedor */
+.categories-container h2 {
+    font-size: 1.8em;
+    color: #f464c4;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Sección de selección de categorías */
+.category-selection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px;
+}
+
+/* Botones de categorías */
+.category-button {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(45deg, #a64bf4, #f464c4, #4bf4e1);
+    border-radius: 50%;
+    cursor: pointer;
+    color: #fff;
+    font-size: 0.9em;
+    text-align: center;
+    font-weight: bold;
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Animación e icono al activarse */
-input[type="checkbox"]:checked + .icon {
-    border-color: #4caf50;
-    background-color: #4caf50;
-    box-shadow: 0 0 10px #4caf50;
+/* Efectos hover para los botones */
+.category-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-input[type="checkbox"]:checked + .icon::before {
-    content: '\2714'; /* Icono de check */
+/* Checkbox de selección dentro de los botones */
+.category-button input[type="checkbox"] {
+    display: none;
+}
+
+.category-button.checked {
+    background: linear-gradient(45deg, #4bf4e1, #f464c4, #a64bf4);
+}
+
+/* Texto centrado con checkbox */
+.category-button span {
+    margin-top: 8px;
+    display: block;
+    line-height: 1.2em;
+    font-size: 0.9em;
+    color: #fff;
+}
+
+/* Botón de "Listo" */
+.ready-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #a64bf4, #f464c4, #4bf4e1);
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.ready-button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #4bf4e1, #f464c4, #a64bf4);
+}
+
+/* Contenedor adaptado para dispositivos móviles */
+@media (max-width: 78px) {
+    .categories-container {
+        padding: 15px;
+    }
+
+    .category-button {
+        width: 80px;
+        height: 80px;
+        font-size: 0.8em;
+    }
+
+    .ready-button {
+        width: 100%;
+        padding: 12px;
+        font-size: 1em;
+    }
+}
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal de categorías */
+#categories-selector {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    max-width: 500px;
+    width: 90%; /* Adaptado para móviles */
+    text-align: center;
+}
+
+/* Título de Categorías */
+#categories-selector h3 {
+    text-align: center; /* Centramos el título */
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #f464c4; /* Color destacado */
+}
+
+/* Texto de instrucciones */
+#categories-selector p {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* Botón "Editar Categorías" */
+#edit-categories-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #a64bf4, #f464c4, #4bf4e1);
+    border: none;
+    border-radius: 5px;
     color: white;
     font-size: 16px;
-    animation: checkmark 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.3s ease;
+    margin-left: auto;
+    margin-right: auto;
+    display: block; /* Para centrar */
 }
 
-/* Animación e icono al desactivarse */
-input[type="checkbox"]:not(:checked) + .icon {
-    border-color: #f44336;
-    background-color: #333;
-    box-shadow: 0 0 10px rgba(244, 67, 54, 0);
+#edit-categories-button:hover {
+    background: linear-gradient(45deg, #4bf4e1, #f464c4, #a64bf4);
 }
 
-input[type="checkbox"]:not(:checked) + .icon::before {
-    content: '\2716'; /* Icono de X */
-    color: #f44336;
+/* Sistema de selección de categorías */
+.categories-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centrado */
+    gap: 20px;
+    margin: 20px 0;
+    padding: 10px;
+}
+
+/* Cada Categoría */
+.category {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Asegura que el texto y el checkbox estén alineados */
+    font-size: 14px;
+    text-align: center;
+    gap: 5px; /* Espaciado entre checkbox y texto */
+}
+
+/* Checkbox Estilizado */
+.category input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #a64bf4;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.category input[type="checkbox"]:checked {
+    background: linear-gradient(45deg, #a64bf4, #f464c4, #4bf4e1);
+    border-color: transparent;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+/* Animación al seleccionar */
+.category input[type="checkbox"]:checked + label {
+    color: #f464c4;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+/* Texto de "Tus Categorías" */
+#categories-results h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #f464c4; /* Color destacado */
+    text-align: center;
+}
+
+/* Espaciado entre títulos y listas */
+.category-list h4 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Botón "Listo" */
+#done-button {
+    margin: 20px auto;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #a64bf4, #f464c4, #4bf4e1);
+    border: none;
+    border-radius: 5px;
+    color: white;
     font-size: 16px;
-    animation: crossmark 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.3s ease;
+    display: block; /* Centrado */
 }
 
-/* Animaciones para el ícono */
-@keyframes checkmark {
-    0% {
-        transform: scale(0);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+#done-button:hover {
+    background: linear-gradient(45deg, #4bf4e1, #f464c4, #a64bf4);
 }
 
-@keyframes crossmark {
-    0% {
-        transform: scale(0);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+/* Listas de canciones */
+#categories-results ul {
+    list-style: none;
+    padding: 0;
 }
 
+#categories-results li {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre imagen y texto */
+    margin-bottom: 10px;
+}
 
+#categories-results img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+#categories-results span {
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+}
+
+#categories-results span:hover {
+    color: #a64bf4;
+    text-decoration: underline;
+}
+
+/* Botón "Editar Categorías" */
+#edit-categories-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #a64bf4, #f464c4, #4bf4e1);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.3s ease;
+}
+
+#edit-categories-button:hover {
+    background: linear-gradient(45deg, #4bf4e1, #f464c4, #a64bf4);
+}
+
+/* Sistema de selección de categorías */
+.categories-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+    padding: 10px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.category {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+}
+
+.category input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #a64bf4;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 5px;
+    background-color: white;
+}
+
+.category input[type="checkbox"]:checked {
+    background: linear-gradient(45deg, #a64bf4, #f464c4, #4bf4e1);
+    border-color: transparent;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+/* Animación al seleccionar */
+.category input[type="checkbox"]:checked + label {
+    color: #f464c4;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+/* Contenedor de selección de categorías */
+#categories-selector {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    max-width: 500px;
+    width: 90%;
+}
+
+/* Centrar el botón "Listo" */
+#done-button {
+    margin: 20px auto;
+    display: block;
+    text-align: center;
+}
+
+/* Contenedor para listas de canciones (ya está adaptado a móviles) */
+#categories-results {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    max-width: 500px;
+    width: 90%;
+}
+
+/*Estilo 2 */
+.hidden {
+    display: none;
+}
+
+#done-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #a64bf4, #f464c4, #4bf4e1);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#done-button:hover {
+    background: linear-gradient(45deg, #4bf4e1, #f464c4, #a64bf4);
+}
+
+.copy-message {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: #28a745;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+    animation: fadeInOut 3s forwards;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-10px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-10px); }
+}
+
+/*Estilo de categorias*/
+.categories-section {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.categories-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.category {
+    flex: 1 1 45%;
+}
+
+.category input {
+    margin-right: 10px;
+}
+
+.category-list {
+    margin-bottom: 20px;
+}
+
+.copy-message {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: #28a745;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+}
 
 /* Estilo general para la sección de eventos */
 .events-section {
@@ -116,7 +598,7 @@ input[type="checkbox"]:not(:checked) + .icon::before {
     background: rgba(30, 30, 30, 0.9);
     padding: 15px;
     border-radius: 10px;
-    max-width: 360px; /* Compacto para dispositivos móviles */
+    max-width: 320px; /* Compacto para dispositivos móviles */
     margin: 0 auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     color: #fff;
@@ -273,7 +755,7 @@ input[type="checkbox"]:not(:checked) + .icon::before {
     padding: 15px;
     border-radius: 10px;
     color: #fff;
-    max-width: 430px; /* Más pequeño para dispositivos móviles */
+    max-width: 320px; /* Más pequeño para dispositivos móviles */
     margin: 0 auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }

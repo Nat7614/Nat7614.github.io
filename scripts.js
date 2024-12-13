@@ -628,39 +628,105 @@ document.querySelectorAll(".event-option").forEach(button => {
         document.getElementById("event-options").classList.add("hidden");
     });
 });
+document.addEventListener("DOMContentLoaded", () => {
+    const categories = [
+        "Phonk", "Funk", "Reguetón", "Pop", "Rock", "Hip-Hop", 
+        "Jazz", "Clásica", "Blues", "Electrónica", "Indie", "Soul", 
+        "Salsa", "Cumbia"
+    ];
+    const selectedCategories = JSON.parse(localStorage.getItem("selectedCategories")) || [];
+    const categoriesSelector = document.querySelector(".categories-list");
+    const doneButton = document.getElementById("done-button");
+    const categoriesResults = document.getElementById("categories-results");
+    const categoryLists = document.getElementById("category-lists");
 
-// Función para adelantar el video cuando se mueve la barra de progreso
-document.getElementById('seek-bar').addEventListener('input', function() {
-    const seekTo = parseFloat(this.value);
-    player.seekTo(seekTo, true); // Adelantar el video al tiempo seleccionado
+    // Función para renderizar categorías
+    function renderCategories() {
+        categoriesSelector.innerHTML = "";
+        categories.forEach(category => {
+            const div = document.createElement("div");
+            div.classList.add("category");
+            const isSelected = selectedCategories.includes(category);
+            div.innerHTML = `
+                <input type="checkbox" id="${category}" ${isSelected ? "checked" : ""}>
+                <label for="${category}">${category}</label>
+            `;
+            categoriesSelector.appendChild(div);
+        });
+        updateDoneButtonVisibility();
+    }
+
+    // Mostrar listas al cargar
+    function initializeView() {
+        if (selectedCategories.length > 0) {
+            renderLists();
+            categoriesResults.classList.remove("hidden");
+            document.getElementById("categories-selector").classList.add("hidden");
+        } else {
+            document.getElementById("categories-selector").classList.remove("hidden");
+            categoriesResults.classList.add("hidden");
+        }
+    }
+
+    // Guardar categorías seleccionadas
+    function saveCategories() {
+        const checkboxes = document.querySelectorAll(".category input");
+        selectedCategories.length = 0;
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) selectedCategories.push(checkbox.id);
+        });
+        localStorage.setItem("selectedCategories", JSON.stringify(selectedCategories));
+    }
+
+    // Mostrar u ocultar el botón "Listo"
+    function updateDoneButtonVisibility() {
+        const checkboxes = document.querySelectorAll(".category input");
+        const isAnyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+        doneButton.classList.toggle("hidden", !isAnyChecked);
+    }
+
+    // Renderizar listas
+    function renderLists() {
+        categoryLists.innerHTML = "";
+        selectedCategories.forEach(category => {
+            const list = document.createElement("div");
+            list.classList.add("category-list");
+            list.innerHTML = `
+                <h4>${category}</h4>
+                <ul>
+                    <li>
+                        <img src="images/${category.toLowerCase()}1.jpg" alt="${category} 1">
+                        <span class="song" data-song="${category} Song 1">Song 1</span>
+                    </li>
+                    <li>
+                        <img src="images/${category.toLowerCase()}2.jpg" alt="${category} 2">
+                        <span class="song" data-song="${category} Song 2">Song 2</span>
+                    </li>
+                    <li>
+                        <img src="images/${category.toLowerCase()}3.jpg" alt="${category} 3">
+                        <span class="song" data-song="${category} Song 3">Song 3</span>
+                    </li>
+                </ul>
+            `;
+            categoryLists.appendChild(list);
+        });
+    }
+
+    // Inicializar
+    renderCategories();
+    initializeView();
+
+    // Eventos
+    doneButton.addEventListener("click", () => {
+        saveCategories();
+        renderLists();
+        document.getElementById("categories-selector").classList.add("hidden");
+        categoriesResults.classList.remove("hidden");
+    });
+
+    document.getElementById("edit-categories-button").addEventListener("click", () => {
+        renderCategories();
+        document.getElementById("categories-selector").classList.remove("hidden");
+        categoriesResults.classList.add("hidden");
+    });
 });
-
-
-// Función para cargar configuraciones al abrir la app
-function loadSettings() {
-    // Recuperar configuraciones de localStorage
-    const pauseOnLock = localStorage.getItem('pauseOnLock') === 'true'; // Convertir a booleano
-    const dataSavingMode = localStorage.getItem('dataSavingMode') === 'true'; // Convertir a booleano
-
-    // Aplicar configuraciones a los checkboxes
-    document.getElementById('pause-on-lock').checked = pauseOnLock;
-    document.getElementById('data-saving-mode').checked = dataSavingMode;
-}
-
-// Función para guardar configuraciones cuando cambien
-function saveSettings() {
-    // Obtener el estado de los checkboxes
-    const pauseOnLock = document.getElementById('pause-on-lock').checked;
-    const dataSavingMode = document.getElementById('data-saving-mode').checked;
-
-    // Guardar los estados en localStorage
-    localStorage.setItem('pauseOnLock', pauseOnLock);
-    localStorage.setItem('dataSavingMode', dataSavingMode);
-}
-
-// Añadir eventos a los checkboxes para guardar configuraciones al cambiar
-document.getElementById('pause-on-lock').addEventListener('change', saveSettings);
-document.getElementById('data-saving-mode').addEventListener('change', saveSettings);
-
-// Cargar configuraciones al inicio
-document.addEventListener('DOMContentLoaded', loadSettings);
