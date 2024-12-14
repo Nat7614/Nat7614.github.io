@@ -129,14 +129,12 @@ input[type="checkbox"]:not(:checked) + .icon::before {
     background-color: transparent;
 }
 
-
-
 /* Estilo general para la sección de eventos */
 .events-section {
     font-family: Arial, sans-serif;
     background: rgba(30, 30, 30, 0.9);
     width: 140%; /* Siempre ocupa el 100% del ancho del dispositivo */
-    max-width: 290px; /* Ancho máximo fijo para pantallas grandes */
+    max-width: 320px; /* Ancho máximo fijo para pantallas grandes */
     margin: 0 auto; /* Centrado en la pantalla */
     padding: 20px;
     background: #1e1e1e;
@@ -299,7 +297,7 @@ input[type="checkbox"]:not(:checked) + .icon::before {
     font-family: Arial, sans-serif;
     background: rgba(30, 30, 30, 0.9);
     width: 140%; /* Siempre ocupa el 100% del ancho del dispositivo */
-    max-width: 290px; /* Ancho máximo fijo para pantallas grandes */
+    max-width: 320px; /* Ancho máximo fijo para pantallas grandes */
     margin: 0 auto; /* Centrado en la pantalla */
     padding: 20px;
     background: #1e1e1e;
@@ -891,7 +889,7 @@ body {
 .section-title {
     font-size: 1.5em;
     margin-bottom: 15px;
-    color: #f464c4;
+    color: #b3c1c1;
 }
 
 /* Novedades */
