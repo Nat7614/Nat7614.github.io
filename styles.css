@@ -698,6 +698,7 @@ h1 {
     white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
     overflow: hidden; /* Ocultar el texto que excede el contenedor */
     text-overflow: ellipsis; /* Mostrar puntos suspensivos (...) si el texto es muy largo */
+    max-width: calc(100% - 90px); /* Limitar el ancho considerando la miniatura */
 }
 
 .result-artist,
@@ -720,6 +721,7 @@ h1 {
 
     .result-title {
         font-size: 14px;
+        max-width: calc(100% - 70px); /* Ajustar para móviles */
     }
 
     .result-artist,
