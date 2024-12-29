@@ -1,4 +1,40 @@
-/* Mensaje de errores */
+
+/* Contenedor general del reproductor en el apartado de buscar */
+#player {
+    width: 85%; /* Achicar más el ancho total del contenedor */
+    max-width: 320px; /* Limitar el ancho máximo para adaptarse a móviles */
+    margin: 0 auto; /* Centrar el contenedor */
+    padding: 8px;
+    border-radius: 10px;
+    background-color: #1e1e1e; /* Fondo oscuro */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para darle profundidad */
+}
+/* Ajuste exclusivo para el reproductor de YouTube */
+#youtube-player {
+    width: 85%; /* Reduce el ancho del reproductor de YouTube */
+    max-width: 320px; /* Limita el ancho máximo para móviles */
+    margin: 0 auto; /* Centra el reproductor */
+    aspect-ratio: 16 / 9;
+    border-radius: 8px; /* Bordes redondeados */
+    overflow: hidden;
+}
+/* Estilo para centrar y aplicar bordes al reproductor de YouTube */
+#player {
+    width: 90%; /* Ajusta el ancho del contenedor principal */
+    max-width: 350px; /* Limita el ancho máximo para móviles */
+    margin: 0 auto; /* Centra horizontalmente */
+    padding: 15px; /* Espacio alrededor del reproductor */
+    background-color: #1a1a1a; /* Color de fondo */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Sombra para darle profundidad */
+}
+
+#youtube-player {
+    width: 100%; /* Asegura que el reproductor ocupe el ancho completo del contenedor */
+    aspect-ratio: 16 / 9;
+    border-radius: 8px; /* Bordes redondeados en el reproductor */
+    overflow: hidden;
+}/* Mensaje de errores */
 #no-connection-warning {
     position: fixed;
     top: 0;
