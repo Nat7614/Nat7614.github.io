@@ -718,29 +718,6 @@ h1 {
     margin: 2px 0;
 }
 
-/* Adaptaciones para pantallas pequeñas */
-@media screen and (max-width: 480px) {
-    #result-list li {
-        padding: 10px;
-    }
-
-    .thumbnail img {
-        width: 60px;
-        height: 45px;
-    }
-
-    .result-title {
-        font-size: 14px;
-        max-width: calc(100% - 70px); /* Ajustar para móviles */
-    }
-
-    .result-artist,
-    .result-duration {
-        font-size: 12px;
-    }
-}
-
-
 
 /* Estilos del reproductor */
 #player.hidden {
