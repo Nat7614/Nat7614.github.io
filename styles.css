@@ -701,6 +701,16 @@ h1 {
     max-width: calc(100% - 90px); /* Limitar el ancho considerando la miniatura */
 }
 
+/* Solución: cortar texto a 31 caracteres */
+.result-title::after {
+    content: attr(data-title);
+    display: inline-block;
+    max-width: 31ch; /* Limitar a 31 caracteres */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .result-artist,
 .result-duration {
     font-size: 14px;
@@ -729,6 +739,7 @@ h1 {
         font-size: 12px;
     }
 }
+
 
 
 /* Estilos del reproductor */
