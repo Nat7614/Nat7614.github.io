@@ -1,4 +1,3 @@
-
 /* Contenedor general del reproductor en el apartado de buscar */
 #player {
     width: 85%; /* Achicar más el ancho total del contenedor */
@@ -897,6 +896,7 @@ h1 {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
+
 /* Estilos para la barra inferior */
 .footer-bar {
     position: fixed; /* Mantener la barra fija en la parte inferior */
@@ -1152,7 +1152,6 @@ body {
     color: #ffffff;
     margin: 5px;
 }
-
 /* Estilo para centrar y aplicar bordes al reproductor de YouTube */
 #player {
     width: 90%; /* Ajusta el ancho del contenedor principal */
@@ -1162,14 +1161,45 @@ body {
     background-color: #0d0d22; /* Color de fondo */
     border-radius: 12px; /* Bordes redondeados */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Sombra para darle profundidad */
+    box-sizing: border-box; /* Incluye padding y bordes en las dimensiones */
+    position: relative; /* Fija su relación con elementos cercanos */
+    overflow: hidden; /* Evita que cualquier contenido adicional sobresalga */
 }
 
+/* Bloquea el cambio de tamaño */
+#player:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Permite interacciones dentro del reproductor */
+}
+
+/* Asegura que el reproductor de YouTube no desborde */
 #youtube-player {
     width: 100%; /* Asegura que el reproductor ocupe el ancho completo del contenedor */
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 16 / 9; /* Relación de aspecto estándar */
     border-radius: 8px; /* Bordes redondeados en el reproductor */
-    overflow: hidden;
+    overflow: hidden; /* Evita desbordamientos visuales */
+    pointer-events: auto; /* Habilita la interacción con el reproductor */
 }
+
+/* Adaptaciones para pantallas pequeñas */
+@media screen and (max-width: 480px) {
+    #player {
+        width: 95%; /* Aumenta el ancho para aprovechar mejor las pantallas pequeñas */
+        max-width: 300px; /* Reduce el tamaño máximo en dispositivos más pequeños */
+        padding: 10px; /* Ajusta el padding */
+    }
+
+    #youtube-player {
+        border-radius: 5px; /* Reduce el radio de los bordes */
+    }
+}
+
 
 /* Estilo del input de búsqueda */
 #search-input {
