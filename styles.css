@@ -647,7 +647,7 @@ h1 {
 /* Resultados de búsqueda */
 #search-results {
     width: 80%;
-    max-width: 600px;
+    max-width: 500px;
     margin: 0 auto;
     padding: 0 10px;
 }
@@ -696,20 +696,11 @@ h1 {
     color: #ffffff;
     margin: 0 0 5px 0;
     white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
-    overflow: hidden; /* Ocultar el texto que excede el contenedor */
+ overflow: hidden; /* Ocultar el texto que excede el contenedor */
     text-overflow: ellipsis; /* Mostrar puntos suspensivos (...) si el texto es muy largo */
     max-width: calc(100% - 90px); /* Limitar el ancho considerando la miniatura */
 }
 
-/* Solución: cortar texto a 31 caracteres */
-.result-title::after {
-    content: attr(data-title);
-    display: inline-block;
-    max-width: 26ch; /* Limitar a 26 caracteres */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 
 .result-artist,
 .result-duration {
