@@ -1,39 +1,4 @@
-/* Contenedor general del reproductor en el apartado de buscar */
-#player {
-    width: 85%; /* Achicar más el ancho total del contenedor */
-    max-width: 320px; /* Limitar el ancho máximo para adaptarse a móviles */
-    margin: 0 auto; /* Centrar el contenedor */
-    padding: 8px;
-    border-radius: 10px;
-    background-color: #1e1e1e; /* Fondo oscuro */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para darle profundidad */
-}
-/* Ajuste exclusivo para el reproductor de YouTube */
-#youtube-player {
-    width: 85%; /* Reduce el ancho del reproductor de YouTube */
-    max-width: 320px; /* Limita el ancho máximo para móviles */
-    margin: 0 auto; /* Centra el reproductor */
-    aspect-ratio: 16 / 9;
-    border-radius: 8px; /* Bordes redondeados */
-    overflow: hidden;
-}
-/* Estilo para centrar y aplicar bordes al reproductor de YouTube */
-#player {
-    width: 90%; /* Ajusta el ancho del contenedor principal */
-    max-width: 350px; /* Limita el ancho máximo para móviles */
-    margin: 0 auto; /* Centra horizontalmente */
-    padding: 15px; /* Espacio alrededor del reproductor */
-    background-color: #1a1a1a; /* Color de fondo */
-    border-radius: 12px; /* Bordes redondeados */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Sombra para darle profundidad */
-}
-
-#youtube-player {
-    width: 100%; /* Asegura que el reproductor ocupe el ancho completo del contenedor */
-    aspect-ratio: 16 / 9;
-    border-radius: 8px; /* Bordes redondeados en el reproductor */
-    overflow: hidden;
-}/* Mensaje de errores */
+/* Mensaje de errores */
 #no-connection-warning {
     position: fixed;
     top: 0;
@@ -681,7 +646,7 @@ h1 {
 
 /* Resultados de búsqueda */
 #search-results {
-    width: 70%;
+    width: 67%;
     max-width: 500px;
     margin: 0 auto;
     padding: 0 10px;
@@ -731,7 +696,6 @@ h1 {
     color: #ffffff;
     margin: 0 0 5px 0;
     white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
- overflow: hidden; /* Ocultar el texto que excede el contenedor */
     text-overflow: ellipsis; /* Mostrar puntos suspensivos (...) si el texto es muy largo */
     max-width: calc(100% - 90px); /* Limitar el ancho considerando la miniatura */
 }
@@ -895,7 +859,6 @@ h1 {
     cursor: pointer;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
-
 
 /* Estilos para la barra inferior */
 .footer-bar {
@@ -1152,6 +1115,7 @@ body {
     color: #ffffff;
     margin: 5px;
 }
+
 /* Estilo para centrar y aplicar bordes al reproductor de YouTube */
 #player {
     width: 90%; /* Ajusta el ancho del contenedor principal */
@@ -1161,45 +1125,14 @@ body {
     background-color: #0d0d22; /* Color de fondo */
     border-radius: 12px; /* Bordes redondeados */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Sombra para darle profundidad */
-    box-sizing: border-box; /* Incluye padding y bordes en las dimensiones */
-    position: relative; /* Fija su relación con elementos cercanos */
-    overflow: hidden; /* Evita que cualquier contenido adicional sobresalga */
 }
 
-/* Bloquea el cambio de tamaño */
-#player:after {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; /* Permite interacciones dentro del reproductor */
-}
-
-/* Asegura que el reproductor de YouTube no desborde */
 #youtube-player {
     width: 100%; /* Asegura que el reproductor ocupe el ancho completo del contenedor */
-    aspect-ratio: 16 / 9; /* Relación de aspecto estándar */
+    aspect-ratio: 16 / 9;
     border-radius: 8px; /* Bordes redondeados en el reproductor */
-    overflow: hidden; /* Evita desbordamientos visuales */
-    pointer-events: auto; /* Habilita la interacción con el reproductor */
+    overflow: hidden;
 }
-
-/* Adaptaciones para pantallas pequeñas */
-@media screen and (max-width: 480px) {
-    #player {
-        width: 95%; /* Aumenta el ancho para aprovechar mejor las pantallas pequeñas */
-        max-width: 300px; /* Reduce el tamaño máximo en dispositivos más pequeños */
-        padding: 10px; /* Ajusta el padding */
-    }
-
-    #youtube-player {
-        border-radius: 5px; /* Reduce el radio de los bordes */
-    }
-}
-
 
 /* Estilo del input de búsqueda */
 #search-input {
