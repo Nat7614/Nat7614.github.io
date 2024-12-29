@@ -1,6 +1,65 @@
+/* Mensaje de errores */
+#no-connection-warning {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #FFC107; /* Amarillo fuerte */
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInOutWarning 5s forwards;
+}
+
+#no-connection-warning span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 0px;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+#no-connection-warning span span {
+    color: red;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Mensaje de error */
+#error-message {
+    display: none;
+    background-color: red;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 1000;
+}
+
+#error-message svg {
+    vertical-align: middle;
+    margin-right: 10px;
+    fill: white;
+    width: 24px;
+    height: 24px;
+}
+
 /* Estilo general para el contenedor */
 body {
-    background-color: #121212;
+    background-color: #0d0d22;
     color: white;
     font-family: Arial, sans-serif;
     display: flex;
@@ -21,7 +80,7 @@ body {
     max-width: 500px; /* Máximo ancho */
     padding: 15px;
     border-radius: 10px;
-    background-color: #1f1f1f;
+    background-color: #0d0d22;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
     cursor: pointer; /* Todo el contenedor es clicable */
     transition: background-color 0.3s ease;
@@ -29,7 +88,7 @@ body {
 
 /* Hover para mejor feedback al usuario */
 .settings-option:hover {
-    background-color: #2a2a2a;
+    background-color: #03000d;
 }
 
 .toggle-container {
@@ -137,7 +196,7 @@ input[type="checkbox"]:not(:checked) + .icon::before {
     max-width: 320px; /* Ancho máximo fijo para pantallas grandes */
     margin: 0 auto; /* Centrado en la pantalla */
     padding: 20px;
-    background: #1e1e1e;
+    background: #0d0d22;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     box-sizing: border-box; /* Garantiza que padding no afecta el tamaño */
@@ -197,7 +256,7 @@ input[type="checkbox"]:not(:checked) + .icon::before {
     top: 100%; /* Al ras del botón */
     left: 0;
     right: 0;
-    background: #2c2c2c;
+    background: #020113;
     padding: 10px;
     border-bottom-left-radius: 8px; /* Solo esquinas inferiores redondeadas */
     border-bottom-right-radius: 8px;
@@ -221,7 +280,7 @@ input[type="checkbox"]:not(:checked) + .icon::before {
 }
 
 .event-option:hover {
-    background: #444;
+    background: #060642;
 }
 
 .hidden {
@@ -239,7 +298,7 @@ input[type="checkbox"]:not(:checked) + .icon::before {
     display: flex;
     align-items: center;
     gap: 10px; /* Espacio entre la imagen y el texto */
-    background: #333;
+    background: #000015;
     padding: 10px;
     border-radius: 8px;
     margin-bottom: 10px;
@@ -300,7 +359,7 @@ input[type="checkbox"]:not(:checked) + .icon::before {
     max-width: 320px; /* Ancho máximo fijo para pantallas grandes */
     margin: 0 auto; /* Centrado en la pantalla */
     padding: 20px;
-    background: #1e1e1e;
+    background: #0d0d22;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     box-sizing: border-box; /* Garantiza que padding no afecta el tamaño */
@@ -325,7 +384,7 @@ input[type="checkbox"]:not(:checked) + .icon::before {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #2c2c2c;
+    background: #fff;
     margin-bottom: 8px; /* Espaciado menor */
     padding: 8px; /* Reducción de padding */
     border-radius: 8px;
@@ -377,6 +436,21 @@ input[type="checkbox"]:not(:checked) + .icon::before {
     }
 }
 
+/* Estilo 2 de canciones populares */
+.popular-songs ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.popular-songs li {
+    background-color: #000015;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    color: #fff;
+}
+
+
 /* styles.css */
 body {
     display: flex;
@@ -384,13 +458,13 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #121212;
+    background-color: #0c0c1a;
     color: #ffffff;
     font-family: Arial, sans-serif;
 }
 
 .song-container {
-    background-color: #1c1c1c;
+    background-color: #0d0d22;
     padding: 20px;
     width: 90%;
     max-width: 400px;
@@ -427,7 +501,7 @@ body {
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 8px;
-    background-color: #2c2c2c;
+    background-color: #000015;
     animation: fadeIn 0.3s ease;
 }
 
@@ -512,10 +586,11 @@ body {
     justify-content: center;
     gap: 15px;
     padding: 0;
-    background-color: transparent; /* Fondo completamente transparente */
+    background-color: trasparent; /* Fondo completamente transparente */
     border: none; /* Sin bordes */
     margin: 0; /* Sin margen superior */
 }
+
 
 /* Estilo de los botones */
 .social-btn {
@@ -524,7 +599,7 @@ body {
     display: flex;
     justify-content: center; /* Centrar la imagen horizontalmente */
     align-items: center;    /* Centrar la imagen verticalmente */
-    background-color: #444; /* Añadimos de nuevo el fondo gris */
+    background-color: #0d0d22; /* Añadimos de nuevo el fondo gris */
     border: none; /* Sin borde */
     border-radius: 10px; /* Bordes ligeramente redondeados */
     cursor: pointer;
@@ -536,11 +611,6 @@ body {
     height: 24px;
 }
 
-/* Efecto hover para el botón */
-.social-btn:hover {
-    background-color: rgba(68, 68, 68, 0.5); /* Fondo gris más oscuro al hacer hover */
-    border-radius: 10px; /* Mantener el redondeado en el hover */
-}
 
 /* Eliminar todo el fondo del contenedor de la barra inferior */
 .footer {
@@ -551,7 +621,8 @@ body {
     padding: 0; /* Sin relleno */
 }
 
-/* Reset de estilos básicos */
+
+/* Reset de estilos de barra */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -559,16 +630,6 @@ body {
     font-family: 'Arial', sans-serif;
 }
 
-/* Estilos del cuerpo */
-body {
-    background-color: #121212;
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-}
 
 /* Estilos del encabezado */
 header {
@@ -582,60 +643,91 @@ h1 {
     margin-bottom: 10px;
 }
 
-/* Contenedor del buscador */
-.search-container {
-    display: flex;
-    justify-content: center;
-    gap: -888810px;
-}
-
-#search-input {
-    width: 300px; /* Ajuste de tamaño */
-    padding: 10px 20px; /* Ajuste del padding */
-    border-radius: 50px; /* Bordes redondeados */
-    border: none;
-    outline: none;
-    background-color: #1e1e1e;
-    color: #fff;
-}
-
-
-#search-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 50px;
-    background: linear-gradient(45deg, #a64bf4, #f464c4, #4bf4e1);
-    color: white;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-#search-button:hover {
-    transform: scale(1.05);
-}
 
 /* Resultados de búsqueda */
 #search-results {
     width: 100%;
     max-width: 600px;
+    margin: 0 auto;
+    padding: 0 10px;
 }
 
 #result-list {
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 #result-list li {
-    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
     margin-bottom: 10px;
-    background-color: #1e1e1e;
+    background-color: #0d0d22;
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 #result-list li:hover {
-    background-color: #2a2a2a;
+    background-color: #1d163b;
 }
+
+/* Miniatura */
+.thumbnail img {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+/* Detalles del resultado */
+.result-details {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Ocupa todo el espacio restante */
+    overflow: hidden; /* Ocultar contenido que desborda */
+}
+
+.result-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 0 0 5px 0;
+    white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
+    overflow: hidden; /* Ocultar el texto que excede el contenedor */
+    text-overflow: ellipsis; /* Mostrar puntos suspensivos (...) si el texto es muy largo */
+}
+
+.result-artist,
+.result-duration {
+    font-size: 14px;
+    color: #b0b0b0;
+    margin: 2px 0;
+}
+
+/* Adaptaciones para pantallas pequeñas */
+@media screen and (max-width: 480px) {
+    #result-list li {
+        padding: 10px;
+    }
+
+    .thumbnail img {
+        width: 60px;
+        height: 45px;
+    }
+
+    .result-title {
+        font-size: 14px;
+    }
+
+    .result-artist,
+    .result-duration {
+        font-size: 12px;
+    }
+}
+
 
 /* Estilos del reproductor */
 #player.hidden {
@@ -745,26 +837,6 @@ h1 {
     color: #aaaaaa;
 }
 
-/* Mensajes de error */
-.error-message {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #f44336;
-    color: white;
-    padding: 15px 30px;
-    border-radius: 50px;
-    z-index: 1000;
-    animation: fadeInOut 5s forwards;
-}
-
-@keyframes fadeInOut {
-    0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-    10% { opacity: 1; transform: translateX(-50%) translateY(0); }
-    90% { opacity: 1; transform: translateX(-50%) translateY(0); }
-    100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-}
 
 /* Responsividad */
 @media (max-width: 768px) {
@@ -807,31 +879,14 @@ h1 {
     cursor: pointer;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
-/* Estilo del mensaje de advertencia */
-.warning-message {
-    background-color: #FFC107; /* Amarillo fuerte */
-    color: white;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-    font-weight: bold;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-}
 
-.warning-message i {
-    margin-right: 8px;
-}
 /* Estilos para la barra inferior */
 .footer-bar {
     position: fixed; /* Mantener la barra fija en la parte inferior */
     bottom: 0; /* Pegada a la parte inferior */
     left: 0;
     right: 0;
-    background-color: #1c1c1c; /* Color de fondo en modo oscuro */
+    background-color: #0d0d22; /* Color de fondo en modo oscuro */
     display: flex; /* Usar flexbox para alinear los elementos */
     justify-content: space-around; /* Espacio entre los botones */
     padding: 10px 0; /* Espaciado vertical */
@@ -840,7 +895,7 @@ h1 {
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #121212;
+    background-color: #010013;
     color: white;
     display: flex;
     flex-direction: column;
@@ -856,7 +911,7 @@ body {
 .bottom-bar {
     display: flex;
     justify-content: space-around;
-    background-color: #1f1f1f;
+    background-color: #070718;
     padding: 10px 0;
     position: fixed;
     width: 100%;
@@ -902,7 +957,7 @@ body {
 }
 
 .news-card {
-    background-color: #2c2c2c;
+    background-color: #0d0d22;
     padding: 15px;
     border-radius: 8px;
     color: #ddd;
@@ -913,76 +968,12 @@ body {
     margin-bottom: 10px;
 }
 
-/* Canciones Populares */
-.popular-songs ul {
-    list-style-type: none;
-    padding: 0;
-}
 
-.popular-songs li {
-    background-color: #333;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 6px;
-    color: #fff;
-}
-
-/* Botones de Discord y Donar */
-.support-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
-.support-buttons .btn {
-    background: linear-gradient(90deg, #a64bf4, #f464c4, #4bf4e1);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48%;
-    transition: opacity 0.2s ease;
-}
-
-.support-buttons .btn img.icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-}
-
-.support-buttons .btn:hover {
-    opacity: 0.9;
-}
-
-.support-buttons .discord-btn {
-    background-color: #7289da;
-}
-
-.support-buttons .donate-btn {
-    background-color: #ff5e57;
-}
-
-/* Adaptación para dispositivos móviles */
-@media only screen and (max-width: 600px) {
-    .support-buttons .btn {
-        padding: 8px;
-        font-size: 0.9em;
-    }
-
-    .section-title {
-        font-size: 1.3em;
-    }
-}
 /* Estilos generales del apartado de ajustes */
 .settings-option, .profile-settings {
     margin: 20px 0;
 }
 
-/* Estilos para el perfil */
 .profile-settings {
     border-top: 1px solid #ccc;
     padding-top: 20px;
@@ -991,6 +982,9 @@ body {
 
 .profile-picture-container {
     margin-bottom: 10px;
+    display: flex;
+    justify-content: center; /* Alinea horizontalmente */
+    align-items: center; /* Alinea verticalmente si es necesario */
 }
 
 .profile-picture {
@@ -1000,6 +994,11 @@ body {
     object-fit: cover;
     margin-bottom: 10px;
     border: 2px solid #666;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
 .profile-name-container {
@@ -1032,6 +1031,49 @@ body {
     opacity: 0.9;
 }
 
+/* Nuevos estilos para el ícono "+" cuando no hay foto */
+.profile-picture::before {
+    content: '+';
+    font-size: 40px;
+    color: #666;
+    position: absolute;
+    display: none; /* Oculto por defecto */
+}
+
+.profile-picture.empty::before {
+    display: block; /* Mostrar el ícono "+" cuando la imagen esté vacía */
+}
+
+/* Mensajes de advertencia y confirmación */
+#warning-message, #success-message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 0;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#warning-mmessage {
+    background-color: #FF0000; /* Color amarillo */
+    color: white;
+    animation: fadeInOutWarning 5s forwards;
+}
+
+#success-message {
+    background-color: #4CAF50; /* Color verde */
+    color: white;
+    animation: fadeInOutWarning 5s forwards;
+}
+
+
 /* Input escondido */
 .hidden {
     display: none;
@@ -1048,33 +1090,6 @@ body {
 #pause-on-lock, #data-saving-mode {
     width: 20px;
     height: 20px;
-}
-/* Ajusta el ancho del reproductor de YouTube en el apartado de buscar */
-#youtube-player {
-    width: 90%; /* Cambia el ancho a un 90% del contenedor */
-    max-width: 350px; /* Limita el ancho máximo para dispositivos más grandes */
-    aspect-ratio: 16 / 9; /* Mantiene la relación de aspecto de YouTube */
-    margin: 0 auto; /* Centra el reproductor */
-    border-radius: 8px; /* Opcional: Bordes redondeados */
-    overflow: hidden;
-}
-/* Contenedor general del reproductor en el apartado de buscar */
-#player {
-    width: 90%; /* Ajusta el ancho total del contenedor */
-    max-width: 350px; /* Limita el ancho máximo */
-    margin: 0 auto; /* Centra el contenedor */
-    padding: 10px;
-    border-radius: 10px;
-    background-color: #1e1e1e; /* Fondo oscuro para modo oscuro */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para darle profundidad */
-}
-
-/* Ajuste del reproductor de YouTube */
-#youtube-player {
-    width: 100%; /* Ocupa el ancho completo del contenedor del reproductor */
-    aspect-ratio: 16 / 9;
-    border-radius: 8px; /* Bordes redondeados */
-    overflow: hidden;
 }
 
 /* Información de la canción */
@@ -1120,32 +1135,14 @@ body {
     color: #ffffff;
     margin: 5px;
 }
-/* Contenedor general del reproductor en el apartado de buscar */
-#player {
-    width: 85%; /* Achicar más el ancho total del contenedor */
-    max-width: 320px; /* Limitar el ancho máximo para adaptarse a móviles */
-    margin: 0 auto; /* Centrar el contenedor */
-    padding: 8px;
-    border-radius: 10px;
-    background-color: #1e1e1e; /* Fondo oscuro */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para darle profundidad */
-}
-/* Ajuste exclusivo para el reproductor de YouTube */
-#youtube-player {
-    width: 85%; /* Reduce el ancho del reproductor de YouTube */
-    max-width: 320px; /* Limita el ancho máximo para móviles */
-    margin: 0 auto; /* Centra el reproductor */
-    aspect-ratio: 16 / 9;
-    border-radius: 8px; /* Bordes redondeados */
-    overflow: hidden;
-}
+
 /* Estilo para centrar y aplicar bordes al reproductor de YouTube */
 #player {
     width: 90%; /* Ajusta el ancho del contenedor principal */
     max-width: 350px; /* Limita el ancho máximo para móviles */
     margin: 0 auto; /* Centra horizontalmente */
     padding: 15px; /* Espacio alrededor del reproductor */
-    background-color: #1a1a1a; /* Color de fondo */
+    background-color: #0d0d22; /* Color de fondo */
     border-radius: 12px; /* Bordes redondeados */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Sombra para darle profundidad */
 }
@@ -1155,45 +1152,6 @@ body {
     aspect-ratio: 16 / 9;
     border-radius: 8px; /* Bordes redondeados en el reproductor */
     overflow: hidden;
-}
-/* Contenedor de búsqueda centrado y más pequeño */
-.search-container {
-    display: flex;
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-    gap: 10px; /* Espacio entre el input y el botón */
-    margin: 20px auto; /* Separación y centrado del contenedor */
-    max-width: 300px; /* Ajusta el ancho máximo según lo necesites */
-}
-
-/* Estilo del input de búsqueda */
-#search-input {
-    padding: 8px; /* Reduce el padding */
-    font-size: 14px; /* Ajusta el tamaño de la fuente */
-    border-radius: 8px 0 0 8px;
-    border: 1px solid #ccc; /* Añade un borde */
-    outline: none;
-    flex: 1; /* Permite que el input ocupe todo el espacio disponible */
-}
-
-/* Estilo del botón de búsqueda */
-#search-button {
-    padding: 8px 16px; /* Reduce el padding del botón */
-    font-size: 14px; /* Ajusta el tamaño de la fuente */
-    background: linear-gradient(45deg, #9b59b6, #3498db);
-    color: #fff;
-    border: none;
-    border-radius: 0 8px 8px 0;
-    cursor: pointer;
-}
-/* Contenedor de búsqueda con ancho específico */
-.search-container {
-    display: flex;
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-    gap: 4px; /* Espacio entre el input y el botón */
-    margin: 20px auto; /* Centramos el contenedor */
-    width: 300px; /* Ajusta el ancho total al que necesitas */
 }
 
 /* Estilo del input de búsqueda */
@@ -1206,17 +1164,8 @@ body {
     width: 70%; /* Ajusta el ancho para que coincida con las rayas azules */
 }
 
-/* Estilo del botón de búsqueda */
-#search-button {
-    padding: 10px 15px;
-    font-size: 14px;
-    background: linear-gradient(45deg, #9b59b6, #3498db);
-    color: #fff;
-    border: none;
-    border-radius: 0 8px 8px 0;
-    cursor: pointer;
-    width: 30%; /* Ajusta el ancho para que coincida con las rayas azules */
-}
+
+
 /* Contenedor de búsqueda con ancho específico */
 .search-container {
     display: flex;
@@ -1233,22 +1182,10 @@ body {
     border-radius: 50px;
     border: none;
     outline: none;
-    background-color: #1e1e1e;
+    background-color: #0d0d22;
     color: #fff;
 }
 
-/* Estilo del botón de búsqueda con nuevo gradiente */
-#search-button {
-    padding: 10px 15px;
-    font-size: 14px;
-    background: linear-gradient(45deg, #a64bf4, #f464c4, #4bf4e1);
-    color: #fff;
-    border: none;
-    border-radius: 0 8px 8px 0;
-    cursor: pointer;
-    width: 30%; /* Ajusta el ancho para que coincida con las rayas azules */
-    transition: background 0.3s; /* Efecto de transición */
-}
 
 /* Efecto hover para el botón */
 #search-button:hover {
@@ -1256,30 +1193,28 @@ body {
 }
 /* Estilo del mensaje de advertencia */
 .warning-message {
+    display: none; /* Oculto por defecto */
     position: fixed;
-    top: 0; /* Aparece en la parte superior */
+    top: 0;
     left: 0;
-    width: 100%; /* Ancho completo de la pantalla */
+    width: 100%; /* Ancho completo */
     background-color: #FFC107; /* Amarillo fuerte */
     color: white;
-    padding: 15px 0; /* Añadí más espacio para que el mensaje sea más grande */
+    padding: 15px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
     text-align: center;
     font-weight: bold;
-    font-size: 18px; /* Tamaño de texto un poco más grande */
+    font-size: 18px; /* Tamaño de texto */
     z-index: 1000;
     animation: fadeInOutWarning 5s forwards;
 }
 
-@keyframes fadeInOutWarning {
-    0% { opacity: 0; transform: translateY(-20px); }
-    10% { opacity: 1; transform: translateY(0); }
-    90% { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(-20px); }
-}
-
 .warning-message i {
     margin-right: 10px;
+    vertical-align: middle; /* Alineado vertical */
 }
+
+
 #search-button {
     padding: 10px 20px;
     border: none;

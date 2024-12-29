@@ -12,19 +12,18 @@
     <main id="main-content">
       <!-- Apartado de Inicio -->
 <section id="home-section" class="section">
-    <h1>Spottrack 3.0</h1>
+    <h1>Spottrack 3.1</h1>
 
     <!-- Sección de Novedades -->
     <div class="news-section">
         <h2 class="section-title">Novedades</h2>
         <div class="news-card">
-            <p>¡Actualizacion 3.0!
-<p>✅ Solucionado mas bugs visuales
-<p>✅ Nuevo sistema de eventos
-<p>✅ Nuevo top 3 de artistas
-<p>✅ Adelantar musica con la barra
-<p>✅ Los ajustes a hora se guardan
-<p>✅ Mejorado estilo de los ajustes
+            <p>¡Actualizacion 3.1!
+<p>✅ Mejorado el estilo global
+<p>✅ Nuevos mensajes de errores
+<p>✅ Solucionado el bug de la pfp
+<p>✅ Nuevos estilos de busqueda
+<p>✅ Nuevos eventos de spottrack
 </p>
         </div>
     </div>
@@ -67,14 +66,14 @@
                 <img src="images/spottrack1.jpg" alt="SpotTrack Music Fest" class="event-img">
                 <div>
                     <strong>Navidad en spottrack</strong>
-                    <p>¡¡¡Spottrack te tiene preparado cosas para ti exclusivas e increibles para este 8 - 30 de diciembre🎄!!!</p>
+                    <p>¡¡¡Spottrack te tiene preparado cosas para ti exclusivas e increibles para este 8 - 4 de diciembre y enero🎄!!!</p>
                 </div>
             </li>
             <li>
                 <img src="images/spottrack2.jpg" alt="SpotTrack Live Party" class="event-img">
                 <div>
-                    <strong>Spottrack + discord nitro</strong>
-                    <p>¡¡¡Spottrack te ofrece una mision para obtener discord nitro gratis unete al servidor de discord y acepta YA la mision para obtenerlo📩!!!</p>
+                    <strong>Videos exclusivos</strong>
+                    <p>¡¡¡Estos meses muy probable tendremos videos en nuestro canal oficial de youtube donde explicaremos algunas funciones y te contaremos todas las novedades de cada actualizacion para la comunidad💪!!!</p>
                 </div>
             </li>
         </ul>
@@ -83,15 +82,15 @@
             <li>
                 <img src="images/artist1.jpg" alt="Coldplay en Concierto" class="event-img">
                 <div>
-                    <strong>Karol G - recital</strong>
-                    <p>¡¡¡La artista colombiana se presentará el 27 de abril de 2025 en el Estadio de Vélez ARG!!!</p>
+                    <strong>Ultra buenos aires</strong>
+                    <p>El festival Ultra vuelve a Buenos Aires en 2025. Luego de 10 años, el viernes 18 y sábado 19 de abril se llevará a cabo una nueva edición en el Parque de la Ciudad. Y ya se conocen los primeros nombres del line-up. Adam Beyer, Black Coffee y Martin Garrix forman parte del line-up de Ultra Buenos Aires 2025</p>
                 </div>
             </li>
             <li>
                 <img src="images/artist2.jpg" alt="Festival Primavera Sound" class="event-img">
                 <div>
-                    <strong>Buenos Aires Trap - recital</strong>
-                    <p>El festival contará con la participación de Duki Bizarrap y Nicki Nicole. Se realizará los días 7 y 8 de diciembre en el Parque de la Ciudad.</p>
+                    <strong>Lollapalooza 2025</strong>
+                    <p>El festival Lollapalooza 2025 en Argentina se llevará a cabo del 21 al 23 de marzo en el Hipódromo de San Isidro, en Buenos Aires Fecha 21 22 y 23 de marzo de 2025</p>
                 </div>
             </li>
         </ul>
@@ -103,7 +102,7 @@
     <button class="social-btn" onclick="window.location.href='https://discord.gg/gkhFs4AUn6'">
         <img src="images/discord-icon.png" alt="Discord">
     </button>
-    <button class="social-btn" onclick="window.location.href='https://nat07site.github.io'">
+    <button class="social-btn" onclick="window.location.href='https://spottrack-web.github.io'">
         <img src="images/spottrack-icon.png" alt="Spottrack Web">
     </button>
     <button class="social-btn" onclick="window.location.href='https://patreon.com/Spottrack'">
@@ -120,36 +119,34 @@
 
 
         <!-- Apartado de Buscar -->
-        <section id="search-section" class="section hidden">
-            <div id="warning-message" class="warning-message" style="display: none;">
-                ⚠ Aún No Has Escrito Ninguna Canción. Escribe tu canción y dale al Botón de Buscar.
-            </div>
-            <header>
-                <h1>Buscar</h1>
-                <div class="search-container">
-                    <input type="text" id="search-input" placeholder="Buscar canciones...">
-                    <button id="search-button">Buscar</button>
-                </div>
-            </header>
-            <section id="search-results">
-                <ul id="result-list"></ul>
-            </section>
-            <section id="player">
-                <div id="youtube-player"></div>
-                <div id="song-info">
-                    <h3 id="song-title">Nada Agregado</h3>
-                    <p id="artist-name">Busca Una Canción</p>
-                </div>
-                <div class="controls">
-                    <button id="prev-button" class="control-button"><i class="fas fa-backward"></i></button>
-                    <button id="playpause-button" class="control-button"><i class="fas fa-play"></i></button>
-                    <button id="next-button" class="control-button"><i class="fas fa-forward"></i></button>
-                </div>
-                <input id="seek-bar" type="range" value="0" min="0" step="1">
-                <div id="current-time">0:00</div> / <div id="duration">0:00</div>
-            </section>
-        </section>
-<p>
+<section id="search-section" class="section hidden">
+    <div id="warning-message" class="warning-message" style="display: none;"></div>
+    <header>
+        <h1>Buscar</h1>
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Buscar canciones...">
+            <button id="search-button">Buscar</button>
+        </div>
+    </header>
+    <section id="search-results">
+        <ul id="result-list"></ul>
+    </section>
+    <section id="player">
+        <div id="youtube-player"></div>
+        <div id="song-info">
+            <h3 id="song-title">Nada Agregado</h3>
+            <p id="artist-name">Busca Una Canción</p>
+        </div>
+        <div class="controls">
+            <button id="prev-button" class="control-button"><i class="fas fa-backward"></i></button>
+            <button id="playpause-button" class="control-button"><i class="fas fa-play"></i></button>
+            <button id="next-button" class="control-button"><i class="fas fa-forward"></i></button>
+        </div>
+        <input id="seek-bar" type="range" value="0" min="0" step="1">
+        <div id="current-time">0:00</div> / <div id="duration">0:00</div>
+    </section>
+</section>
+
 
         <!-- Apartado de Playlist -->
         <section id="playlist-section" class="section hidden">
@@ -187,23 +184,29 @@
 <section id="settings-section" class="section hidden">
     <h1>‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ Ajustes</h1>
 
-    <!-- Sección de perfil del usuario -->
-    <div class="profile-settings">
-        <div class="profile-picture-container">
-            <img id="profile-picture" src="default-profile.png" alt="Foto de perfil" class="profile-picture">
-        </div>
-        <div class="profile-name-container">
-            <p id="profile-name-display">Nombre de usuario</p>
-        </div>
+    <!-- Mensaje de advertencia -->
+<div id="warning-message" style="display: none;"></div>
+<!-- Mensaje de confirmación -->
+<div id="success-message" style="display: none;"></div>
 
-        <div class="profile-buttons">
-            <button id="upload-picture-btn" class="btn">Cambiar Foto De Perfil</button>
-            <input type="file" id="profile-picture-input" accept="image/*" class="hidden">
-
-            <button id="change-name-btn" class="btn">Cambiar Nombre</button>
-            <input type="text" id="profile-name-input" class="hidden" placeholder="Nuevo nombre">
-        </div>
+<!-- Sección de perfil del usuario -->
+<div class="profile-settings">
+    <div class="profile-picture-container">
+        <img id="profile-picture" src="default-profile.png" alt="Foto de perfil" class="profile-picture">
     </div>
+    <div class="profile-name-container">
+        <p id="profile-name-display">Nombre de usuario</p>
+    </div>
+
+    <div class="profile-buttons">
+        <button id="upload-picture-btn" class="btn">Cambiar Foto De Perfil</button>
+        <input type="file" id="profile-picture-input" accept="image/*" class="hidden">
+
+        <button id="change-name-btn" class="btn">Cambiar Nombre</button>
+        <input type="text" id="profile-name-input" class="hidden" placeholder="Nuevo nombre">
+    </div>
+</div>
+
 
   <p>___________________________________________<p>
 <p>‎ 
@@ -252,35 +255,22 @@
     </button>
 </div>
 
+      <div id="error-message">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+    </svg>
+</div>
 
-    <div id="error-message" style="display:none; background-color: red; color: white; padding: 10px; border-radius: 5px; margin-bottom: 10px; position: fixed; top: 0; left: 0; width: 100%; text-align: center; z-index: 1000;">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24px" height="24px" style="vertical-align: middle; margin-right: 10px;">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-        </svg>
         **No Hay Ninguna Canción Agregada o Reproduciéndose**
     </div>
-
     <script src="script.js"></script>
 </body>
   </html>
+
 <!-- Elementos de audio para los sonidos de error y advertencia -->
 <audio id="error-sound" src="sounds/error.mp3"></audio>
 <audio id="warning-sound" src="sounds/warning.mp3"></audio>
 
-<!-- Mensajes de advertencia y error -->
-<div id="warning-message" style="display: none; background-color: orange; padding: 10px; border-radius: 5px; margin-bottom: 10px;"></div>
-<div id="error-message" style="display: none; background-color: red; padding: 10px; border-radius: 5px; margin-bottom: 10px;"></div>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mensaje de Bienvenida</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    
     <!-- Mensaje de bienvenida -->
     <div id="welcomeMessage" class="welcome-message">¡¡¡Bienvenido/a de vuelta a Spottrack!!!</div>
     
@@ -292,3 +282,5 @@
     
 </body>
 </html>
+<div id="no-connection-warning" style="display: none;"></div>
+<script src="scripts.js"></script>

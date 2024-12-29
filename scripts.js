@@ -169,17 +169,76 @@ function handleSongSelection(video) {
     playSong(video.id.videoId, video.snippet.title, video.snippet.channelTitle);
 }
 
+// Función para formatear la duración de ISO 8601 a mm:ss
+function formatDuration(duration) {
+    const match = duration.match(/PT(?:(\d+)M)?(?:(\d+)S)?/);
+    const minutes = match[1] ? parseInt(match[1], 10) : 0;
+    const seconds = match[2] ? parseInt(match[2], 10) : 0;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
+
 // Función para mostrar los resultados de búsqueda
-function displaySearchResults(videos) {
+async function displaySearchResults(videos) {
     const resultList = document.getElementById('result-list');
     resultList.innerHTML = ''; // Limpiar la lista de resultados anteriores
 
-    videos.forEach(video => {
+    // Obtener las IDs de los videos
+    const videoIds = videos.map(video => video.id.videoId).join(',');
+
+    // Llamar a la API de YouTube para obtener la duración de los videos
+    const apiKey = 'AIzaSyABClQa94HWAt0QlrXcFnrMHqsJ-axBN9E'; // Reemplaza con tu propia API Key
+    const videoDetailsResponse = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoIds}&key=${apiKey}`);
+    const videoDetails = await videoDetailsResponse.json();
+
+    // Mapear los videos con sus detalles
+    videos.forEach((video, index) => {
         const listItem = document.createElement('li');
-        listItem.textContent = video.snippet.title;
+
+        // Crear contenedor para la miniatura
+        const thumbnailContainer = document.createElement('div');
+        thumbnailContainer.classList.add('thumbnail');
+        const thumbnailImage = document.createElement('img');
+        thumbnailImage.src = video.snippet.thumbnails.default.url; // URL de la miniatura
+        thumbnailImage.alt = video.snippet.title;
+        thumbnailContainer.appendChild(thumbnailImage);
+
+        // Crear contenedor para los detalles del video
+        const detailsContainer = document.createElement('div');
+        detailsContainer.classList.add('result-details');
+
+        // Título del video
+        const titleElement = document.createElement('h3');
+        titleElement.classList.add('result-title');
+        titleElement.textContent = video.snippet.title;
+
+        // Nombre del artista
+        const artistElement = document.createElement('p');
+        artistElement.classList.add('result-artist');
+        artistElement.textContent = `Artista: ${video.snippet.channelTitle}`;
+
+        // Duración del video
+        const duration = videoDetails.items[index]?.contentDetails?.duration || 'Desconocida';
+        const formattedDuration = duration !== 'Desconocida' ? formatDuration(duration) : 'Desconocida';
+
+        const durationElement = document.createElement('p');
+        durationElement.classList.add('result-duration');
+        durationElement.textContent = `Duración: ${formattedDuration}`;
+
+        // Añadir los elementos al contenedor de detalles
+        detailsContainer.appendChild(titleElement);
+        detailsContainer.appendChild(artistElement);
+        detailsContainer.appendChild(durationElement);
+
+        // Añadir miniatura y detalles al elemento de la lista
+        listItem.appendChild(thumbnailContainer);
+        listItem.appendChild(detailsContainer);
+
+        // Evento al hacer clic en el resultado
         listItem.onclick = () => {
             handleSongSelection(video);
         };
+
+        // Añadir el elemento a la lista
         resultList.appendChild(listItem);
     });
 }
@@ -261,7 +320,7 @@ function showError(message) {
                 color: red; 
                 font-size: 18px; 
                 font-weight: bold;">
-                X
+                ❌
             </span>
         </span>`;
 
@@ -314,32 +373,75 @@ pauseOnLockCheckbox.addEventListener('change', function() {
     }
 });
 
-// Funcionalidad para cambiar la foto de perfil
+
 const profilePicture = document.getElementById('profile-picture');
 const profilePictureInput = document.getElementById('profile-picture-input');
 const uploadPictureBtn = document.getElementById('upload-picture-btn');
+const warningMessage = document.getElementById('warning-message');
+const successMessage = document.getElementById('success-message');
 
-uploadPictureBtn.addEventListener('click', function() {
+// Mostrar mensaje de advertencia con sonido
+function showWarningMessage(message) {
+    warningMessage.textContent = message;
+    warningMessage.style.display = 'flex';
+
+    // Reproducir sonido de error
+    const errorSound = new Audio('sounds/error.mp3');
+    errorSound.play();
+
+    setTimeout(() => {
+        warningMessage.style.display = 'none';
+    }, 5000);
+}
+
+// Mostrar mensaje de éxito con sonido
+function showSuccessMessage(message) {
+    successMessage.textContent = message;
+    successMessage.style.display = 'flex';
+
+    // Reproducir sonido de éxito
+    const successSound = new Audio('sounds/success.mp3');
+    successSound.play();
+
+    setTimeout(() => {
+        successMessage.style.display = 'none';
+    }, 5000);
+}
+
+// Función para cambiar la foto de perfil
+uploadPictureBtn.addEventListener('click', function () {
     profilePictureInput.click(); // Abrir el administrador de archivos
 });
 
-profilePictureInput.addEventListener('change', function() {
+profilePictureInput.addEventListener('change', function () {
     const file = this.files[0];
     if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            profilePicture.src = e.target.result; // Cambiar la imagen de perfil
-            localStorage.setItem('profilePicture', e.target.result); // Guardar la imagen en localStorage
+        // Validar si el archivo es una imagen
+        if (!file.type.startsWith('image/')) {
+            showWarningMessage('❌ Archivo inválido. Por favor, selecciona una imagen.');
+            return;
         }
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            profilePicture.src = e.target.result; // Cambiar la imagen de perfil
+            profilePicture.classList.remove('empty'); // Quitar estado de "vacío"
+            localStorage.setItem('profilePicture', e.target.result); // Guardar la imagen en localStorage
+            showSuccessMessage('✅ Foto de perfil establecida correctamente.');
+        };
         reader.readAsDataURL(file);
+    } else {
+        showWarningMessage('No se seleccionó ningún archivo.');
     }
 });
 
 // Cargar la imagen de perfil desde localStorage
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     const savedProfilePicture = localStorage.getItem('profilePicture');
     if (savedProfilePicture) {
         profilePicture.src = savedProfilePicture;
+        profilePicture.classList.remove('empty');
+    } else {
+        profilePicture.classList.add('empty');
     }
 });
 
@@ -408,15 +510,14 @@ function showError(message) {
             align-items: center; 
             justify-content: center; 
             width: 30px; 
-            height: 30px; 
-            background-color: white; 
+            height: 30px;
             border-radius: 4px; 
             margin-right: 10px;">
             <span style="
                 color: red; 
                 font-size: 18px; 
                 font-weight: bold;">
-                X
+                ❌
             </span>
         </span>`;
 
@@ -452,17 +553,17 @@ function showWarningMessage(message) {
             align-items: center; 
             justify-content: center; 
             width: 30px; 
-            height: 30px; 
-            background-color: white; 
+            height: 0px; 
             border-radius: 4px; 
             margin-right: 10px;">
             <span style="
                 color: yellow; 
                 font-size: 18px; 
                 font-weight: bold;">
-                ⚠
+                ⚠️
             </span>
         </span>`;
+
 
     const messageHTML = `<strong style="color: white; font-size: 16px;">${message}</strong>`;
 
@@ -664,3 +765,31 @@ document.getElementById('data-saving-mode').addEventListener('change', saveSetti
 
 // Cargar configuraciones al inicio
 document.addEventListener('DOMContentLoaded', loadSettings);
+// Función para reproducir el sonido de advertencia
+function playWarningSound() {
+    const audio = new Audio('sounds/warning.mp3'); // Ruta al archivo de sonido
+    audio.play().catch(error => console.error('Error al reproducir el sonido:', error));
+}
+
+// Función para mostrar el mensaje de advertencia
+function showNoConnectionWarning() {
+    const warningMessage = document.getElementById('no-connection-warning');
+    warningMessage.innerHTML = `
+        <span>
+            <span>⚠️</span>
+        </span>
+        <strong>No hay conexión a Internet</strong>
+    `;
+    warningMessage.style.display = 'flex';
+
+    // Reproducir el sonido de advertencia
+    playWarningSound();
+
+    // Ocultar el mensaje automáticamente después de 5 segundos
+    setTimeout(() => {
+        warningMessage.style.display = 'none';
+    }, 5000);
+}
+
+// Detectar cambios en la conexión de red
+window.addEventListener('offline', showNoConnectionWarning);
