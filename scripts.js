@@ -186,7 +186,7 @@ async function displaySearchResults(videos) {
     const videoIds = videos.map(video => video.id.videoId).join(',');
 
     // Llamar a la API de YouTube para obtener la duración de los videos
-    const apiKey = 'AIzaSyDqXyMRGBGRDnZBXfiCPpkfdV6tNeiVqJE'; // Reemplaza con tu propia API Key
+    const apiKey = 'AIzaSyCiEjKo8cps3pDY1XeatDdVhQHfZfrYahE'; // Reemplaza con tu propia API Key
     const videoDetailsResponse = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoIds}&key=${apiKey}`);
     const videoDetails = await videoDetailsResponse.json();
 
@@ -245,7 +245,7 @@ async function displaySearchResults(videos) {
 
 // Función de búsqueda usando la API de YouTube
 function searchSongs(query) {
-    const apiKey = 'AIzaSyDqXyMRGBGRDnZBXfiCPpkfdV6tNeiVqJE';  // Asegúrate de mantener tu API Key segura
+    const apiKey = 'AIzaSyCiEjKo8cps3pDY1XeatDdVhQHfZfrYahE';  // Asegúrate de mantener tu API Key segura
     const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${encodeURIComponent(query)}&key=${apiKey}`;
 
     fetch(apiUrl)
