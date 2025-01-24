@@ -299,14 +299,6 @@ document.getElementById('prev-button').addEventListener('click', function() {
     }
 });
 
-// Evento para pausar o reproducir el video
-document.getElementById('playpause-button').addEventListener('click', function() {
-    if (player.getPlayerState() === YT.PlayerState.PLAYING) {
-        player.pauseVideo();
-    } else {
-        player.playVideo();
-    }
-});
 
 // Evento de búsqueda al hacer clic en el botón
 document.getElementById('search-button').addEventListener('click', function() {
@@ -813,3 +805,23 @@ function showNoConnectionWarning() {
 
 // Detectar cambios en la conexión de red
 window.addEventListener('offline', showNoConnectionWarning);
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const images = document.querySelectorAll(".news-carousel img");
+    const carousel = document.querySelector(".news-carousel");
+    let currentIndex = 0;
+
+    // Función para mostrar la siguiente imagen
+    const showNextImage = () => {
+        images[currentIndex].classList.remove("active"); // Quitar clase activa de la imagen actual
+        currentIndex = (currentIndex + 1) % images.length; // Pasar al siguiente índice
+        images[currentIndex].classList.add("active"); // Agregar clase activa a la nueva imagen
+    };
+
+    // Cambiar imágenes automáticamente cada 10 segundos
+    setInterval(showNextImage, 10000);
+
+    // Cambiar a la siguiente imagen al hacer clic en el cuadro
+    carousel.addEventListener("click", showNextImage);
+});
