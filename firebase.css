@@ -1,0 +1,72 @@
+/* Contenedor principal */
+.container {
+    text-align: center;
+    background-color: #0d0d22;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 427px;
+    color: white;
+}
+
+/* Estilos de los inputs */
+.container input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #8a2be2;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Estilos de los botones */
+.container button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background: linear-gradient(45deg, #8a2be2, #ff69b4, #00bfff);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.container button:hover {
+    transform: scale(1.02);
+}
+
+/* Botón rojo para cerrar sesión */
+#logoutBtn {
+    background: red;
+}
+
+/* Estilos de la imagen de perfil */
+.container .profile-picture {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container .profile-picture img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: none;
+}
+
+/* Panel premium */
+.container .premium-panel {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #010013;
+    border-radius: 5px;
+}

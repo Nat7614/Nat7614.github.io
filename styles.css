@@ -77,7 +77,7 @@ body {
     justify-content: center;
     margin: 20px 0;
     width: 100%; /* Estirado hacia los lados */
-    max-width: 500px; /* Máximo ancho */
+    max-width: 385px; /* Máximo ancho */
     padding: 15px;
     border-radius: 10px;
     background-color: #0d0d22;

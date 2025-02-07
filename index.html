@@ -179,29 +179,196 @@
 <!-- Apartado de Ajustes -->
 <section id="settings-section" class="section hidden">
     <h1>‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ Ajustes</h1>
-
-    <!-- Mensaje de advertencia -->
-<div id="warning-message" style="display: none;"></div>
-<!-- Mensaje de confirmación -->
-<div id="success-message" style="display: none;"></div>
-
-<!-- Sección de perfil del usuario -->
-<div class="profile-settings">
-    <div class="profile-picture-container">
-        <img id="profile-picture" src="default-profile.png" alt="Foto de perfil" class="profile-picture">
-    </div>
-    <div class="profile-name-container">
-        <p id="profile-name-display">Nombre de usuario</p>
-    </div>
-
-    <div class="profile-buttons">
-        <button id="upload-picture-btn" class="btn">Cambiar Foto De Perfil</button>
-        <input type="file" id="profile-picture-input" accept="image/*" class="hidden">
-
-        <button id="change-name-btn" class="btn">Cambiar Nombre</button>
-        <input type="text" id="profile-name-input" class="hidden" placeholder="Nuevo nombre">
-    </div>
-</div>
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Spottrack - Iniciar Sesión</title>
+        <link rel="stylesheet" href="firebase.css">
+        <script type="module">
+            // Firebase Configuración
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
+            import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
+            import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js";
+            import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-storage.js";
+    
+            // Configuración de Firebase
+            const firebaseConfig = {
+                apiKey: "AIzaSyABdWdjdSTf33W6zaInDznc8HUWZE2KZ6w",
+                authDomain: "spottrack-888de.firebaseapp.com",
+                projectId: "spottrack-888de",
+                storageBucket: "spottrack-888de.appspot.com",
+                messagingSenderId: "641511662246",
+                appId: "1:641511662246:web:c4c3225daae5edf4ea4a67"
+            };
+    
+            // Inicialización de Firebase
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const db = getFirestore(app);
+            const storage = getStorage(app);
+    
+            // Manejo de Estado de Autenticación
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    document.getElementById("login-container").style.display = "none";
+                    document.getElementById("perfil-container").style.display = "block";
+                    const userDoc = await getDoc(doc(db, "usuarios", user.uid));
+                    if (userDoc.exists()) {
+                        const userData = userDoc.data();
+                        document.getElementById("username").innerText = userData.nombre || "Usuario";
+                        const profileImg = document.getElementById("profile-img");
+                        profileImg.src = userData.foto || "";
+                        document.getElementById("plus-icon").style.display = userData.foto ? "none" : "block";
+                    }
+                } else {
+                    document.getElementById("login-container").style.display = "block";
+                    document.getElementById("perfil-container").style.display = "none";
+                }
+            });
+    
+            // Inicio de Sesión
+            document.getElementById("loginBtn").addEventListener("click", async () => {
+                const email = document.getElementById("login-email").value;
+                const password = document.getElementById("login-password").value;
+                const mensajeLogin = document.getElementById("mensajeLogin");
+    
+                if (!email || !password) {
+                    mensajeLogin.innerText = "Por favor, completa todos los campos.";
+                    mensajeLogin.style.color = "red";
+                    return;
+                }
+    
+                mensajeLogin.innerText = "Iniciando sesión...";
+                mensajeLogin.style.color = "blue";
+    
+                try {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    document.getElementById("login-container").style.display = "none";
+                    document.getElementById("perfil-container").style.display = "block";
+                } catch (error) {
+                    mensajeLogin.innerText = "Error: " + error.message;
+                    mensajeLogin.style.color = "red";
+                }
+            });
+    
+            // Cambio de Foto de Perfil
+            document.getElementById("change-photo").addEventListener("click", () => {
+                document.getElementById("file-input").click();
+            });
+    
+            // Subir Foto de Perfil
+            document.getElementById("file-input").addEventListener("change", async (event) => {
+                const file = event.target.files[0];
+                if (file && file.type.startsWith("image/")) {
+                    const storageRef = ref(storage, `profile_pictures/${auth.currentUser.uid}`);
+                    const uploadResult = await uploadBytes(storageRef, file);
+                    const photoURL = await getDownloadURL(uploadResult.ref);
+    
+                    await updateDoc(doc(db, "usuarios", auth.currentUser.uid), { foto: photoURL });
+                    document.getElementById("profile-img").src = photoURL;
+                    document.getElementById("plus-icon").style.display = "none";
+                } else {
+                    alert("Por favor, selecciona un archivo de imagen.");
+                }
+            });
+    
+            // Cambio de Nombre de Usuario
+            document.getElementById("change-username").addEventListener("click", () => {
+                document.getElementById("change-username-container").style.display = "block";
+            });
+    
+            // Guardar Nuevo Nombre de Usuario
+            document.getElementById("save-username").addEventListener("click", async () => {
+                const newUsername = document.getElementById("new-username").value;
+                if (newUsername.trim() !== "") {
+                    await updateDoc(doc(db, "usuarios", auth.currentUser.uid), { nombre: newUsername });
+                    document.getElementById("username").innerText = newUsername;
+                    document.getElementById("change-username-container").style.display = "none";
+                } else {
+                    alert("El nombre no puede estar vacío.");
+                }
+            });
+    
+            // Cerrar Sesión
+            document.getElementById("logoutBtn").addEventListener("click", () => {
+                signOut(auth).then(() => {
+                    document.getElementById("perfil-container").style.display = "none";
+                    document.getElementById("login-container").style.display = "block";
+                });
+            });
+    
+            // Integración con PayPal para Spottrack Premium
+            paypal.Buttons({
+                style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'subscribe', height: 40 },
+                createSubscription: function(data, actions) {
+                    return actions.subscription.create({ plan_id: 'P-6GC75737B9128194DM6R5U3Y' });
+                },
+                onApprove: async function(data, actions) {
+                    const user = auth.currentUser;
+                    if (user) {
+                        const expiration = Date.now() + 30 * 24 * 60 * 60 * 1000;
+                        await updateDoc(doc(db, "usuarios", user.uid), { premium: true, expira: expiration });
+    
+                        document.getElementById("paypal-button-container").style.display = "none";
+                        document.getElementById("premium-status").innerText = "Spottrack Premium: Activa";
+                    }
+                }
+            }).render('#paypal-button-container');
+        </script>
+    </head>
+    <body>
+        <!-- Panel de Inicio de Sesión -->
+        <div class="container login-container" id="login-container">
+            <h2>Iniciar Sesión</h2>
+            <input type="email" id="login-email" placeholder="Correo electrónico">
+            <input type="password" id="login-password" placeholder="Contraseña">
+            <button id="loginBtn">Iniciar Sesión</button>
+            <p>‎ </p>
+            <p class="mensaje" id="mensajeLogin"></p>
+            <p class="registro-link">¿No tienes cuenta? <a href="https://spottrack-web.github.io">Crea una ya</a></p>
+        </div>
+    
+        <!-- Panel de Perfil -->
+        <div class="container perfil-container" id="perfil-container" style="display: none;">
+            <h2>Perfil</h2>
+            <p>‎ </p>
+            <p>‎ </p>
+            <div class="profile-picture" id="profile-container">
+                <img id="profile-img" src="" alt="Foto de perfil" class="empty">
+                <span id="plus-icon">+</span>
+                <input type="file" id="file-input" accept="image/png" style="display: none;">
+            </div>
+            <p>‎ </p>
+            <h3 id="username">Nombre del Usuario</h3>
+            <p>‎ </p>
+            <button id="change-photo">Cambiar Foto de Perfil</button>
+    
+            <!-- Cambio de Nombre de Usuario -->
+            <div id="change-username-container" style="display: none;">
+                <input type="text" id="new-username" placeholder="Nuevo Nombre de Usuario">
+                <button id="save-username">Guardar</button>
+            </div>
+    
+            <button id="change-username">Cambiar Nombre de Usuario</button>
+            <button id="logoutBtn" class="logout">Cerrar Sesión</button>
+    
+            <div class="premium-panel">
+                <h3 id="premium-status">Spottrack Premium</h3>
+                <p>‎ </p>
+                <p>Mejora tu experiencia con Spottrack Premium por tan solo 100$ ARS - 0,95 USD al mes</p>
+                <p>‎ </p>
+                <p>‎ </p>
+                <div id="paypal-button-container"></div>
+            </div>
+        </div>
+    
+        <!-- Scripts -->
+        <script src="https://www.paypal.com/sdk/js?client-id=AXxgsqCoEER-XS1VOEgzeABCMh9P_YOD2kNjAy9fkJsFdI1ZJGG3_0TIXkOQY-gJC4fcz4K907auxIxC&vault=true&intent=subscription"></script>
+    </body>
+    </html>
+      
 
 
   <p>___________________________________________<p>
