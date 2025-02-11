@@ -38,7 +38,7 @@
 
 /* Botón rojo para cerrar sesión */
 #logoutBtn {
-    background: red;
+    background: rgb(211, 62, 62);
 }
 
 /* Estilos de la imagen de perfil */

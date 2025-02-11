@@ -59,7 +59,7 @@
 
 /* Estilo general para el contenedor */
 body {
-    background-color: #0d0d22;
+    background-color: #010013;
     color: white;
     font-family: Arial, sans-serif;
     display: flex;
@@ -80,7 +80,7 @@ body {
     max-width: 385px; /* Máximo ancho */
     padding: 15px;
     border-radius: 10px;
-    background-color: #0d0d22;
+    background-color: #010013;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
     cursor: pointer; /* Todo el contenedor es clicable */
     transition: background-color 0.3s ease;

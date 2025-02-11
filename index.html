@@ -210,23 +210,44 @@
             const storage = getStorage(app);
     
             // Manejo de Estado de Autenticación
-            onAuthStateChanged(auth, async (user) => {
-                if (user) {
-                    document.getElementById("login-container").style.display = "none";
-                    document.getElementById("perfil-container").style.display = "block";
-                    const userDoc = await getDoc(doc(db, "usuarios", user.uid));
-                    if (userDoc.exists()) {
-                        const userData = userDoc.data();
-                        document.getElementById("username").innerText = userData.nombre || "Usuario";
-                        const profileImg = document.getElementById("profile-img");
-                        profileImg.src = userData.foto || "";
-                        document.getElementById("plus-icon").style.display = userData.foto ? "none" : "block";
-                    }
-                } else {
-                    document.getElementById("login-container").style.display = "block";
-                    document.getElementById("perfil-container").style.display = "none";
-                }
-            });
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        document.getElementById("login-container").style.display = "none";
+        document.getElementById("perfil-container").style.display = "block";
+
+        const userDoc = await getDoc(doc(db, "usuarios", user.uid));
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            document.getElementById("username").innerText = userData.nombre || "Usuario";
+            document.getElementById("profile-img").src = userData.foto || "";
+            document.getElementById("plus-icon").style.display = userData.foto ? "none" : "block";
+
+            const premiumStatus = document.getElementById("premium-status");
+            const premiumDescription = document.getElementById("premium-description");
+            const paypalContainer = document.getElementById("paypal-button-container");
+
+            if (userData.premium) {
+                premiumStatus.innerText = "Spottrack Premium: Activa";
+                premiumStatus.style.color = "green";
+                premiumStatus.style.fontWeight = "bold";
+                
+                premiumDescription.style.display = "none"; // Ocultar descripción
+                paypalContainer.style.display = "none"; // Ocultar botón de PayPal
+            } else {
+                premiumStatus.innerText = "Spottrack Premium";
+                premiumStatus.style.color = "white";
+                premiumStatus.style.fontWeight = "normal";
+
+                premiumDescription.style.display = "block"; // Mostrar descripción
+                paypalContainer.style.display = "block"; // Mostrar botón de PayPal
+            }
+        }
+    } else {
+        document.getElementById("login-container").style.display = "block";
+        document.getElementById("perfil-container").style.display = "none";
+    }
+});
+
     
             // Inicio de Sesión
             document.getElementById("loginBtn").addEventListener("click", async () => {
@@ -357,12 +378,13 @@
             <div class="premium-panel">
                 <h3 id="premium-status">Spottrack Premium</h3>
                 <p>‎ </p>
-                <p>Mejora tu experiencia con Spottrack Premium por tan solo 100$ ARS - 0,95 USD al mes</p>
-                <p>‎ </p>
+                <p id="premium-description">Mejora tu experiencia con Spottrack Premium por tan solo 0,95 USD al mes.</p>
                 <p>‎ </p>
                 <div id="paypal-button-container"></div>
             </div>
-        </div>
+            
+    
+            
     
         <!-- Scripts -->
         <script src="https://www.paypal.com/sdk/js?client-id=AXxgsqCoEER-XS1VOEgzeABCMh9P_YOD2kNjAy9fkJsFdI1ZJGG3_0TIXkOQY-gJC4fcz4K907auxIxC&vault=true&intent=subscription"></script>
@@ -371,7 +393,7 @@
       
 
 
-  <p>___________________________________________<p>
+  <p>________________________________________<p>
 <p>‎ 
   <h2>‎ ‎‎ ‎ ‎‎  ‎Ajustes de reproduccion</h2>
 <!-- Opción para detener música cuando el dispositivo se apaga -->
