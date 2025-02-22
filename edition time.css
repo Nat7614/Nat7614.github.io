@@ -1,0 +1,107 @@
+/* Estilos para el botón de lápiz */
+#edit-timing {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(90deg, #a64bf4, #f464c4, #4bf4e1);
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+/* Iluminación activa cuando el botón está seleccionado */
+#edit-timing.active {
+    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.8); /* Iluminación blanca */
+}
+
+/* Estilo del botón cuando se pasa el mouse */
+#edit-timing:hover {
+    background-color: #ffb300;
+}
+
+/* Estilos para el menú emergente */
+#timing-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    background-color: #121229;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    display: none;
+    z-index: 1000;
+    transition: opacity 0.3s ease-in-out; /* Transición para hacer aparecer el modal */
+}
+
+/* Cuando el modal es visible */
+#timing-modal.show {
+    display: block;
+    opacity: 1; /* Mostrar el modal con opacidad */
+}
+
+#timing-modal h2 {
+    margin-bottom: 10px;
+    text-align: center;
+    color: white;
+}
+
+/* Campos de entrada */
+#timing-modal input {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #2c2c5c;
+    color: white;
+}
+
+/* Contenedor para los botones con separación */
+#timing-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+/* Botón Guardar */
+#save-timing {
+    width: 48%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background: linear-gradient(90deg, #a64bf4, #f464c4, #4bf4e1);
+    color: white;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#save-timing:hover {
+    background: linear-gradient(90deg, #953de3, #db3eaf, #3ad9cd);
+}
+
+/* Botón Cancelar */
+#cancel-timing {
+    width: 48%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #dc3545;
+    color: white;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#cancel-timing:hover {
+    background-color: #c82333;
+}
+
+/* Estilo para los botones cuando están deshabilitados */
+#save-timing:disabled, #cancel-timing:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

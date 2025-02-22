@@ -12,7 +12,7 @@
     <main id="main-content">
       <!-- Apartado de Inicio -->
 <section id="home-section" class="section">
-    <h1>Spottrack 3.2</h1>
+    <h1>Spottrack 3.3</h1>
 
 <!-- Sección de Novedades -->
 <div class="news-section">
@@ -61,15 +61,19 @@
             <li>
                 <img src="images/spottrack1.jpg" alt="SpotTrack Music Fest" class="event-img">
                 <div>
-                    <strong>Sin evento</strong>
-                    <p>No ay evento disponible en este contenedor</p>
+                    <strong>Sorteo Premium</strong>
+                    <p>🎉¡Este mes y el siguiente estaremos sorteando Spottrack Premium en nuestro servidor de Discord! 🎉
+
+                        Habrá 3 ganadores, y los resultados se anunciarán el 28 de febrero. ¡No pierdas la oportunidad de ser uno de los afortunados! 🍀
+                        
+                        ¡Suerte a todos! 😎✨</p>
                 </div>
             </li>
             <li>
                 <img src="images/spottrack2.jpg" alt="SpotTrack Live Party" class="event-img">
                 <div>
-                    <strong>Videos exclusivos</strong>
-                    <p>¡¡¡Estos meses muy probable tendremos videos en nuestro canal oficial de youtube donde explicaremos algunas funciones y te contaremos todas las novedades de cada actualizacion para la comunidad💪!!!</p>
+                    <strong>Sin evento</strong>
+                    <p>El ultimo evento finalizo el 22/2/2025 ¡Pronto nuevos eventos!</p>
                 </div>
             </li>
         </ul>
@@ -140,6 +144,29 @@
         </div>
         <input id="seek-bar" type="range" value="0" min="0" step="1">
         <div id="current-time">0:00</div> / <div id="duration">0:00</div>
+
+<!-- Botón para activar el menú de personalización -->
+<button id="edit-timing">
+    <i class="fas fa-pencil-alt" style="font-size: 20px;"></i>  <!-- Ícono de lápiz -->
+</button>
+
+
+<!-- Menú emergente para establecer el rango de tiempo -->
+<div id="timing-modal">
+    <h2>Personalizar Cancion</h2>
+    <label for="start-time">Inicio:</label>
+    <input type="text" id="start-time" placeholder="00:00" maxlength="5">
+    <label for="end-time">Fin:</label>
+    <input type="text" id="end-time" placeholder="00:00" maxlength="5">
+    <button id="save-timing">Guardar</button>
+    <button id="cancel-timing">Cancelar</button>
+</div>
+
+
+
+<script src="edition.js"></script>
+<link rel="stylesheet" href="edition time.css">
+
     </section>
 </section>
 <p>‎ </p>
@@ -290,7 +317,6 @@ onAuthStateChanged(auth, async (user) => {
                     document.getElementById("profile-img").src = photoURL;
                     document.getElementById("plus-icon").style.display = "none";
                 } else {
-                    alert("Por favor, selecciona un archivo de imagen.");
                 }
             });
     
@@ -411,9 +437,122 @@ onAuthStateChanged(auth, async (user) => {
     </div>
 </div>
 
+<p>________________________________</p>
+<p>‎ </p>
+<h2>Reproduccion Premium</h2>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Timer</title>
+    <link rel="stylesheet" href="sleep timer.css">
+</head>
+<body>
+    <!-- Opción de Sleep Timer -->
+    <div class="settings-option">
+        <div class="toggle-container">
+            <label for="sleep-timer-toggle">Sleep Timer</label>
+            <input type="checkbox" id="sleep-timer-toggle">
+            <span class="icon"></span>
+        </div>
+    </div>
+
+    <!-- Menú flotante del Sleep Timer -->
+    <div id="sleep-timer-menu" class="sleep-timer-menu" style="display: none;">
+        <h3>Configurar Sleep Timer</h3>
+
+        <!-- Configuración personalizada -->
+        <div class="custom-time">
+            <label>Tiempo personalizado</label>
+            <input type="number" id="custom-hours" placeholder="Horas" min="0" max="24">
+            <input type="number" id="custom-minutes" placeholder="Minutos" min="0" max="59">
+            <input type="number" id="custom-seconds" placeholder="Segundos" min="0" max="59">
+        </div>
+
+        <!-- Botones Aceptar / Cancelar alineados -->
+        <div class="buttons">
+            <button onclick="setCustomSleepTimer()" class="accept-btn">Aceptar</button>
+            <button onclick="cancelSleepTimer()" class="cancel-btn">Cancelar</button>
+        </div>
+
+        <!-- Mensaje de confirmación -->
+        <p id="confirmation-message" class="confirmation-message"></p>
+    </div>
+
+    <script>
+        let sleepTimer;
+        let isSleepTimerActive = false;
+
+        document.getElementById("sleep-timer-toggle").addEventListener("change", function() {
+            const menu = document.getElementById("sleep-timer-menu");
+            const premiumStatus = document.getElementById("premium-status").innerText.trim();
+
+            if (!premiumStatus.includes("Spottrack Premium: Activa")) {
+                alert("Necesitas Spottrack Premium para usar esta función.");
+                this.checked = false; // Desactiva el toggle
+                return;
+            }
+
+            if (isSleepTimerActive) {
+                cancelSleepTimer();
+            } else {
+                menu.style.display = this.checked ? "block" : "none";
+            }
+        });
+
+        function setCustomSleepTimer() {
+            let hours = parseInt(document.getElementById("custom-hours").value) || 0;
+            let minutes = parseInt(document.getElementById("custom-minutes").value) || 0;
+            let seconds = parseInt(document.getElementById("custom-seconds").value) || 0;
+
+            if (hours > 24 || (hours === 24 && (minutes > 59 || seconds > 59))) {
+                alert("El tiempo máximo permitido es 24h 59m 59s.");
+                return;
+            }
+
+            let totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+
+            if (totalSeconds > 0 && totalSeconds <= 89999) {
+                startSleepTimer(totalSeconds);
+            } else {
+                alert("Por favor, introduce un tiempo válido (máx. 24h 59m 59s).");
+            }
+        }
+
+        function startSleepTimer(seconds) {
+            clearTimeout(sleepTimer);
+            sleepTimer = setTimeout(() => {
+                location.reload();
+            }, seconds * 1000);
+
+            let confirmationMessage = document.getElementById("confirmation-message");
+            confirmationMessage.textContent = `Sleep Timer activado. La app se reiniciará en ${Math.floor(seconds / 60)} minutos.`;
+            confirmationMessage.style.opacity = "1";
+
+            setTimeout(() => {
+                confirmationMessage.style.opacity = "0"; 
+                document.getElementById("sleep-timer-menu").style.display = "none"; 
+            }, 2000); 
+
+            isSleepTimerActive = true;
+        }
+
+        function cancelSleepTimer() {
+            clearTimeout(sleepTimer);
+            isSleepTimerActive = false;
+            document.getElementById("sleep-timer-toggle").checked = false;
+            document.getElementById("sleep-timer-menu").style.display = "none";
+        }
+    </script>
 </body>
 </html>
-</body>
+
+
+
+
+
 </html>
 </section>
   </main>

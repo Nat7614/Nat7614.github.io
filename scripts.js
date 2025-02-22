@@ -120,7 +120,7 @@ function startUpdatingProgress() {
     updateInterval = setInterval(updateProgress, 1000);
 }
 
-// Función para mostrar el mensaje de advertencia con un nuevo ícono
+// Función para mostrar el mensaje de advertencia
 function showWarningMessage(message) {
     const warningMessageElement = document.getElementById('warning-message');
 
@@ -378,10 +378,10 @@ const pauseOnLockCheckbox = document.getElementById('pause-on-lock');
 pauseOnLockCheckbox.addEventListener('change', function() {
     if (this.checked) {
         // Aquí activamos la opción para pausar la música cuando la pantalla se apaga
-        alert("La música se pausará cuando se apague el dispositivo.");
+        alert("La música se reproducirá cuando se apague la pantalla del dispositivo.");
     } else {
         // Desactivamos la pausa automática
-        alert("La música seguirá reproduciéndose incluso si apagas el dispositivo.");
+        alert("La música se detendra cuando se apague la pantalla del dispositivo.");
     }
 });
 
