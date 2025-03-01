@@ -1,0 +1,11 @@
+/* Estilos para la sección de inicio */
+.section {
+    padding: 20px;
+    color: white;
+}
+
+.section-title {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #b3c1c1;
+}

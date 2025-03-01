@@ -1,0 +1,39 @@
+/* Novedades */
+:root {
+    --news-width: 321px; /* Controla el ancho del cuadro */
+    --news-height: 270px; /* Controla la altura del cuadro */
+}
+
+.news-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.news-carousel {
+    position: relative;
+    width: var(--news-width); /* Usa la variable para ajustar el ancho */
+    height: var(--news-height); /* Usa la variable para ajustar la altura */
+    overflow: hidden; /* Oculta contenido que exceda el cuadro */
+    border-radius: 12px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Sombra para dar profundidad */
+    cursor: pointer; /* Cambia el cursor a una mano al pasar sobre el cuadro */
+}
+
+.news-carousel img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que las imágenes se adapten al cuadro */
+    border-radius: 12px; /* Aplica bordes redondeados a las imágenes */
+    display: none; /* Oculta todas las imágenes por defecto */
+    transition: opacity 0.5s ease; /* Transición suave entre imágenes */
+}
+
+.news-carousel img.active {
+    display: block; /* Muestra la imagen activa */
+    opacity: 1;
+}

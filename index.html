@@ -12,6 +12,7 @@
     <main id="main-content">
       <!-- Apartado de Inicio -->
 <section id="home-section" class="section">
+    <link rel="stylesheet" href="home section.css">    
     <h1>Spottrack 3.3</h1>
 
 <!-- Sección de Novedades -->
@@ -22,11 +23,15 @@
         <img src="images/novedad3.jpg" alt="Novedad 3">
     </div>
 </div>
+<script src="news section.js"></script>
+<link rel="stylesheet" href="news section.css">
 
 
-    <!-- Sección de Canciones Populares -->
+<!-- Sección de Canciones Populares -->
+<link rel="stylesheet" href="top songs.css">
+
 <div class="popular-songs">
-    <h2 class="section-title">Artistas tops 2024</h2>
+    <h2 class="section-title">Artistas Tops 2024</h2>
     <ul>
         <li>
             Mejor - Emilia Mernes
@@ -41,8 +46,9 @@
             <span class="ranking top-3">Top 3</span>
         </li>
     </ul>
-  </div>
-<p>‎ 
+</div>
+<p>‎ </p>
+<!-- Eventos seccion -->
 <div class="events-section">
     <h2 class="section-title">Eventos</h2>
     <div class="events-toggle">
@@ -91,13 +97,18 @@
                 <div>
                     <strong>Lollapalooza 2025</strong>
                     <p>El festival Lollapalooza 2025 en Argentina se llevará a cabo del 21 al 23 de marzo en el Hipódromo de San Isidro, en Buenos Aires Fecha 21 22 y 23 de marzo de 2025</p>
+
+<script src="event.js"></script>
+<link rel="stylesheet" href="event.css">
+
                 </div>
             </li>
         </ul>
     </div>
-</div>
+</div>     
 
 <p>‎‎ <p>
+    <link rel="stylesheet" href="redes.css">
         <div class="social-links">
     <button class="social-btn" onclick="window.location.href='https://discord.gg/gkhFs4AUn6'">
         <img src="images/discord-icon.png" alt="Discord">
@@ -119,6 +130,7 @@
 
 
         <!-- Apartado de Buscar -->
+         <link rel="stylesheet" href="search.css">
 <section id="search-section" class="section hidden">
     <div id="warning-message" class="warning-message" style="display: none;"></div>
     <header>
@@ -134,8 +146,8 @@
     <section id="player">
         <div id="youtube-player"></div>
         <div id="song-info">
-            <h3 id="song-title">Nada Agregado</h3>
-            <p id="artist-name">Busca Una Canción</p>
+            <h3 id="song-title">Nada agregado</h3>
+            <p id="artist-name">Busca una canción</p>
         </div>
         <div class="controls">
             <button id="prev-button" class="control-button"><i class="fas fa-backward"></i></button>
@@ -182,7 +194,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spottrack - Lista de Canciones</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="library music.css">
 </head>
 <body>
     <div class="song-container">
@@ -193,7 +205,7 @@
         <input type="file" id="file-input" accept="audio/*" style="display: none;" onchange="handleFileSelect(event)">
     </div>
 
-    <script src="script.js"></script>
+    <script src="library music.js"></script>
 </body>
 </html>
 
@@ -276,29 +288,45 @@ onAuthStateChanged(auth, async (user) => {
 
     
             // Inicio de Sesión
-            document.getElementById("loginBtn").addEventListener("click", async () => {
-                const email = document.getElementById("login-email").value;
-                const password = document.getElementById("login-password").value;
-                const mensajeLogin = document.getElementById("mensajeLogin");
-    
-                if (!email || !password) {
-                    mensajeLogin.innerText = "Por favor, completa todos los campos.";
-                    mensajeLogin.style.color = "red";
-                    return;
-                }
-    
-                mensajeLogin.innerText = "Iniciando sesión...";
-                mensajeLogin.style.color = "blue";
-    
-                try {
-                    await signInWithEmailAndPassword(auth, email, password);
-                    document.getElementById("login-container").style.display = "none";
-                    document.getElementById("perfil-container").style.display = "block";
-                } catch (error) {
-                    mensajeLogin.innerText = "Error: " + error.message;
-                    mensajeLogin.style.color = "red";
-                }
-            });
+document.getElementById("loginBtn").addEventListener("click", async () => {
+    const email = document.getElementById("login-email").value;
+    const password = document.getElementById("login-password").value;
+    const mensajeLogin = document.getElementById("mensajeLogin");
+
+    // Verificar si los campos de correo y contraseña están completos
+    if (!email || !password) {
+        mensajeLogin.innerText = "Por favor, completa todos los campos.";
+        mensajeLogin.style.color = "red";
+        return;
+    }
+
+    // Verificar si el reCAPTCHA fue completado
+    const recaptchaResponse = grecaptcha.getResponse(); // Obtener la respuesta del reCAPTCHA
+
+    if (recaptchaResponse.length === 0) {
+        mensajeLogin.innerText = "Por favor, completa el reCAPTCHA.";
+        mensajeLogin.style.color = "red";
+        return;
+    }
+
+    // Mostrar mensaje de "Iniciando sesión..."
+    mensajeLogin.innerText = "Iniciando sesión...";
+    mensajeLogin.style.color = "blue";
+
+    try {
+        // Intentar iniciar sesión con Firebase
+        await signInWithEmailAndPassword(auth, email, password);
+
+        // Ocultar el contenedor de login y mostrar el contenedor de perfil
+        document.getElementById("login-container").style.display = "none";
+        document.getElementById("perfil-container").style.display = "block";
+    } catch (error) {
+        // Mostrar mensaje de error si la autenticación falla
+        mensajeLogin.innerText = "Error: " + error.message;
+        mensajeLogin.style.color = "red";
+    }
+});
+
     
             // Cambio de Foto de Perfil
             document.getElementById("change-photo").addEventListener("click", () => {
@@ -370,6 +398,34 @@ onAuthStateChanged(auth, async (user) => {
             <h2>Iniciar Sesión</h2>
             <input type="email" id="login-email" placeholder="Correo electrónico">
             <input type="password" id="login-password" placeholder="Contraseña">
+      <!-- Cargar el script de reCAPTCHA -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+
+<style>/* Estilo específico para el reCAPTCHA */
+    .g-recaptcha {
+        width: 101% !important; /* Asegura que se ajuste al ancho del formulario */
+        margin-top: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: center; /* Centra el recaptcha en su contenedor */
+    }
+    
+    /* Opcional: ajustar el tamaño del contenedor reCAPTCHA si sigue sobresaliendo */
+    .g-recaptcha iframe {
+        transform: scale(95%); /* Ajusta el tamaño para que se vea más pequeño si es necesario */
+        transform-origin: 1 0; /* Mantiene la alineación en la esquina superior izquierda */
+    }</style>
+
+
+<!-- Formulario con reCAPTCHA -->
+<form action="/tu_backend" method="POST">
+    <!-- Otros campos del formulario, como correo y contraseña -->
+
+    <!-- El widget reCAPTCHA -->
+    <div class="g-recaptcha" data-sitekey="6LfVo-EqAAAAAKnO-lj24zrEW9N7f0pwokBrMQYf"></div>
+</form>
+
             <button id="loginBtn">Iniciar Sesión</button>
             <p>‎ </p>
             <p class="mensaje" id="mensajeLogin"></p>
@@ -420,6 +476,7 @@ onAuthStateChanged(auth, async (user) => {
 <p>‎ 
   <h2>‎ ‎Ajustar reproduccion</h2>
 <!-- Opción para detener música cuando el dispositivo se apaga -->
+ <script src="segundo plano.js"></script>
 <div class="settings-option">
     <div class="toggle-container">
         <label for="pause-on-lock">Cancion en segundo plano</label>
@@ -429,6 +486,7 @@ onAuthStateChanged(auth, async (user) => {
 </div>
 
 <!-- Opción de ahorro de datos -->
+ <script src="ahorro de datos.js"></script>
 <div class="settings-option">
     <div class="toggle-container">
         <label for="data-saving-mode">Economizador de datos</label>
@@ -597,8 +655,10 @@ onAuthStateChanged(auth, async (user) => {
     
     <!-- Enlace al archivo JS externo -->
     <script src="scripts.js"></script>
-    
+
+<!-- Mensaje de no ay conexion -->
 </body>
 </html>
 <div id="no-connection-warning" style="display: none;"></div>
-<script src="scripts.js"></script>
+<script src="conection error.js"></script>
+<link rel="stylesheet" href="conection.css"
