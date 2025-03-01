@@ -411,6 +411,22 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
     <div class="g-recaptcha" data-sitekey="6LfVo-EqAAAAAKnO-lj24zrEW9N7f0pwokBrMQYf"></div>
 </form>
 
+
+<style>/* Estilo específico para el reCAPTCHA */
+    .g-recaptcha {
+        width: 96% !important; /* Asegura que se ajuste al ancho del formulario */
+        margin-top: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: center; /* Centra el recaptcha en su contenedor */
+    }
+    
+    /* Opcional: ajustar el tamaño del contenedor reCAPTCHA si sigue sobresaliendo */
+    .g-recaptcha iframe {
+        transform: scale(90%); /* Ajusta el tamaño para que se vea más pequeño si es necesario */
+        transform-origin: 1 0; /* Mantiene la alineación en la esquina superior izquierda */
+    }</style>
+
             <button id="loginBtn">Iniciar Sesión</button>
             <p>‎ </p>
             <p class="mensaje" id="mensajeLogin"></p>
