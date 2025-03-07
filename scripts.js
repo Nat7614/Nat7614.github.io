@@ -521,36 +521,56 @@ function playWarningSound() {
     audio.play().catch(error => console.error('Error al reproducir el sonido:', error));
 }
 
-function createMediaNotification() {
-    if (!('mediaSession' in navigator) || !player) return;
-    
-    const videoData = player.getVideoData();
-    const videoId = videoData.video_id;
-    const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-    
-    navigator.mediaSession.metadata = new MediaMetadata({
-        title: videoData.title,
-        artist: videoData.author,
-        album: "Spottrack",
-        artwork: [
-            { src: thumbnailUrl, sizes: "96x96", type: "image/jpeg" },
-            { src: thumbnailUrl, sizes: "128x128", type: "image/jpeg" },
-            { src: thumbnailUrl, sizes: "192x192", type: "image/jpeg" },
-            { src: thumbnailUrl, sizes: "256x256", type: "image/jpeg" },
-            { src: thumbnailUrl, sizes: "384x384", type: "image/jpeg" },
-            { src: thumbnailUrl, sizes: "512x512", type: "image/jpeg" }
-        ]
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+        events: {
+            'onStateChange': onPlayerStateChange
+        }
     });
-    
-    navigator.mediaSession.setActionHandler("play", () => player.playVideo());
-    navigator.mediaSession.setActionHandler("pause", () => player.pauseVideo());
-    navigator.mediaSession.setActionHandler("previoustrack", () => console.log("Previous track"));
-    navigator.mediaSession.setActionHandler("nexttrack", () => console.log("Next track"));
 }
 
-// Llamar esta función cuando el video empiece a reproducirse
-player.addEventListener("onStateChange", event => {
+function onPlayerStateChange(event) {
     if (event.data === YT.PlayerState.PLAYING) {
-        createMediaNotification();
+        isPlaying = true;
+    } else {
+        isPlaying = false;
+    }
+}
+
+// Detecta cuando la app se minimiza o cambia de pestaña
+document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+        if (isPlaying) {
+            showNotification();
+        }
+    } else {
+        closeNotification();
     }
 });
+
+let notification;
+function showNotification() {
+    if (Notification.permission === "granted") {
+        let videoTitle = player.getVideoData().title || "Reproduciendo música";
+        notification = new Notification("Spottrack", {
+            body: videoTitle,
+            icon: "https://nat7614.github.io/icon.png"
+        });
+
+        notification.onclick = function () {
+            window.focus();
+            notification.close();
+        };
+    }
+}
+
+function closeNotification() {
+    if (notification) {
+        notification.close();
+    }
+}
+
+// Solicita permiso para mostrar notificaciones al cargar la app
+if (Notification.permission !== "granted") {
+    Notification.requestPermission();
+}
