@@ -520,3 +520,37 @@ function playWarningSound() {
     const audio = new Audio('sounds/warning.mp3'); // Ruta al archivo de sonido
     audio.play().catch(error => console.error('Error al reproducir el sonido:', error));
 }
+
+function createMediaNotification() {
+    if (!('mediaSession' in navigator) || !player) return;
+    
+    const videoData = player.getVideoData();
+    const videoId = videoData.video_id;
+    const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    
+    navigator.mediaSession.metadata = new MediaMetadata({
+        title: videoData.title,
+        artist: videoData.author,
+        album: "Spottrack",
+        artwork: [
+            { src: thumbnailUrl, sizes: "96x96", type: "image/jpeg" },
+            { src: thumbnailUrl, sizes: "128x128", type: "image/jpeg" },
+            { src: thumbnailUrl, sizes: "192x192", type: "image/jpeg" },
+            { src: thumbnailUrl, sizes: "256x256", type: "image/jpeg" },
+            { src: thumbnailUrl, sizes: "384x384", type: "image/jpeg" },
+            { src: thumbnailUrl, sizes: "512x512", type: "image/jpeg" }
+        ]
+    });
+    
+    navigator.mediaSession.setActionHandler("play", () => player.playVideo());
+    navigator.mediaSession.setActionHandler("pause", () => player.pauseVideo());
+    navigator.mediaSession.setActionHandler("previoustrack", () => console.log("Previous track"));
+    navigator.mediaSession.setActionHandler("nexttrack", () => console.log("Next track"));
+}
+
+// Llamar esta función cuando el video empiece a reproducirse
+player.addEventListener("onStateChange", event => {
+    if (event.data === YT.PlayerState.PLAYING) {
+        createMediaNotification();
+    }
+});
