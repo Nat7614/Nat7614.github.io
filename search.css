@@ -1,11 +1,9 @@
 /* Resultados de búsqueda */
 #search-results {
-    width: 100%;  /* Usamos 100% para que el contenedor ocupe el 100% del espacio disponible */
-    max-width: 500px;  /* Este es el ancho máximo que se permite */
+    width: 67%;
+    max-width: 500px;
     margin: 0 auto;
     padding: 0 10px;
-    box-sizing: border-box; /* Esto asegura que el padding no afecte el ancho */
-    overflow-x: hidden; /* Evitar desplazamiento horizontal */
 }
 
 #result-list {
@@ -23,8 +21,6 @@
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
-    width: 100%; /* Asegura que cada item ocupe el 100% del ancho del contenedor */
-    box-sizing: border-box; /* Para evitar desbordamientos por padding */
 }
 
 #result-list li:hover {
@@ -38,8 +34,6 @@
     object-fit: cover;
     border-radius: 5px;
     margin-right: 10px;
-    max-width: 100%; /* Asegura que las imágenes no se expandan más de lo necesario */
-    height: auto; /* Asegura que las imágenes mantengan su relación de aspecto */
 }
 
 /* Detalles del resultado */
@@ -47,7 +41,7 @@
     display: flex;
     flex-direction: column;
     flex: 1; /* Ocupa todo el espacio restante */
-    overflow: hidden; /* Evita que el contenido se desborde */
+    overflow: hidden; /* Ocultar contenido que desborda */
 }
 
 .result-title {
@@ -60,19 +54,13 @@
     max-width: calc(100% - 90px); /* Limitar el ancho considerando la miniatura */
 }
 
+
 .result-artist,
 .result-duration {
     font-size: 14px;
     color: #b0b0b0;
     margin: 2px 0;
 }
-
-
-/* Evitar desbordamientos en el body */
-body {
-    overflow-x: hidden; /* Elimina cualquier posible desplazamiento horizontal global */
-}
-
 
 
 /* Estilos del reproductor */
