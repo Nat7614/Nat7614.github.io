@@ -120,48 +120,6 @@ function startUpdatingProgress() {
     updateInterval = setInterval(updateProgress, 1000);
 }
 
-// Función para mostrar el mensaje de advertencia
-function showWarningMessage(message) {
-    const warningMessageElement = document.getElementById('warning-message');
-
-    // HTML para el ícono de advertencia cuadrado con el símbolo ⚠ en el centro
-    const iconHTML = `
-        <span style="
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center; 
-            width: 30px; 
-            height: 30px; 
-            background-color: white; 
-            border-radius: 4px; 
-            margin-right: 10px;">
-            <span style="
-                color: yellow; 
-                font-size: 18px; 
-                font-weight: bold;">
-                ⚠
-            </span>
-        </span>`;
-
-    const messageHTML = `<strong style="color: white; font-size: 16px;">${message}</strong>`;
-
-    // Actualizar el contenido del mensaje de advertencia con el texto centrado
-    warningMessageElement.innerHTML = `
-        <div style="
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            width: 100%;">
-            ${iconHTML}${messageHTML}
-        </div>`;
-    warningMessageElement.style.display = 'block';
-
-    // Ocultar el mensaje después de 5 segundos
-    setTimeout(() => {
-        warningMessageElement.style.display = 'none';
-    }, 5000);
-}
-
 // Función que maneja el clic en una canción de los resultados
 function handleSongSelection(video) {
     songList.push(video);  // Añadir la canción a la lista de reproducción
@@ -313,45 +271,48 @@ document.getElementById('search-button').addEventListener('click', function() {
     }
 });
 
-// Función para mostrar el mensaje de error
-function showError(message) {
-    const errorMessageElement = document.getElementById('error-message');
+// Función para mostrar el mensaje de advertencia con sonido
+function showWarningMessage(message) {
+    const warningSound = document.getElementById('warning-sound');
+    warningSound.play(); // Reproduce el sonido de advertencia
 
-    // HTML para el ícono de error cuadrado con una "X" en el centro
+    const warningMessageElement = document.getElementById('warning-message');
+
+    // HTML para el ícono de advertencia cuadrado con el símbolo ⚠ en el centro
     const iconHTML = `
         <span style="
             display: inline-flex; 
             align-items: center; 
             justify-content: center; 
             width: 30px; 
-            height: 30px; 
-            background-color: white; 
-            border-radius: 4px; 
+            height: 0px; 
+            border-radius: 20px; 
             margin-right: 10px;">
             <span style="
-                color: red; 
+                color: yellow; 
                 font-size: 18px; 
                 font-weight: bold;">
-                ❌
+                ⚠️
             </span>
         </span>`;
 
-    const mensajeHTML = `<strong style="color: white; font-size: 16px;">${message}</strong>`;
 
-    // Actualizar el contenido del mensaje de error con el texto centrado
-    errorMessageElement.innerHTML = `
+    const messageHTML = `<strong style="color: white; font-size: 16px;">${message}</strong>`;
+
+    // Actualizar el contenido del mensaje de advertencia con el texto centrado
+    warningMessageElement.innerHTML = `
         <div style="
             display: flex; 
             align-items: center; 
             justify-content: center; 
             width: 100%;">
-            ${iconHTML}${message}
+            ${iconHTML}${messageHTML}
         </div>`;
-    errorMessageElement.style.display = 'block';
+    warningMessageElement.style.display = 'block';
 
     // Ocultar el mensaje después de 5 segundos
     setTimeout(() => {
-        errorMessageElement.style.display = 'none';
+        warningMessageElement.style.display = 'none';
     }, 5000);
 }
 
@@ -389,12 +350,9 @@ function showError(message) {
             justify-content: center; 
             width: 30px; 
             height: 30px;
-            border-radius: 4px; 
+            border-radius: 20px; 
             margin-right: 10px;">
-            <span style="
-                color: red; 
-                font-size: 18px; 
-                font-weight: bold;">
+            <span style="color: red; font-size: 18px; font-weight: bold;">
                 ❌
             </span>
         </span>`;
@@ -403,64 +361,20 @@ function showError(message) {
 
     // Actualizar el contenido del mensaje de error con el texto centrado
     errorMessageElement.innerHTML = `
-        <div style="
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            width: 100%;">
+        <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
             ${iconHTML}${mensajeHTML}
         </div>`;
     errorMessageElement.style.display = 'block';
 
-    // Ocultar el mensaje después de 5 segundos
+    // Aplicar animación de entrada
+    errorMessageElement.style.animation = 'slideInFromLeft 0.3s forwards';
+
+    // Ocultar el mensaje después de 5 segundos con animación de salida
     setTimeout(() => {
-        errorMessageElement.style.display = 'none';
+        errorMessageElement.style.animation = 'slideOutToLeft 0.3s forwards';
     }, 5000);
 }
-// Función para mostrar el mensaje de advertencia con sonido
-function showWarningMessage(message) {
-    const warningSound = document.getElementById('warning-sound');
-    warningSound.play(); // Reproduce el sonido de advertencia
 
-    const warningMessageElement = document.getElementById('warning-message');
-
-    // HTML para el ícono de advertencia cuadrado con el símbolo ⚠ en el centro
-    const iconHTML = `
-        <span style="
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center; 
-            width: 30px; 
-            height: 0px; 
-            border-radius: 4px; 
-            margin-right: 10px;">
-            <span style="
-                color: yellow; 
-                font-size: 18px; 
-                font-weight: bold;">
-                ⚠️
-            </span>
-        </span>`;
-
-
-    const messageHTML = `<strong style="color: white; font-size: 16px;">${message}</strong>`;
-
-    // Actualizar el contenido del mensaje de advertencia con el texto centrado
-    warningMessageElement.innerHTML = `
-        <div style="
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            width: 100%;">
-            ${iconHTML}${messageHTML}
-        </div>`;
-    warningMessageElement.style.display = 'block';
-
-    // Ocultar el mensaje después de 5 segundos
-    setTimeout(() => {
-        warningMessageElement.style.display = 'none';
-    }, 5000);
-}
 
 window.onload = function() {
     const message = document.getElementById('welcomeMessage');
@@ -520,3 +434,8 @@ function playWarningSound() {
     const audio = new Audio('sounds/warning.mp3'); // Ruta al archivo de sonido
     audio.play().catch(error => console.error('Error al reproducir el sonido:', error));
 }
+
+document.getElementById('show-advantages').addEventListener('click', function() {
+    const menu = document.getElementById('advantages-menu');
+    menu.classList.toggle('show');
+});

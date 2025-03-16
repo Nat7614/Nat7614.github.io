@@ -1,4 +1,3 @@
-
 let audio = null;  // Variable para almacenar el audio actual
 let currentSongElement = null;  // Elemento de la canción que está en reproducción
 let currentSongURL = null;  // URL del archivo de audio actual
@@ -38,7 +37,11 @@ function addSongToList(id, name, fileURL) {
 
     const title = document.createElement('span');
     title.className = 'song-title';
-    title.innerText = name;
+
+    // Limitar el título a 15 caracteres y agregar "..." si es necesario
+    const truncatedName = name.length > 15 ? name.substring(0, 15) + "..." : name;
+    title.innerText = truncatedName;
+
     songItem.appendChild(title);
 
     const playButton = document.createElement('button');

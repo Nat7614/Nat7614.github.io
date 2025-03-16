@@ -48,8 +48,25 @@
     overflow: hidden;
     text-overflow: ellipsis;
     color: #fff;
+    max-width: calc(100% - 60px); /* Evitar que el texto se desborde cuando hay botones */
+    display: inline-block;
+    text-align: left;
 }
 
+.song-title::after {
+    content: '...';
+    display: inline-block;
+    visibility: hidden;
+}
+
+/* Títulos truncados con "..." si son largos */
+.song-title.long-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Estilo para la animación de los botones */
 .add-song-button {
     width: 100%;
     padding: 10px;

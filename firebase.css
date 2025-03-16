@@ -49,7 +49,7 @@
     margin: auto;
     border-radius: 50%;
     overflow: hidden;
-    background-color: white;
+    background-color: rgb(4, 1, 17);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -66,7 +66,56 @@
 /* Panel premium */
 .container .premium-panel {
     margin-top: 20px;
-    padding: 15px;
-    background-color: #010013;
-    border-radius: 5px;
+    padding: 25px;
+    background: linear-gradient(135deg, #0d0d22, #010013);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.container .premium-panel:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Título del panel premium */
+.container .premium-panel .premium-title {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #1DB954; /* Acento verde vibrante */
+    text-shadow: 0 0 8px rgba(29, 185, 84, 0.7);
+}
+
+/* Descripción del panel premium */
+.container .premium-panel .premium-description {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Contenedor para los botones de PayPal */
+.container .premium-panel .paypal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Estilo para cada botón de PayPal */
+.container .premium-panel .paypal-buttons button {
+    background-color: #ffc439; /* Amarillo característico de PayPal */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.container .premium-panel .paypal-buttons button:hover {
+    background-color: #ffb347;
+    transform: scale(1.05);
+}
+

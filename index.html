@@ -10,10 +10,10 @@
 </head>
 <body>
     <main id="main-content">
-      <!-- Apartado de Inicio -->
+         <!-- Apartado de Inicio -->
 <section id="home-section" class="section">
     <link rel="stylesheet" href="home section.css">    
-    <h1>Spottrack 3.3</h1>
+    <h1>Spottrack 3.4</h1>
 
 <!-- Sección de Novedades -->
 <div class="news-section">
@@ -68,7 +68,7 @@
                 <img src="images/spottrack1.jpg" alt="SpotTrack Music Fest" class="event-img">
                 <div>
                     <strong>Sorteo Premium</strong>
-                    <p>🎉¡Este mes y el siguiente estaremos sorteando Spottrack Premium en nuestro servidor de Discord! 🎉
+                    <p>🎉¡Este mes estaremos sorteando Spottrack Premium en nuestro servidor de Discord! 🎉
 
                         Habrá 3 ganadores, y los resultados se anunciarán el 15 de marzo. ¡No pierdas la oportunidad de ser uno de los afortunados! 🍀
                         
@@ -165,7 +165,7 @@
 
 <!-- Menú emergente para establecer el rango de tiempo -->
 <div id="timing-modal">
-    <h2>Personalizar Cancion</h2>
+    <h2>Personalizar cancion</h2>
     <label for="start-time">Inicio:</label>
     <input type="text" id="start-time" placeholder="00:00" maxlength="5">
     <label for="end-time">Fin:</label>
@@ -265,9 +265,14 @@ onAuthStateChanged(auth, async (user) => {
             const paypalContainer = document.getElementById("paypal-button-container");
 
             if (userData.premium) {
-                premiumStatus.innerText = "Spottrack Premium: Activa";
-                premiumStatus.style.color = "green";
-                premiumStatus.style.fontWeight = "bold";
+    premiumStatus.innerText = "Spottrack Premium: Activa";
+    premiumStatus.style.color = "#00c853"; // Verde premium
+    premiumStatus.style.fontWeight = "bold";
+    premiumStatus.style.fontSize = "18px"; // Un tamaño de fuente un poco más grande
+
+// Añadir una animación profesional
+premiumStatus.classList.add("premium-active");
+
                 
                 premiumDescription.style.display = "none"; // Ocultar descripción
                 paypalContainer.style.display = "none"; // Ocultar botón de PayPal
@@ -444,9 +449,9 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
                 <input type="file" id="file-input" accept="image/png" style="display: none;">
             </div>
             <p>‎ </p>
-            <h3 id="username">Nombre del Usuario</h3>
+            <h3 id="username">Nombre de usuario</h3>
             <p>‎ </p>
-            <button id="change-photo">Cambiar Foto de Perfil</button>
+            <button id="change-photo">Cambiar foto de perfil</button>
     
             <!-- Cambio de Nombre de Usuario -->
             <div id="change-username-container" style="display: none;">
@@ -454,8 +459,8 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
                 <button id="save-username">Guardar</button>
             </div>
     
-            <button id="change-username">Cambiar Nombre de Usuario</button>
-            <button id="logoutBtn" class="logout">Cerrar Sesión</button>
+            <button id="change-username">Cambiar nombre de usuario</button>
+            <button id="logoutBtn" class="logout">Cerrar sesión</button>
     
             <div class="premium-panel">
                 <h3 id="premium-status">Spottrack Premium</h3>
@@ -473,7 +478,7 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
     </body>
     </html>
       
-<p>________________________________</p>
+<p>______________________________________</p>
 <p>‎ 
   <h2>‎ ‎Ajustar reproduccion</h2>
 <!-- Opción para detener música cuando el dispositivo se apaga -->
@@ -496,7 +501,7 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
     </div>
 </div>
 
-<p>________________________________</p>
+<p>______________________________________</p>
 <p>‎ </p>
 <h2>Reproduccion Premium</h2>
 

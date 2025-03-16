@@ -4,7 +4,7 @@
     background-color: red;
     color: white;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 20px;
     margin-bottom: 10px;
     position: fixed;
     top: 0;
@@ -41,8 +41,8 @@ body {
     align-items: center;
     justify-content: center;
     margin: 20px 0;
-    width: 100%; /* Estirado hacia los lados */
-    max-width: 385px; /* Máximo ancho */
+    width: 120%; /* Estirado hacia los lados */
+    max-width: 495px; /* Máximo ancho */
     padding: 15px;
     border-radius: 10px;
     background-color: #010013;
@@ -222,7 +222,20 @@ h1 {
     justify-content: space-around; /* Espacio entre los botones */
     padding: 10px 0; /* Espaciado vertical */
     border-top: 1px solid #333; /* Línea superior */
+    animation: slideUp 0.5s ease-out; /* Animación de aparición */
+    z-index: 9999; /* Asegura que esté por encima de otros elementos */
 }
+
+/* Animación de la barra apareciendo desde abajo */
+@keyframes slideUp {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -239,6 +252,7 @@ body {
     flex-grow: 1;
 }
 
+/* Barra inferior sólida y fija */
 .bottom-bar {
     display: flex;
     justify-content: space-around;
@@ -248,8 +262,21 @@ body {
     width: 100%;
     bottom: 0;
     border-top: 1px solid #333;
+    z-index: 9999; /* Asegura que esté por encima de otros elementos */
+    animation: slideUp 0.5s ease-out; /* Animación de la barra apareciendo */
 }
 
+/* Línea que se mueve hacia el apartado seleccionado */
+.tab-line {
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background-color: #1DB954;
+    bottom: 0;
+    transition: transform 0.3s ease;
+}
+
+/* Estilo de los botones de la barra */
 .tab {
     background: none;
     border: none;
@@ -257,99 +284,46 @@ body {
     font-size: 16px;
     cursor: pointer;
     flex-grow: 1;
+    position: relative;
+    transition: all 0.3s ease; /* Transición suave para el efecto de iluminación */
 }
 
 .tab:focus {
     outline: none;
 }
 
+/* Efecto de iluminación verde cuando se activa el apartado */
 .tab.active {
     color: #1DB954;
+    text-shadow: 0 0 10px #1DB954, 0 0 20px #1DB954, 0 0 30px #1DB954; /* Efecto de iluminación */
 }
 
-
-/* Estilos generales del apartado de ajustes */
-.settings-option, .profile-settings {
-    margin: 20px 0;
+/* Animación de la barra deslizante que indica el apartado seleccionado */
+.tab.active .tab-line {
+    transform: translateX(0); /* Deslizarse al botón activo */
 }
 
-.profile-settings {
-    border-top: 1px solid #ccc;
-    padding-top: 20px;
-    text-align: center;
+/* Para que cada tab tenga su propia animación de línea */
+.tab1 .tab-line {
+    transform: translateX(0); /* Se coloca en su posición cuando es la activa */
 }
 
-.profile-picture-container {
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: center; /* Alinea horizontalmente */
-    align-items: center; /* Alinea verticalmente si es necesario */
+.tab2 .tab-line {
+    transform: translateX(100%); /* Desplazamiento para el segundo tab */
 }
 
-.profile-picture {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 10px;
-    border: 2px solid #666;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+.tab3 .tab-line {
+    transform: translateX(200%); /* Desplazamiento para el tercer tab */
 }
 
-.profile-name-container {
-    margin-bottom: 20px;
-}
-
-#profile-name-display {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.profile-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.btn {
-    padding: 10px 20px;
-    background: linear-gradient(90deg, #a64bf4, #f464c4, #4bf4e1);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    font-size: 14px;
-}
-
-.btn:hover {
-    opacity: 0.9;
-}
-
-/* Nuevos estilos para el ícono "+" cuando no hay foto */
-.profile-picture::before {
-    content: '+';
-    font-size: 40px;
-    color: #666;
-    position: absolute;
-    display: none; /* Oculto por defecto */
-}
-
-.profile-picture.empty::before {
-    display: block; /* Mostrar el ícono "+" cuando la imagen esté vacía */
-}
-
-/* Mensajes de advertencia y confirmación */
+/* Estilos para los mensajes de advertencia y éxito */
 #warning-message, #success-message {
     position: fixed;
     top: 0;
-    left: 0;
+    left: -100%; /* Empezar fuera de la pantalla (izquierda) */
     width: 100%;
     padding: 15px 0;
-    border-radius: 4px;
+    border-radius: 20px; /* Bordes redondeados */
     text-align: center;
     font-weight: bold;
     font-size: 16px;
@@ -357,45 +331,60 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
-#warning-mmessage {
-    background-color: #FF0000; /* Color amarillo */
+/* Mensaje de advertencia */
+#warning-message {
+    background-color: #FFC107; /* Color rojo */
     color: white;
-    animation: fadeInOutWarning 5s forwards;
+    animation: slideInFromLeft 1s forwards, slideOutToLeft 1s 4s forwards; /* Animaciones: entrada y salida */
 }
 
 #success-message {
     background-color: #4CAF50; /* Color verde */
     color: white;
-    animation: fadeInOutWarning 5s forwards;
+    animation: slideInFromLeft 1s forwards, slideOutToLeft 1s 4s forwards; /* Animaciones: entrada y salida */
 }
 
-
-/* Input escondido */
-.hidden {
-    display: none;
+/* Animación de entrada desde la izquierda */
+@keyframes slideInFromLeft {
+    0% {
+        left: -100%; /* Fuera de la pantalla (izquierda) */
+    }
+    100% {
+        left: 0; /* Se mueve completamente hacia la pantalla */
+    }
 }
 
-/* Estilo del mensaje de advertencia */
+/* Animación de salida hacia la izquierda */
+@keyframes slideOutToLeft {
+    0% {
+        left: 0; /* Posición final */
+    }
+    100% {
+        left: -100%; /* Sale hacia la izquierda de la pantalla */
+    }
+}
+
+/* Estilo para el mensaje de advertencia (con el ícono ⚠️) */
 .warning-message {
     display: none; /* Oculto por defecto */
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%; /* Ancho completo */
-    background-color: #FFC107; /* Amarillo fuerte */
+    left: -100%; /* Fuera de la pantalla (izquierda) */
+    width: 100%;
+    background-color: #FFC107; /* Color amarillo */
     color: white;
-    padding: 15px; /* Espaciado interno */
-    border-radius: 5px; /* Bordes redondeados */
+    padding: 15px;
+    border-radius: 20px; /* Bordes redondeados */
     text-align: center;
     font-weight: bold;
-    font-size: 18px; /* Tamaño de texto */
+    font-size: 18px;
     z-index: 1000;
-    animation: fadeInOutWarning 5s forwards;
-}
-
-.warning-message i {
-    margin-right: 10px;
-    vertical-align: middle; /* Alineado vertical */
+    animation: slideInFromLeft 1s forwards, slideOutToLeft 1s 4s forwards; /* Animaciones: entrada y salida */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
