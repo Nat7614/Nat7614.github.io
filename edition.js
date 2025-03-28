@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Verificación de estado Premium
         if (!premiumStatus.includes("Spottrack Premium: Activa")) {
-            alert("Necesitas Spottrack Premium para usar esta función.");
+            alert("Necesitas Spottrack Premium para usar esta función con la que podras personalizar el tiempo de inicio y fin de una cancion ¡Suscribete a Spottrack Premium y disfruta de esta ventaja!.");
             return; // No permite abrir el modal si no tiene Premium
         }
 
