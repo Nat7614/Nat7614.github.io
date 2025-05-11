@@ -1,34 +1,53 @@
-/* Mensaje de errores */
+/* Mensaje de error de conexión tipo Discord */
 #no-connection-warning {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #FFC107; /* Amarillo fuerte */
-    color: white;
-    padding: 15px 0;
-    text-align: center;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ff8b07;
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    font-family: "Segoe UI", sans-serif;
+    font-size: 14px;
     font-weight: bold;
-    font-size: 18px;
-    z-index: 1000;
     display: flex;
     align-items: center;
-    justify-content: center;
-    animation: fadeInOutWarning 5s forwards;
+    gap: 10px;
+    z-index: 1000;
+    max-width: 90%;
+    text-align: center;
+    animation: slideWarningDown 0.4s ease forwards, slideWarningUp 0.4s ease 4s forwards;
 }
 
+/* Animación de entrada */
+@keyframes slideWarningDown {
+    0% {
+        top: -100px;
+        opacity: 0;
+    }
+    100% {
+        top: 20px;
+        opacity: 1;
+    }
+}
+
+/* Animación de salida */
+@keyframes slideWarningUp {
+    0% {
+        top: 20px;
+        opacity: 1;
+    }
+    100% {
+        top: -100px;
+        opacity: 0;
+    }
+}
+
+/* Ícono o mensaje interno */
 #no-connection-warning span {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 0px;
-    border-radius: 4px;
-    margin-right: 10px;
-}
-
-#no-connection-warning span span {
-    color: red;
-    font-size: 18px;
     font-weight: bold;
+    font-size: 16px;
+    color: white;
 }

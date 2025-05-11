@@ -1,17 +1,27 @@
+﻿/* Solo prevenir scroll lateral globalmente */
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
 /* Resultados de búsqueda */
 #search-results {
     width: 67%;
     max-width: 500px;
     margin: 0 auto;
     padding: 0 10px;
+    overflow-x: hidden;
 }
 
+/* Lista */
 #result-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
+/* Ítems */
 #result-list li {
     display: flex;
     align-items: center;
@@ -21,8 +31,11 @@
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
+    overflow: hidden;
+    max-width: 100%;
 }
 
+/* Hover */
 #result-list li:hover {
     background-color: #1d163b;
 }
@@ -34,27 +47,30 @@
     object-fit: cover;
     border-radius: 5px;
     margin-right: 10px;
+    flex-shrink: 0;
 }
 
-/* Detalles del resultado */
+/* Detalles */
 .result-details {
     display: flex;
     flex-direction: column;
-    flex: 1; /* Ocupa todo el espacio restante */
-    overflow: hidden; /* Ocultar contenido que desborda */
+    flex: 1;
+    overflow: hidden;
 }
 
+/* Título */
 .result-title {
     font-size: 16px;
     font-weight: bold;
     color: #ffffff;
     margin: 0 0 5px 0;
-    white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
-    text-overflow: ellipsis; /* Mostrar puntos suspensivos (...) si el texto es muy largo */
-    max-width: calc(100% - 90px); /* Limitar el ancho considerando la miniatura */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
 }
 
-
+/* Artista y duración */
 .result-artist,
 .result-duration {
     font-size: 14px;

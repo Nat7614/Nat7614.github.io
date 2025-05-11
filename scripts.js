@@ -1,4 +1,4 @@
-const homeSection = document.getElementById('home-section');
+﻿const homeSection = document.getElementById('home-section');
 const searchSection = document.getElementById('search-section');
 const playlistSection = document.getElementById('playlist-section');
 const settingsSection = document.getElementById('settings-section');
@@ -230,14 +230,14 @@ function searchSongs(query) {
         .then(response => response.json())
         .then(data => {
             if (data.items.length === 0) {
-                showWarningMessage('No se encontraron resultados para tu búsqueda.');
+                showError('No se encontraron resultados para tu búsqueda.');
             } else {
                 displaySearchResults(data.items);
             }
         })
         .catch(error => {
             console.error('Error al buscar canciones:', error);
-            showWarningMessage('Ocurrió un error al buscar canciones.');
+            showError('Ocurrió un error al buscar canciones (error 62).');
         });
 }
 
@@ -264,7 +264,7 @@ document.getElementById('search-button').addEventListener('click', function() {
 
     if (query === "") {
         // Si no se ha ingresado texto, mostrar la advertencia
-        showWarningMessage('Primero Ingresa Un Termino De Busqueda');
+        showWarningMessage('Primero ingresa un termino de busqueda');
     } else {
         // Si hay texto, realizar la búsqueda
         searchSongs(query);
@@ -276,26 +276,27 @@ function showWarningMessage(message) {
     const warningSound = document.getElementById('warning-sound');
     warningSound.play(); // Reproduce el sonido de advertencia
 
+    
+
     const warningMessageElement = document.getElementById('warning-message');
 
-    // HTML para el ícono de advertencia cuadrado con el símbolo ⚠ en el centro
-    const iconHTML = `
-        <span style="
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center; 
-            width: 30px; 
-            height: 0px; 
-            border-radius: 20px; 
-            margin-right: 10px;">
-            <span style="
-                color: yellow; 
-                font-size: 18px; 
-                font-weight: bold;">
-                ⚠️
-            </span>
-        </span>`;
-
+ // HTML para el ícono de advertencia cuadrado con el símbolo ⚠ en el centro
+ const iconHTML = `
+ <span style="
+     display: inline-flex; 
+     align-items: center; 
+     justify-content: center; 
+     width: 30px; 
+     height: 0px; 
+     border-radius: 20px; 
+     margin-right: 10px;">
+     <span style="
+         color: yellow; 
+         font-size: 18px; 
+         font-weight: bold;">
+         ⚠️
+     </span>
+ </span>`;
 
     const messageHTML = `<strong style="color: white; font-size: 16px;">${message}</strong>`;
 
@@ -308,13 +309,17 @@ function showWarningMessage(message) {
             width: 100%;">
             ${iconHTML}${messageHTML}
         </div>`;
-    warningMessageElement.style.display = 'block';
 
-    // Ocultar el mensaje después de 5 segundos
-    setTimeout(() => {
-        warningMessageElement.style.display = 'none';
-    }, 5000);
+        warningMessageElement.style.display = 'block';
+
+
+// Ocultar el mensaje después de 5 segundos
+setTimeout(() => {
+    warningMessageElement.style.display = 'none';
+}, 5000);
 }
+
+
 
 // Evento para pausar o reproducir el video
 document.getElementById('playpause-button').addEventListener('click', function() {
@@ -323,7 +328,7 @@ document.getElementById('playpause-button').addEventListener('click', function()
 
         // Si no hay canción agregada (estado -1 es cuando no hay video cargado)
         if (playerState === -1) {
-            showError('No Hay Ninguna Canción Agregada');
+            showWarningMessage('No hay ninguna canción agregada');
         } else if (playerState === YT.PlayerState.PLAYING) {
             player.pauseVideo();
         } else {
@@ -331,18 +336,19 @@ document.getElementById('playpause-button').addEventListener('click', function()
         }
     } else {
         // Si el reproductor no está inicializado, mostrar el error
-        showError('No Hay Ninguna Canción Agregada');
+        showWarningMessage('No hay ninguna canción agregada');
     }
 });
 
 // Función para mostrar el mensaje de error con sonido
 function showError(message) {
     const errorSound = document.getElementById('error-sound');
-    errorSound.play(); // Reproduce el sonido de error
-
     const errorMessageElement = document.getElementById('error-message');
 
-    // HTML para el ícono de error cuadrado con una "X" en el centro
+    // Reproducir el sonido de error
+    errorSound.play();
+
+    // HTML para el ícono de error ❌
     const iconHTML = `
         <span style="
             display: inline-flex; 
@@ -352,28 +358,31 @@ function showError(message) {
             height: 30px;
             border-radius: 20px; 
             margin-right: 10px;">
-            <span style="color: red; font-size: 18px; font-weight: bold;">
+            <span style="color: white; font-size: 18px; font-weight: bold;">
                 ❌
             </span>
         </span>`;
 
     const mensajeHTML = `<strong style="color: white; font-size: 16px;">${message}</strong>`;
 
-    // Actualizar el contenido del mensaje de error con el texto centrado
+    // Insertar contenido
     errorMessageElement.innerHTML = `
         <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
             ${iconHTML}${mensajeHTML}
         </div>`;
-    errorMessageElement.style.display = 'block';
 
-    // Aplicar animación de entrada
-    errorMessageElement.style.animation = 'slideInFromLeft 0.3s forwards';
+    // Reiniciar animación (técnica de reflow)
+    errorMessageElement.style.animation = 'none';
+    void errorMessageElement.offsetWidth; // Fuerza el reflow
+    errorMessageElement.style.animation = 'slideErrorDown 0.4s ease forwards, slideErrorUp 0.4s ease 4s forwards';
+}
+
 
     // Ocultar el mensaje después de 5 segundos con animación de salida
     setTimeout(() => {
         errorMessageElement.style.animation = 'slideOutToLeft 0.3s forwards';
-    }, 5000);
-}
+    }, 5000);  
+ 
 
 
 window.onload = function() {

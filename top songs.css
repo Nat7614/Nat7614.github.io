@@ -1,85 +1,104 @@
-/* Estilos para la sección de canciones populares */
-.popular-songs {
+/* Contenedor principal */
+.trending-songs {
     font-family: Arial, sans-serif;
-    background: rgba(30, 30, 30, 0.9);
-    width: 140%; /* Siempre ocupa el 100% del ancho del dispositivo */
-    max-width: 320px; /* Ancho máximo fijo para pantallas grandes */
-    margin: 0 auto; /* Centrado en la pantalla */
+    width: 140%;
+    max-width: 320px;
+    margin: 0 auto;
     padding: 20px;
     background: #0d0d22;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    box-sizing: border-box; /* Garantiza que padding no afecta el tamaño */
-    overflow: hidden; /* Evita que el contenido haga crecer el contenedor */
-    margin: 0 auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
-
-
-.popular-songs .section-title {
+/* Título */
+.trending-songs .section-title {
     font-size: 1.5rem;
     margin-bottom: 10px;
     text-align: center;
     color: #f464c4;
 }
 
-.popular-songs ul {
+/* Lista */
+.trending-songs ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
-.popular-songs li {
+/* Canción individual */
+.trending-songs li {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background: #fff;
-    margin-bottom: 8px; /* Espaciado menor */
-    padding: 8px; /* Reducción de padding */
-    border-radius: 8px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.popular-songs li:hover {
-    transform: scale(1.03);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-}
-
-.popular-songs .ranking {
-    font-size: 0.8rem; /* Tamaño más pequeño */
-    font-weight: bold;
-    padding: 3px 8px; /* Reducción del tamaño */
-    border-radius: 12px;
-    color: #fff;
-    text-align: center;
-}
-
-/* Colores de los rankings */
-.popular-songs .ranking.top-1 {
-    background: gold;
-    color: black;
-}
-
-.popular-songs .ranking.top-2 {
-    background: silver;
-    color: black;
-}
-
-.popular-songs .ranking.top-3 {
-    background: #cd7f32; /* Bronce */
-    color: black;
-}
-
-/* Estilo 2 de canciones populares */
-.popular-songs ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.popular-songs li {
-    background-color: #000015;
+    gap: 10px;
+    background: #000015;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 6px;
     color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.trending-songs li:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Miniatura */
+.trending-songs img {
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+/* Detalles de la canción */
+.trending-songs .song-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 190px;
+}
+
+/* Título */
+.trending-songs .song-title {
+    font-weight: bold;
+    font-size: 0.95rem;
+    color: #fdfdfd;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Artista y duración */
+.trending-songs .song-meta {
+    font-size: 0.75rem;
+    color: #ccc;
+}
+
+/* Etiquetas Top */
+.top-label {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-weight: bold;
+    color: #000;
+    text-transform: uppercase;
+}
+
+/* Colores específicos por top */
+.top-1 {
+    background-color: #FFD700; /* Dorado */
+}
+.top-2 {
+    background-color: #C0C0C0; /* Plateado */
+}
+.top-3 {
+    background-color: #cd7f32; /* Bronce */
 }
