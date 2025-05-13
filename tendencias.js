@@ -198,5 +198,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return h > 0
             ? `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
             : `${m}:${s.toString().padStart(2, '0')}`;
+    } 
+
+// ✅ Mostrar código del país al lado de "Spottrack 4.1"
+const versionElement = document.getElementById('spottrack-version');
+    if (versionElement && regionCode) {
+        versionElement.innerHTML = `Spottrack 4.1 <span style="font-size: 0.7em; vertical-align: baseline; opacity: 0.7; margin-left: 1px;">${regionCode}</span>`;
     }
 });
