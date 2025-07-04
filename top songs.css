@@ -2,7 +2,7 @@
 .trending-songs {
     font-family: Arial, sans-serif;
     width: 100%;
-    max-width: 320px;
+    max-width: 320px; /* Base para pantallas pequeñas */
     margin: 0 auto;
     padding: 20px;
     background: #0d0d22;
@@ -96,7 +96,7 @@
 
 /* Artista y duración */
 .trending-songs .song-meta {
-    margin-top: 4px; /* Ajustá el valor si querés más o menos espacio */
+    margin-top: 4px;
     font-size: 0.75rem;
     color: #ccc;
 }
@@ -116,11 +116,59 @@
 
 /* Colores específicos por top */
 .top-1 {
-    background-color: #FFD700; /* Dorado */
+    background-color: #FFD700;
 }
 .top-2 {
-    background-color: #C0C0C0; /* Plateado */
+    background-color: #C0C0C0;
 }
 .top-3 {
-    background-color: #cd7f32; /* Bronce */
+    background-color: #cd7f32;
+}
+
+/* 📱 Media Query para teléfonos modernos (361px a 767px) */
+@media (min-width: 400px) and (max-width: 767px) {
+    .trending-songs {
+        max-width: 767px;
+    }
+
+    .trending-songs img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .trending-songs .song-info {
+        max-width: 230px;
+    }
+
+    .trending-songs .song-title {
+        font-size: 1rem;
+    }
+
+    .trending-songs .song-meta {
+        font-size: 0.8rem;
+    }
+}
+
+/* 💻 Media Query para tablets y pantallas grandes (768px en adelante) */
+@media (min-width: 768px) {
+    .trending-songs {
+        max-width: 600px;
+    }
+
+    .trending-songs img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .trending-songs .song-info {
+        max-width: 280px;
+    }
+
+    .trending-songs .song-title {
+        font-size: 1.1rem;
+    }
+
+    .trending-songs .song-meta {
+        font-size: 0.85rem;
+    }
 }
