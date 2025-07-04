@@ -4,7 +4,7 @@
     width: 100%;
     max-width: 320px;
     margin: 0 auto;
-    padding: 20px 20px 50px 20px; /* espacio inferior para el cartel */
+    padding: 20px 20px 50px 20px;
     background: #0d0d22;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
@@ -61,4 +61,48 @@
 
 .dev-footer i {
     font-size: 14px;
+}
+
+/* 📱 Media Query para teléfonos modernos (400px a 767px) */
+@media (min-width: 400px) and (max-width: 767px) {
+    .social-wrapper {
+        max-width: 767px;
+    }
+
+    .social-btn {
+        width: 60px;
+        height: 60px;
+    }
+
+    .social-btn img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .dev-footer {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+/* 💻 Media Query para tablets y pantallas grandes (768px en adelante) */
+@media (min-width: 768px) {
+    .social-wrapper {
+        max-width: 600px;
+    }
+
+    .social-btn {
+        width: 70px;
+        height: 70px;
+    }
+
+    .social-btn img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .dev-footer {
+        font-size: 15px;
+        padding: 10px 20px;
+    }
 }

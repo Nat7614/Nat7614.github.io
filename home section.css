@@ -8,10 +8,9 @@
     border-radius: 16px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     margin: 20px auto;
-    width: 100%;         /* ← Ancho total */
-    max-width: 320px   /* ← Limita el tamaño en pantallas grandes */
+    width: 100%;
+    max-width: 320px;
 }
-
 
 /* Nombre de la app */
 .app-name {
@@ -40,4 +39,44 @@
     height: 24px;
     border-radius: 6px;
     object-fit: cover;
+}
+
+/* 📱 Teléfonos modernos (400px a 767px) */
+@media (min-width: 400px) and (max-width: 767px) {
+    .topbar {
+        max-width: 767px;
+    }
+
+    .app-name {
+        font-size: 1.2em;
+    }
+
+    .app-version {
+        font-size: 1em;
+    }
+
+    .app-icon {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* 💻 Tablets y pantallas grandes (768px en adelante) */
+@media (min-width: 768px) {
+    .topbar {
+        max-width: 600px;
+    }
+
+    .app-name {
+        font-size: 1.3em;
+    }
+
+    .app-version {
+        font-size: 1.1em;
+    }
+
+    .app-icon {
+        width: 32px;
+        height: 32px;
+    }
 }

@@ -21,7 +21,7 @@
     overflow: hidden; 
 }
 
-/* Lista horizontal deslizable - sin barra visible */
+/* Lista horizontal deslizable */
 .recientes-section .recientes-lista {
     list-style: none;
     padding: 0;
@@ -30,17 +30,17 @@
     overflow-x: auto;
     scroll-behavior: smooth;
 
-    /* Ocultar barra scroll */
-    scrollbar-width: none;         /* Firefox */
-    -ms-overflow-style: none;      /* IE y Edge */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
+
 .recientes-section .recientes-lista::-webkit-scrollbar {
-    display: none; /* Chrome y Safari */
+    display: none;
 }
 
 /* Ítems individuales */
 .recientes-section .recientes-lista li {
-    background: #000015; /* Azul oscuro */
+    background: #000015;
     border-radius: 10px;
     padding: 10px;
     min-width: 140px;
@@ -57,7 +57,7 @@
 
 .recientes-section .recientes-lista li:hover {
     transform: scale(1.02);
-    background: #000015; /* Azul oscuro más claro al hacer hover */
+    background: #000015;
 }
 
 /* Miniatura de la canción */
@@ -68,7 +68,7 @@
     object-fit: cover;
 }
 
-/* Contenedor para el texto con animación marquee */
+/* Contenedor de título */
 .recientes-section .song-title {
     font-size: 14px;
     margin-top: 6px;
@@ -82,17 +82,15 @@
     padding: 0 4px;
 }
 
-
-/* El texto que se mueve */
+/* Texto en movimiento */
 .song-title span {
     display: inline-block;
     white-space: nowrap;
     animation: marquee 9s linear infinite;
-    padding-left: 40;
+    padding-left: 40px;
     min-width: 100%;
 }
 
-/* Animación que mueve el texto de derecha a izquierda */
 @keyframes marquee {
     0%   { transform: translateX(0); }
     100% { transform: translateX(-100%); }
@@ -106,4 +104,44 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: center;
+}
+
+/* 📱 Media Query para teléfonos modernos (400px a 767px) */
+@media (min-width: 400px) and (max-width: 767px) {
+    .recientes-section {
+        max-width: 767px;
+    }
+
+    .recientes-section .recientes-lista li {
+        min-width: 160px;
+        max-width: 160px;
+    }
+
+    .recientes-section .song-title {
+        font-size: 15px;
+    }
+
+    .recientes-section .song-meta {
+        font-size: 13px;
+    }
+}
+
+/* 💻 Media Query para tablets y pantallas grandes (768px en adelante) */
+@media (min-width: 768px) {
+    .recientes-section {
+        max-width: 600px;
+    }
+
+    .recientes-section .recientes-lista li {
+        min-width: 180px;
+        max-width: 180px;
+    }
+
+    .recientes-section .song-title {
+        font-size: 16px;
+    }
+
+    .recientes-section .song-meta {
+        font-size: 14px;
+    }
 }
