@@ -124,3 +124,51 @@
 .top-3 {
     background-color: #cd7f32; /* Bronce */
 }
+
+/* 📲 Teléfonos modernos (360px a 767px) */
+@media (min-width: 360px) and (max-width: 767px) {
+    .trending-songs {
+        max-width: 420px;
+    }
+
+    .trending-songs img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .trending-songs .song-info {
+        max-width: 230px;
+    }
+
+    .trending-songs .song-title {
+        font-size: 1rem;
+    }
+
+    .trending-songs .song-meta {
+        font-size: 0.8rem;
+    }
+}
+
+/* 💻 Tablets y pantallas grandes (768px en adelante) */
+@media (min-width: 768px) {
+    .trending-songs {
+        max-width: 600px;
+    }
+
+    .trending-songs img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .trending-songs .song-info {
+        max-width: 280px;
+    }
+
+    .trending-songs .song-title {
+        font-size: 1.1rem;
+    }
+
+    .trending-songs .song-meta {
+        font-size: 0.85rem;
+    }
+}

@@ -107,3 +107,48 @@
     text-overflow: ellipsis;
     text-align: center;
 }
+
+
+/* 📲 Teléfonos modernos (360px a 767px) */
+@media (min-width: 360px) and (max-width: 767px) {
+    .recientes-section {
+        max-width: 420px;
+    }
+
+    .recientes-section .recientes-lista li {
+        min-width: 160px;
+        max-width: 160px;
+        padding: 12px;
+    }
+
+    .recientes-section .song-title {
+        font-size: 15px;
+        height: 22px;
+    }
+
+    .recientes-section .song-meta {
+        font-size: 13px;
+    }
+}
+
+/* 💻 Tablets y pantallas grandes (768px en adelante) */
+@media (min-width: 768px) {
+    .recientes-section {
+        max-width: 600px;
+    }
+
+    .recientes-section .recientes-lista li {
+        min-width: 180px;
+        max-width: 180px;
+        padding: 14px;
+    }
+
+    .recientes-section .song-title {
+        font-size: 16px;
+        height: 24px;
+    }
+
+    .recientes-section .song-meta {
+        font-size: 14px;
+    }
+}
