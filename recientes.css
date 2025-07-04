@@ -110,7 +110,7 @@
 
 
 /* 📲 Teléfonos modernos (360px a 767px) */
-@media (min-width: 360px) and (max-width: 767px) {
+@media (min-width: 360px) and (max-width: 420px) {
     .recientes-section {
         max-width: 420px;
     }

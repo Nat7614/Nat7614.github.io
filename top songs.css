@@ -126,7 +126,7 @@
 }
 
 /* 📲 Teléfonos modernos (360px a 767px) */
-@media (min-width: 360px) and (max-width: 767px) {
+@media (min-width: 360px) and (max-width: 420px) {
     .trending-songs {
         max-width: 420px;
     }
