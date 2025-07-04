@@ -141,7 +141,7 @@
 }
 
 /* Ajustes responsivos */
-@media (max-width: 600px) {
+@media (max-width: 320px) {
     .events-section {
         max-width: 100%; /* Ocupa el 90% del ancho */
     }
