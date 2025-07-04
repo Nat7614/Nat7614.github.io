@@ -2,7 +2,7 @@
 .events-section {
     font-family: Arial, sans-serif;
     background: rgba(30, 30, 30, 0.9);
-    width: 140%; /* Siempre ocupa el 100% del ancho del dispositivo */
+    width: 100%; /* Siempre ocupa el 100% del ancho del dispositivo */
     max-width: 320px; /* Ancho máximo fijo para pantallas grandes */
     margin: 0 auto; /* Centrado en la pantalla */
     padding: 20px;
