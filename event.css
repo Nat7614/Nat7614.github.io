@@ -141,7 +141,7 @@
 }
 
 /* Teléfonos modernos como Galaxy A32 (360px a 500px) */
-@media (min-width: 360px) and (max-width: 767px) {
+@media (min-width: 400px) and (max-width: 767px) {
     .events-section {
         max-width: 420px;
     }
