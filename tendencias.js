@@ -132,13 +132,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 li.style.position = 'relative';
 
                 li.innerHTML = `
-                    <img src="${thumbnail}" alt="${title}">
-                    <div class="song-info">
-                        <span class="song-title">${title}</span>
-                        <span class="song-meta">${channel}</span>
-                        <span class="song-meta">${duration}</span>
-                    </div>
-                `;
+    <img src="${thumbnail}" alt="${title}">
+    <div class="song-info">
+        <span class="song-title"><span class="scrolling-text">${title}</span></span>
+        <span class="song-meta"><strong>Artista:</strong> ${channel}</span>
+        <span class="song-meta"><strong>Duración:</strong> ${duration}</span>
+    </div>
+`;
+
 
                 if (index < 3) {
                     const topLabel = document.createElement('div');
@@ -202,7 +203,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ✅ Mostrar código del país al lado de "Spottrack 4.1"
 const versionElement = document.getElementById('spottrack-version');
-    if (versionElement && regionCode) {
-        versionElement.innerHTML = `Spottrack 4.1 <span style="font-size: 0.7em; vertical-align: baseline; opacity: 0.7; margin-left: 1px;">${regionCode}</span>`;
-    }
+if (versionElement && regionCode) {
+    versionElement.innerHTML = `v4.2 <span style="font-size: 0.75em; vertical-align: middle; opacity: 0.6; margin-left: 6px;">${regionCode}</span>`;
+}
+
 });

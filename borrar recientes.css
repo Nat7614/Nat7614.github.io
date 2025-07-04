@@ -1,0 +1,87 @@
+/* Contenedor del botón */
+.settings-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 350px;
+    padding: 12px;
+    border-radius: 10px;
+    background-color: #010013;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.settings-option:hover {
+    background-color: #11112a;
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Menú flotante */
+.borrar-menu {
+    display: none;
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #121229;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    z-index: 1000;
+    width: 280px;
+}
+
+/* Botones */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.buttons button {
+    flex: 1;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s ease;
+}
+
+.accept-btn {
+    background: linear-gradient(45deg, #a64bf4, #f464c4, #4bf4e1);
+    color: white;
+}
+
+.cancel-btn {
+    background: #e74c3c !important;
+    color: white !important;
+}
+
+.accept-btn:hover {
+    opacity: 0.8;
+}
+
+.cancel-btn:hover {
+    background: #c0392b !important;
+}
+
+/* Confirmación */
+.confirmation-message {
+    color: #4bf4e1;
+    font-size: 14px;
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}

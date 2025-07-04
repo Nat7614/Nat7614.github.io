@@ -1,0 +1,109 @@
+/* Contenedor principal */
+.recientes-section {
+    font-family: Arial, sans-serif;
+    width: 140%;
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #0d0d22;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Título */
+.recientes-section .section-title {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #f464c4;
+    white-space: nowrap;
+    overflow: hidden; 
+}
+
+/* Lista horizontal deslizable - sin barra visible */
+.recientes-section .recientes-lista {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+
+    /* Ocultar barra scroll */
+    scrollbar-width: none;         /* Firefox */
+    -ms-overflow-style: none;      /* IE y Edge */
+}
+.recientes-section .recientes-lista::-webkit-scrollbar {
+    display: none; /* Chrome y Safari */
+}
+
+/* Ítems individuales */
+.recientes-section .recientes-lista li {
+    background: #000015; /* Azul oscuro */
+    border-radius: 10px;
+    padding: 10px;
+    min-width: 140px;
+    max-width: 140px;
+    color: white;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: transform 0.2s, background 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.recientes-section .recientes-lista li:hover {
+    transform: scale(1.02);
+    background: #000015; /* Azul oscuro más claro al hacer hover */
+}
+
+/* Miniatura de la canción */
+.recientes-section .recientes-lista img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+/* Contenedor para el texto con animación marquee */
+.recientes-section .song-title {
+    font-size: 14px;
+    margin-top: 6px;
+    font-weight: bold;
+    overflow: hidden;
+    text-align: left;
+    position: relative;
+    width: 100%;
+    height: 20px;
+    box-sizing: border-box;
+    padding: 0 4px;
+}
+
+
+/* El texto que se mueve */
+.song-title span {
+    display: inline-block;
+    white-space: nowrap;
+    animation: marquee 9s linear infinite;
+    padding-left: 40;
+    min-width: 100%;
+}
+
+/* Animación que mueve el texto de derecha a izquierda */
+@keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+/* Artista y duración */
+.recientes-section .song-meta {
+    font-size: 12px;
+    opacity: 0.7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}

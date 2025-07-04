@@ -12,8 +12,17 @@
     <main id="main-content">
          <!-- Apartado de Inicio -->
 <section id="home-section" class="section">
-    <link rel="stylesheet" href="home section.css">    
-    <h1 id="spottrack-version">Spottrack 4.1</h1> 
+    <link rel="stylesheet" href="home section.css">
+    <div class="topbar">
+    <div class="app-left">
+        <img src="images/spottrack logo.png" alt="Spottrack Icon" class="app-icon">
+        <span class="app-name">Spottrack</span>
+    </div>
+    <span class="app-version" id="spottrack-version">v4.2</span>
+</div>
+
+
+
 
 
 
@@ -28,6 +37,20 @@
 <script src="news section.js"></script>
 <link rel="stylesheet" href="news section.css">
 
+
+
+<!-- Sección de Escuchadas Recientemente -->
+<link rel="stylesheet" href="recientes.css">
+
+<div class="recientes-section">
+    <h2 class="section-title">­ㅤÚltimas escuchadas</h2>
+    <ul id="recientes-lista" class="recientes-lista"></ul>
+</div>
+
+<script src="recientes.js"></script>
+
+
+<p>ㅤ</p>
 
 <!-- Sección de Tendencias -->
 <link rel="stylesheet" href="top songs.css">
@@ -64,10 +87,10 @@
         <!-- Eventos de SpotTrack -->
         <ul id="spottrack-events">
             <li>
-                <img src="images/spottrack1.jpg" alt="SpotTrack Music Fest" class="event-img">
+                <img src="images/spottrack1.png" alt="SpotTrack Music Fest" class="event-img">
                 <div>
-                    <strong>Sin evento</strong>
-                    <p>El ultimo evento finalizo el 15/03/2025</p>
+                    <strong>Spottrack PC Update</strong>
+                    <p>Preparate para la actualizacion 2.0 de Spotrrack PC a finales de Julio,🔥 se estaran sorteando Spottrack Premium 🌟 y entre otras cosas en nuestro servidor de Discord Unete YA!😎</p>
                 </div>
             </li>
             <li>
@@ -84,14 +107,14 @@
                 <img src="images/artist1.jpg" alt="Coldplay en Concierto" class="event-img">
                 <div>
                     <strong>Sin evento</strong>
-                    <p>El evento finalizo el 19/04/2025</p>
+                    <p>No ay eventos relevantes disponibles en este momento.</p>
                 </div>
             </li>
             <li>
                 <img src="images/artist2.jpg" alt="Festival Primavera Sound" class="event-img">
                 <div>
                     <strong>Sin evento</strong>
-                    <p>El evento finalizo</p>
+                    <p>No ay eventos relevantes disponibles en este momento.</p>
 
 <script src="event.js"></script>
 <link rel="stylesheet" href="event.css">
@@ -104,16 +127,35 @@
 
 <p>‎‎ <p>
     <link rel="stylesheet" href="redes.css">
-        <div class="social-links">
-    <button class="social-btn" onclick="window.location.href='https://discord.gg/gkhFs4AUn6'">
-        <img src="images/discord-icon.png" alt="Discord">
-    </button>
-    <button class="social-btn" onclick="window.location.href='https://spottrack-web.github.io'">
-        <img src="images/spottrack-icon.png" alt="Spottrack Web">
-    </button>
-    <button class="social-btn" onclick="window.location.href='https://patreon.com/Spottrack'">
-        <img src="images/donation-icon.png" alt="Donar">
-    </button>
+
+<!-- Contenedor principal -->
+<div class="social-wrapper">
+    <!-- Botones de redes -->
+    <div class="social-links">
+        <button class="social-btn" onclick="window.location.href='https://discord.gg/gkhFs4AUn6'">
+            <img src="images/discord-icon.png" alt="Discord">
+        </button>
+        <button class="social-btn" onclick="window.location.href='https://spottrack-web.github.io'">
+            <img src="images/spottrack-icon.png" alt="Spottrack Web">
+        </button>
+        <button class="social-btn" onclick="window.location.href='https://patreon.com/Spottrack'">
+            <img src="images/donation-icon.png" alt="Donar">
+        </button>
+        <button class="social-btn" onclick="window.location.href='https://youtube.com/@Spottrack-community'">
+            <img src="images/youtube-icon.png" alt="YouTube">
+        </button>
+        <button class="social-btn" onclick="window.location.href='https://twitter.com/10Subs8297'">
+            <img src="images/x-twitter-icon.png" alt="X Twitter">
+        </button>
+    </div>
+
+    <!-- Cartel del desarrollador -->
+    <div class="dev-footer">
+        <i class=""></i>© Dev NXS 2025
+    </div>
+</div>
+
+</div>
 </div>
 <p>‎ </p>
 </div>
@@ -267,10 +309,36 @@ onAuthStateChanged(auth, async (user) => {
             const paypalContainer = document.getElementById("paypal-button-container");
 
             if (userData.premium) {
-    premiumStatus.innerText = "Spottrack Premium: Activa";
-    premiumStatus.style.color = "#00c853"; // Verde premium
-    premiumStatus.style.fontWeight = "bold";
-    premiumStatus.style.fontSize = "18px"; // Un tamaño de fuente un poco más grande
+    premiumStatus.innerHTML = `
+        <div style="
+                color: #00c853;
+                font-weight: bold;
+                font-size: 18px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                text-align: center;
+                margin-bottom: 10px;
+            ">
+                Spottrack Premium: Activa
+            </div>
+            <div style="
+                font-size: 14px;
+                line-height: 1.5;
+                color: #ccc;
+                text-align: left;
+            ">
+                Felicidades, eres usuario premium de Spottrack. Obtienes las siguientes ventajas:
+                <ul style="padding-left: 20px; margin: 10px 0 0 0;">
+                    <li>Puedes indicar el inicio y fin de una canción.</li>
+                    <li>Puedes establecer un tiempo límite para que la música se detenga.</li>
+                    <li>Obtienes un rol especial y ventajas en nuestro servidor de Discord.</li>
+                </ul>
+            </div>
+        </div>
+    `;
+    premiumStatus.style.display = "block";
+
 
 // Añadir una animación profesional
 premiumStatus.classList.add("premium-active");
@@ -507,7 +575,7 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
 
 <p>____________________________________</p>
 <p>‎ </p>
-<h2>Reproduccion Premium</h2>
+<h2>Ajustes premium</h2>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -618,6 +686,38 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
 </html>
 
 
+<p>____________________________________</p>
+<p>‎ </p>
+<h2>Ajustes de privacidad</h2>
+
+<!-- Opción de Borrar Últimas Escuchadas -->
+<link rel="stylesheet" href="borrar recientes.css">
+<script src="borrar recientes.js" defer></script>
+
+<div class="settings-option" id="borrar-recientes-btn">
+    <div class="toggle-container">
+        <label>Borrar últimas escuchadas</label>
+        <span class="icon" style="font-size: 20px; color: #c0392b;">
+  <i class="fas fa-trash-alt"></i>
+</span>
+
+    </div>
+</div>
+
+<!-- Menú flotante de confirmación -->
+<div class="borrar-menu" id="borrar-menu">
+    <h3>Borrar datos</h3>
+    <p>‎</p>
+    <p>¿Deseas borrar las canciones escuchadas recientemente?</p>
+    <div class="buttons">
+        <button class="accept-btn" onclick="confirmarBorrado()">Sí, borrar</button>
+        <button class="cancel-btn" onclick="cerrarMenu()">Cancelar</button>
+    </div>
+    <div class="confirmation-message" id="mensaje-confirmacion">
+        Se borraron las últimas escuchadas, requiere reinicio.
+    </div>
+</div>
+
 
 
 
@@ -626,7 +726,7 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
   </main>
 <p>‎ ‎ 
 <p>‎ 
-
+<p>‎ </p>
     <div class="bottom-bar">
     <button class="tab" id="home-tab">
         <i class="fas fa-home"></i> <p>Inicio

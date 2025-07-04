@@ -90,10 +90,35 @@ function playSong(videoId, videoTitle, channelTitle) {
         document.getElementById('seek-bar').value = 0;
         document.getElementById('current-time').textContent = '0:00';
         document.getElementById('duration').textContent = '0:00';
+
+        try {
+            // ✅ Guardar la canción en el historial
+            const recientes = JSON.parse(localStorage.getItem('spottrack_recientes')) || [];
+
+            // Eliminar si ya existe para evitar duplicados y moverla al principio
+            const filtradas = recientes.filter(item => item.id !== videoId);
+
+            // Insertar al inicio
+            filtradas.unshift({
+                id: videoId,
+                titulo: videoTitle || 'Sin título',
+                canal: channelTitle || 'Desconocido'
+            });
+
+            // Limitar a máximo 5 canciones
+            const nuevasRecientes = filtradas.slice(0, 5);
+
+            localStorage.setItem('spottrack_recientes', JSON.stringify(nuevasRecientes));
+        } catch (e) {
+            console.warn("No se pudo guardar canción en recientes:", e);
+        }
+
     } else {
         console.error("Error: El reproductor no está inicializado.");
     }
 }
+
+ 
 
 // Función para actualizar la barra de progreso y el tiempo
 function updateProgress() {
@@ -230,7 +255,7 @@ function searchSongs(query) {
         .then(response => response.json())
         .then(data => {
             if (data.items.length === 0) {
-                showError('No se encontraron resultados para tu búsqueda.');
+                showWarningMessage('No se encontraron resultados para tu búsqueda.');
             } else {
                 displaySearchResults(data.items);
             }
@@ -280,23 +305,27 @@ function showWarningMessage(message) {
 
     const warningMessageElement = document.getElementById('warning-message');
 
- // HTML para el ícono de advertencia cuadrado con el símbolo ⚠ en el centro
- const iconHTML = `
- <span style="
-     display: inline-flex; 
-     align-items: center; 
-     justify-content: center; 
-     width: 30px; 
-     height: 0px; 
-     border-radius: 20px; 
-     margin-right: 10px;">
-     <span style="
-         color: yellow; 
-         font-size: 18px; 
-         font-weight: bold;">
-         ⚠️
-     </span>
- </span>`;
+ // HTML para el ícono de advertencia cuadrado con el símbolo ⚠️ en el centro
+const iconHTML = `
+<span style="
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
+    width: 30px; 
+    height: 0px; 
+    border-radius: 20px; 
+    margin-right: 10px;
+    white-space: nowrap; /* ✅ evita que el texto se rompa en otra línea */
+">
+    <span style="
+        color: yellow; 
+        font-size: 18px; 
+        font-weight: bold;
+    ">
+        ⚠️
+    </span>
+</span>`;
+
 
     const messageHTML = `<strong style="color: white; font-size: 16px;">${message}</strong>`;
 
@@ -349,19 +378,27 @@ function showError(message) {
     errorSound.play();
 
     // HTML para el ícono de error ❌
-    const iconHTML = `
+const iconHTML = `
+    <span style="
+        display: inline-flex; 
+        align-items: center; 
+        justify-content: center; 
+        width: 30px; 
+        height: 24px; /* 🔧 Más fino que antes */
+        border-radius: 20px; 
+        margin-right: 10px;
+        white-space: nowrap; /* ✅ evita que el texto se divida */
+    ">
         <span style="
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center; 
-            width: 30px; 
-            height: 30px;
-            border-radius: 20px; 
-            margin-right: 10px;">
-            <span style="color: white; font-size: 18px; font-weight: bold;">
-                ❌
-            </span>
-        </span>`;
+            color: white; 
+            font-size: 18px; 
+            font-weight: bold;
+            line-height: 1;
+        ">
+            ❌
+        </span>
+    </span>`;
+
 
     const mensajeHTML = `<strong style="color: white; font-size: 16px;">${message}</strong>`;
 

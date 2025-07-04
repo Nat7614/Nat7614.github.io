@@ -1,29 +1,64 @@
-/* Contenedor de los enlaces sociales */
+/* Contenedor principal de redes */
+.social-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 20px 20px 50px 20px; /* espacio inferior para el cartel */
+    background: #0d0d22;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+}
+
+/* Botones de redes */
 .social-links {
     display: flex;
     justify-content: center;
     gap: 15px;
-    padding: 0;
-    background-color: trasparent; /* Fondo completamente transparente */
-    border: none; /* Sin bordes */
-    margin: 0; /* Sin margen superior */
 }
 
-/* Estilo de los botones */
 .social-btn {
-    width: 50px; /* Tamaño de los botones */
+    width: 50px;
     height: 50px;
     display: flex;
-    justify-content: center; /* Centrar la imagen horizontalmente */
-    align-items: center;    /* Centrar la imagen verticalmente */
-    background-color: #0d0d22; /* Añadimos de nuevo el fondo gris */
-    border: none; /* Sin borde */
-    border-radius: 10px; /* Bordes ligeramente redondeados */
+    justify-content: center;
+    align-items: center;
+    background-color: #080816;
+    border: none;
+    border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
+.social-btn:hover {
+    background-color: #262640;
+}
+
 .social-btn img {
-    width: 24px; /* Tamaño de los iconos */
+    width: 24px;
     height: 24px;
+}
+
+/* Mini contenedor del desarrollador centrado abajo */
+.dev-footer {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #00c853;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.dev-footer i {
+    font-size: 14px;
 }

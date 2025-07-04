@@ -71,10 +71,32 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: block;
+    margin-bottom: 6px;
+    position: relative;
+}
+
+/* Contenido desplazante dentro del título */
+.trending-songs .song-title .scrolling-text {
+    display: inline-block;
+    white-space: nowrap;
+    padding-left: 100%;
+    animation: scroll-title 8s linear infinite;
+}
+
+/* Animación horizontal */
+@keyframes scroll-title {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
 }
 
 /* Artista y duración */
 .trending-songs .song-meta {
+    margin-top: 4px; /* Ajustá el valor si querés más o menos espacio */
     font-size: 0.75rem;
     color: #ccc;
 }
