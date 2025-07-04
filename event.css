@@ -140,23 +140,30 @@
     }
 }
 
-/* Ajustes responsivos */
-@media (max-width: 320px) {
+/* Teléfonos modernos como Galaxy A32 (360px a 500px) */
+@media (min-width: 360px) and (max-width: 767px) {
     .events-section {
-        max-width: 100%; /* Ocupa el 90% del ancho */
+        max-width: 420px;
+    }
+}
+
+/* Tablets y pantallas grandes (768px en adelante) */
+@media (min-width: 768px) {
+    .events-section {
+        max-width: 600px;
     }
 
     #toggle-button {
-        font-size: 0.9rem;
-        padding: 8px;
+        font-size: 1.1rem;
+        padding: 12px;
     }
 
     .event-img {
-        width: 40px;
-        height: 40px;
+        width: 60px;
+        height: 60px;
     }
 
     #event-content li {
-        padding: 8px;
+        padding: 12px;
     }
 }
