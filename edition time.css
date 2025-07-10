@@ -100,6 +100,7 @@
     background-color: #c82333;
 }
 
+
 /* Estilo para los botones cuando están deshabilitados */
 #save-timing:disabled, #cancel-timing:disabled {
     background-color: #ccc;

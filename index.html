@@ -195,6 +195,49 @@
         <input id="seek-bar" type="range" value="0" min="0" step="1">
         <div id="current-time">0:00</div> / <div id="duration">0:00</div>
 
+        <!-- Botón redondo para abrir convertidor externo -->
+<link rel="stylesheet" href="convertidor.css">
+<button id="external-download" title="Convertir audio externo">
+  <i class="fas fa-download"></i>
+</button>
+
+<!-- Modal flotante de instrucciones -->
+<div id="convertidor-modal" class="modal">
+  <div class="modal-content">
+    <h2><span style="color:#f464c4">Convertidor Externo</span></h2>
+
+    <p><strong>Pasos para convertir:</strong></p>
+    <ol>
+      <li>Abre ajustes del reproductor y copia la <strong>URL del video</strong>.</li>
+      <p>‎ </p>
+      <li>Pegala en el <strong>campo de texto</strong> de la web que se abre.</li>
+      <p>‎ </p>
+      <li>Elegí MP3 o MP4, luego presioná <strong>Convert</strong>.</li>
+      <p>‎ </p>
+      <li>Esperá que cargue y luego presioná <strong>Download</strong>, cerrá cualquier ventana emergente que aparezca y listo.</li>
+    </ol>
+
+    <hr>
+
+    <p style="font-size: 13px; color: #ccc; text-align: center;">
+      ⚠️ <strong>Spottrack</strong> no ofrece descargas oficiales ni almacena contenido localmente en los dispositivos.<br>
+      Spottrack debe y está obligado a cumplir con las políticas de YouTube y no permite la descarga directa.<br>
+      <a href="https://www.youtube.com/t/terms" target="_blank" style="color:#4bf4e1;">Ver políticas de YouTube</a>
+    </p>
+
+    <!-- Botones -->
+    <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+      <button id="accept-convertidor" style="flex: 1; margin-right: 5px;">Aceptar</button>
+      <button id="accept-hide-convertidor" style="flex: 1; margin-left: 5px;">Aceptar y no mostrar más</button>
+    </div>
+  </div>
+</div>
+
+
+<script src="convertidor.js" defer></script>
+
+
+
 <!-- Botón para activar el menú de personalización -->
 <button id="edit-timing">
     <i class="fas fa-pencil-alt" style="font-size: 20px;"></i>  <!-- Ícono de lápiz -->

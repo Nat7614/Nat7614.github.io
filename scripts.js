@@ -91,6 +91,11 @@ function playSong(videoId, videoTitle, channelTitle) {
         document.getElementById('current-time').textContent = '0:00';
         document.getElementById('duration').textContent = '0:00';
 
+        // 👉 Enviar información a Android WebView
+        if (window.AndroidInterface && typeof window.AndroidInterface.onVideoSelected === 'function') {
+            window.AndroidInterface.onVideoSelected(videoId);
+        }
+
         try {
             // ✅ Guardar la canción en el historial
             const recientes = JSON.parse(localStorage.getItem('spottrack_recientes')) || [];
@@ -107,16 +112,15 @@ function playSong(videoId, videoTitle, channelTitle) {
 
             // Limitar a máximo 5 canciones
             const nuevasRecientes = filtradas.slice(0, 5);
-
             localStorage.setItem('spottrack_recientes', JSON.stringify(nuevasRecientes));
         } catch (e) {
             console.warn("No se pudo guardar canción en recientes:", e);
         }
-
     } else {
         console.error("Error: El reproductor no está inicializado.");
     }
 }
+
 
  
 
