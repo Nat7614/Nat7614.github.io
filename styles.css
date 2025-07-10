@@ -251,7 +251,7 @@ h1 {
     display: flex; /* Usar flexbox para alinear los elementos */
     justify-content: space-around; /* Espacio entre los botones */
     padding: 10px 0; /* Espaciado vertical */
-    border-top: 1px solid #333; /* Línea superior */
+    border-top: 1px solid #010013; /* Línea superior */
     animation: slideUp 0.5s ease-out; /* Animación de aparición */
     z-index: 9999; /* Asegura que esté por encima de otros elementos */
 }
@@ -269,7 +269,7 @@ h1 {
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #010013;
+    background-color: #0d0d22;
     color: white;
     display: flex;
     flex-direction: column;
