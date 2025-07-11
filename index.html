@@ -543,7 +543,22 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
     .g-recaptcha iframe {
         transform: scale(85%); /* Ajusta el tamaño para que se vea más pequeño si es necesario */
         transform-origin: 1 0; /* Mantiene la alineación en la esquina superior izquierda */
-    }</style>
+    }
+    
+    /* 📱 Celulares modernos (400px a 767px) */
+@media (min-width: 400px) and (max-width: 767px) {
+    .g-recaptcha iframe {
+        transform: scale(0.80);
+    }
+}
+
+/* 💻 Tablets y pantallas grandes (768px en adelante) */
+@media (min-width: 768px) {
+    .g-recaptcha iframe {
+        transform: scale(0.90);
+    }
+}
+    </style>
 
             <button id="loginBtn">Iniciar Sesión</button>
             <p>‎ </p>

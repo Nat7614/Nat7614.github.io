@@ -106,3 +106,143 @@
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+
+/* styles.css */
+.song-container {
+    background-color: #0d0d22;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 10px;
+    text-align: center;
+    /* Para mover el contenedor: ajusta el margen izquierdo (para derecha) o derecho (para izquierda) */
+    margin-left: auto; /* Alinea hacia la derecha */
+    margin-right: auto; /* Alinea hacia la izquierda */
+}
+
+.song-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#no-songs {
+    font-size: 1rem;
+    color: #777;
+}
+
+#song-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.song-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background-color: #000015;
+    animation: fadeIn 0.3s ease;
+}
+
+.song-title {
+    font-size: 1rem;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #fff;
+    max-width: calc(100% - 60px); /* Evitar que el texto se desborde cuando hay botones */
+    display: inline-block;
+    text-align: left;
+}
+
+.song-title::after {
+    content: '...';
+    display: inline-block;
+    visibility: hidden;
+}
+
+/* Títulos truncados con "..." si son largos */
+.song-title.long-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Estilo para la animación de los botones */
+.add-song-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #a64bf4, #f464c4, #4bf4e1);
+    transition: background 0.3s ease;
+}
+
+.add-song-button:hover {
+    opacity: 0.9;
+}
+
+.play-button, .delete-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    margin-left: 8px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #a64bf4, #f464c4, #4bf4e1);
+    border: none;
+    cursor: pointer;
+}
+
+.play-button i, .delete-button i {
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (min-width: 768px) {
+    .song-container {
+        max-width: 500px;
+        padding: 25px;
+    }
+
+    .song-container h2 {
+        font-size: 1.6rem;
+    }
+
+    .song-title {
+        font-size: 1.05rem;
+    }
+
+    .add-song-button {
+        font-size: 1.05rem;
+        padding: 12px;
+    }
+
+    .play-button, .delete-button {
+        width: 45px;
+        height: 45px;
+        margin-left: 10px;
+    }
+
+    .play-button i, .delete-button i {
+        font-size: 1.3rem;
+    }
+}
