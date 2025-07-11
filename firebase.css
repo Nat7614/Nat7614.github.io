@@ -119,3 +119,65 @@
     transform: scale(1.05);
 }
 
+/* 📱 Teléfonos modernos (400px a 767px) */
+@media (min-width: 400px) and (max-width: 767px) {
+    .container {
+        width: 90%;
+        max-width: 95%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .container .premium-panel {
+        padding: 20px;
+    }
+
+    .container .premium-panel .premium-title {
+        font-size: 24px;
+    }
+
+    .container .premium-panel .premium-description {
+        font-size: 14px;
+    }
+
+    .container .premium-panel .paypal-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .container .premium-panel .paypal-buttons button {
+        width: 100%;
+        font-size: 15px;
+    }
+}
+
+/* 💻 Tablets y pantallas grandes (768px en adelante) */
+@media (min-width: 768px) {
+    .container {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 30px;
+    }
+
+    .container .premium-panel {
+        padding: 25px 30px;
+    }
+
+    .container .premium-panel .premium-title {
+        font-size: 26px;
+    }
+
+    .container .premium-panel .premium-description {
+        font-size: 15px;
+    }
+
+    .container .premium-panel .paypal-buttons {
+        flex-direction: row;
+        gap: 20px;
+    }
+
+    .container .premium-panel .paypal-buttons button {
+        font-size: 16px;
+    }
+}

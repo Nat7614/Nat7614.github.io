@@ -384,3 +384,62 @@ html, body {
     cursor: pointer;
     transition: transform 0.2s;
 }
+
+/* Ajustes para móviles modernos (400px a 767px) */
+@media (min-width: 400px) and (max-width: 767px) {
+    #player {
+        width: 90%;        /* Ocupa el 90% del ancho, deja espacio lateral */
+        max-width: 350px;  /* Limita el ancho máximo */
+        margin: 0 auto;    /* Centrado horizontal */
+        padding: 15px;
+    }
+
+    #search-input {
+        width: 85%;        /* Un poco menos que 100% para dejar margen */
+        padding: 10px 15px;
+        border-radius: 30px;
+    }
+
+    .search-container {
+        width: 90%;        /* Centrado con margen lateral */
+        max-width: 320px;  /* No demasiado ancho */
+        margin: 20px auto;
+        gap: 6px;
+    }
+
+    #search-button {
+        padding: 10px 15px;
+        border-radius: 30px;
+        font-size: 14px;
+    }
+}
+
+/* Ajustes para tablets y pantallas grandes (768px en adelante) */
+@media (min-width: 768px) {
+    #player {
+        width: 600px;
+        max-width: 90%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    #search-input {
+        width: 80%;
+        padding: 12px 20px;
+        border-radius: 35px;
+        font-size: 16px;
+    }
+
+    .search-container {
+        width: 600px;
+        max-width: 95%;
+        margin: 20px auto;
+        gap: 10px;
+    }
+
+    #search-button {
+        padding: 12px 25px;
+        font-size: 16px;
+        border-radius: 35px;
+    }
+}

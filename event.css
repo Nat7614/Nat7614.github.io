@@ -143,7 +143,9 @@
 /* 📱 Teléfonos modernos (400px a 767px) */
 @media (min-width: 400px) and (max-width: 767px) {
     .events-section {
-        max-width: 767px;
+        max-width: 90%; /* No ocupa todo el ancho */
+        margin: 0 auto; /* Centrado horizontal */
+        padding: 0 10px; /* Espaciado lateral */
     }
 
     #toggle-button {
@@ -174,6 +176,8 @@
 @media (min-width: 768px) {
     .events-section {
         max-width: 600px;
+        margin: 0 auto; /* Centrado */
+        padding: 0 15px; /* Espaciado lateral */
     }
 
     #toggle-button {

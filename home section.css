@@ -44,7 +44,9 @@
 /* 📱 Teléfonos modernos (400px a 767px) */
 @media (min-width: 400px) and (max-width: 767px) {
     .topbar {
+        width: 90%;
         max-width: 767px;
+        margin: 0 auto;
     }
 
     .app-name {
@@ -64,7 +66,9 @@
 /* 💻 Tablets y pantallas grandes (768px en adelante) */
 @media (min-width: 768px) {
     .topbar {
+        width: 85%;
         max-width: 600px;
+        margin: 0 auto;
     }
 
     .app-name {

@@ -98,3 +98,31 @@
         padding: 8px; /* Reducir el padding para ajustar en pantallas pequeñas */
     }
 }
+
+/* 📱 Media Query para teléfonos modernos (400px a 767px) */
+@media (min-width: 400px) and (max-width: 767px) {
+    #suggestions-container {
+        width: 90%;
+        max-height: 150px;
+        margin: 0 auto;
+    }
+
+    .suggestion {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+}
+
+/* 💻 Media Query para tablets y pantallas grandes (768px en adelante) */
+@media (min-width: 768px) {
+    #suggestions-container {
+        width: 600px;
+        max-height: 200px;
+        margin: 0 auto;
+    }
+
+    .suggestion {
+        font-size: 1rem;
+        padding: 10px;
+    }
+}

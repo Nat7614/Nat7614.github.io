@@ -41,7 +41,7 @@
 /* 📱 Teléfonos modernos (400px a 767px) */
 @media (min-width: 400px) and (max-width: 767px) {
     :root {
-        --news-width: 100%;
+        --news-width: 90vw;       /* 90% del ancho de la pantalla */
         --news-height: 300px;
     }
 }
@@ -49,7 +49,7 @@
 /* 💻 Tablets y pantallas grandes (768px en adelante) */
 @media (min-width: 768px) {
     :root {
-        --news-width: 600px;
+        --news-width: 85vw;       /* 85% del ancho de la pantalla */
         --news-height: 320px;
     }
 }

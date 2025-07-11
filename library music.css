@@ -106,3 +106,60 @@
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+
+/* 📱 Teléfonos modernos (400px a 767px) */
+@media (min-width: 400px) and (max-width: 767px) {
+    .song-container {
+        width: 90%;
+        max-width: 340px;
+        margin: 20px auto;
+    }
+
+    .song-title {
+        font-size: 0.95rem;
+        max-width: calc(100% - 55px);
+    }
+
+    .add-song-button {
+        font-size: 0.95rem;
+        padding: 9px;
+    }
+
+    .play-button, .delete-button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .play-button i, .delete-button i {
+        font-size: 1.1rem;
+    }
+}
+
+/* 💻 Tablets y pantallas grandes (768px en adelante) */
+@media (min-width: 768px) {
+    .song-container {
+        width: 95%;
+        max-width: 600px;
+        margin: 30px auto;
+    }
+
+    .song-title {
+        font-size: 1rem;
+        max-width: calc(100% - 65px);
+    }
+
+    .add-song-button {
+        font-size: 1rem;
+        padding: 10px;
+    }
+
+    .play-button, .delete-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .play-button i, .delete-button i {
+        font-size: 1.2rem;
+    }
+}
