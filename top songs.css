@@ -129,7 +129,7 @@
 @media (min-width: 400px) and (max-width: 767px) {
     .trending-songs {
         width: 90%;
-        max-width: 767px;
+        max-width: 400px;
         margin: 0 auto;
     }
 

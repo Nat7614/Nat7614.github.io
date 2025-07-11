@@ -103,7 +103,7 @@
 @media (min-width: 400px) and (max-width: 767px) {
     #suggestions-container {
         width: 90%;
-        max-height: 150px;
+        max-height: 400px;
         margin: 0 auto;
     }
 

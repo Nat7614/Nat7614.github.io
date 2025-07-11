@@ -143,13 +143,21 @@
 /* 📱 Teléfonos modernos (400px a 767px) */
 @media (min-width: 400px) and (max-width: 767px) {
     .events-section {
-        max-width: 90%; /* No ocupa todo el ancho */
-        margin: 0 auto; /* Centrado horizontal */
-        padding: 0 10px; /* Espaciado lateral */
+        width: 90%;              /* No ocupa todo el ancho */
+        max-width: 400px;        /* Ancho máximo cómodo en móviles */
+        margin: 0 auto;          /* Centrado horizontal */
+        padding: 20px 15px;      /* Espaciado interno para que el contenido no toque los bordes */
+        box-sizing: border-box;  /* Asegura que el padding no desborde */
+    }
+
+    .events-section .section-title {
+        font-size: 1.4rem;
+        text-align: center;
+        word-break: break-word;  /* Evita desbordes por palabras largas */
     }
 
     #toggle-button {
-        font-size: 1.05rem;
+        font-size: 1rem;
         padding: 10px 12px;
     }
 
@@ -164,13 +172,10 @@
     }
 
     .event-option {
-        font-size: 1.05rem;
-    }
-
-    .events-section .section-title {
-        font-size: 1.6rem;
+        font-size: 1rem;
     }
 }
+
 
 /* 💻 Tablets y pantallas grandes (768px en adelante) */
 @media (min-width: 768px) {

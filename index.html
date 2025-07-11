@@ -530,7 +530,9 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
 </form>
 
 
-<style>/* Estilo específico para el reCAPTCHA */
+<style>
+
+/* Estilo específico para el reCAPTCHA */
     .g-recaptcha {
         width: 101% !important; /* Asegura que se ajuste al ancho del formulario */
         margin-top: 10px;
@@ -543,7 +545,35 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
     .g-recaptcha iframe {
         transform: scale(85%); /* Ajusta el tamaño para que se vea más pequeño si es necesario */
         transform-origin: 1 0; /* Mantiene la alineación en la esquina superior izquierda */
-    }</style>
+    }
+    
+    
+/* 📱 Teléfonos modernos (400px a 767px) */
+@media (min-width: 400px) and (max-width: 767px) {
+    .g-recaptcha {
+        width: 97% !important;
+        justify-content: center;
+    }
+
+    .g-recaptcha iframe {
+        transform: scale(105%);
+        transform-origin: 0 0;
+    }
+}
+
+/* 💻 Tablets y pantallas grandes (768px en adelante) */
+@media (min-width: 768px) {
+    .g-recaptcha {
+        width: 100% !important;
+    }
+
+    .g-recaptcha iframe {
+        transform: scale(0.95);
+        transform-origin: 0 0;
+    }
+}
+
+    </style>
 
             <button id="loginBtn">Iniciar Sesión</button>
             <p>‎ </p>

@@ -110,7 +110,7 @@
 @media (min-width: 400px) and (max-width: 767px) {
     .recientes-section {
         width: 90%;
-        max-width: 767px;
+        max-width: 410px;
         margin: 0 auto;
     }
 
