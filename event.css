@@ -15,11 +15,23 @@
     color: #fff;
 }
 
+/* Título */
 .events-section .section-title {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    text-align: center;
     color: #f464c4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* texto a la izquierda, ícono a la derecha */
+    white-space: nowrap;
+}
+
+/* Ícono de eventos */
+.events-section .section-title .icon-evento {
+    color: #f464c4;
+    font-size: 1.3em;
+    animation: brillo-icono 2s infinite alternate;
+    filter: drop-shadow(0 0 4px #f464c4);
 }
 
 /* Botón de selección */
@@ -64,7 +76,7 @@
     top: 100%; /* Al ras del botón */
     left: 0;
     right: 0;
-    background: #020113;
+    background: #000000;
     padding: 10px;
     border-bottom-left-radius: 8px; /* Solo esquinas inferiores redondeadas */
     border-bottom-right-radius: 8px;
@@ -106,7 +118,7 @@
     display: flex;
     align-items: center;
     gap: 10px; /* Espacio entre la imagen y el texto */
-    background: #000015;
+    background: #000000;
     padding: 10px;
     border-radius: 8px;
     margin-bottom: 10px;

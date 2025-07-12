@@ -15,9 +15,21 @@
 .trending-songs .section-title {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    text-align: center;
     color: #f464c4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* texto a la izquierda, ícono a la derecha */
+    white-space: nowrap;
 }
+
+/* Ícono Font Awesome para tendencias */
+.trending-songs .section-title .icon-trending {
+    color: #f464c4;
+    font-size: 1.3em;
+    animation: brillo-icono 2s infinite alternate;
+    filter: drop-shadow(0 0 4px #f464c4);
+}
+
 
 /* Lista */
 .trending-songs ul {
@@ -31,7 +43,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    background: #010013;
+    background: #000000;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 6px;
