@@ -1,0 +1,60 @@
+/* Estilos base del botón */
+#like-button {
+  background: none;
+  border: none;
+  color: gray;
+  font-size: 32px;
+  padding: 0;
+  cursor: pointer;
+  position: absolute;
+  z-index: 999;
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+/* Color cuando está marcado */
+#like-button.liked {
+  color: red;
+  animation: pop 0.3s ease;
+}
+
+/* Desactivado */
+#like-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 💥 Animación pop */
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 📌 Posiciones (puedes cambiarlas dinámicamente con JS o desde HTML) */
+.top-left {
+  top: 20px;
+  left: 20px;
+}
+.top-right {
+  top: 20px;
+  right: 20px;
+}
+.bottom-left {
+  bottom: 20px;
+  left: 20px;
+}
+.bottom-right {
+  bottom: 130px;
+  right: 10px;
+}
+.center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

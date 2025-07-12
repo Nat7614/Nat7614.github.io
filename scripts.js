@@ -91,10 +91,13 @@ function playSong(videoId, videoTitle, channelTitle) {
         document.getElementById('current-time').textContent = '0:00';
         document.getElementById('duration').textContent = '0:00';
 
-        // 👉 Enviar información a Android WebView
-        if (window.AndroidInterface && typeof window.AndroidInterface.onVideoSelected === 'function') {
-            window.AndroidInterface.onVideoSelected(videoId);
-        }
+        // Notificar a otros scripts que hay una canción cargada
+window.currentVideoInfo = {
+    id: videoId,
+    title: videoTitle,
+    channel: channelTitle
+};
+
 
         try {
             // ✅ Guardar la canción en el historial

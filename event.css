@@ -6,14 +6,12 @@
     max-width: 320px; /* Ancho máximo fijo para pantallas grandes */
     margin: 0 auto; /* Centrado en la pantalla */
     padding: 20px;
-    background: #0d0d22;
+    background: #010013;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     box-sizing: border-box; /* Garantiza que padding no afecta el tamaño */
     overflow: hidden; /* Evita que el contenido haga crecer el contenedor */
 
     margin: 0 auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     color: #fff;
 }
 
