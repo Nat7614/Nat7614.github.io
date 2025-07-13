@@ -1,18 +1,10 @@
-/* Contenedor general */
-.welcome-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  color: white;
-}
 
 /* Subcontenedor tipo canción, más alto */
 .welcome-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #000000;
+  background: #0d0d22;
   padding: 20px 24px;
   border-radius: 6px;
   max-width: 600px;
@@ -24,7 +16,7 @@
 
 /* Icono de usuario */
 .user-icon-container {
-  background: #000000;
+  background: #0d0d22;
   padding: 10px;
   border-radius: 6px;
   flex-shrink: 0;
