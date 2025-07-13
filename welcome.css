@@ -1,0 +1,83 @@
+/* Contenedor general */
+.welcome-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: white;
+}
+
+/* Subcontenedor tipo canción, más alto */
+.welcome-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #000000;
+  padding: 20px 24px;
+  border-radius: 6px;
+  max-width: 600px;
+  width: 100%;
+  height: 90px; /* más alto */
+  overflow: hidden;
+  position: relative;
+}
+
+/* Icono de usuario */
+.user-icon-container {
+  background: #000000;
+  padding: 10px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  margin-left: -30px; /* Desplaza el icono a la izquierda */
+}
+
+
+.user-icon {
+  font-size: 50px;
+  color: #ffffff;
+}
+
+/* Texto de saludo */
+.greeting-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.greeting-text h2 {
+  font-size: 1.3em;
+  color: #f464c4;
+  margin: 0;
+  font-weight: bold;
+}
+
+.greeting-text p {
+  font-size: 1em;
+  color: #aaa;
+  margin: 4px 0 0 0;
+}
+
+/* Ícono dinámico (luna/sol/tarde) grande y fijo a la derecha */
+.greeting-icon {
+  position: absolute;
+  right: 10px;
+  top: 35%;
+  transform: translateY(-50%);
+  font-size: 28px;
+  color: #f464c4;
+  animation: brillo-icono 2s infinite alternate;
+  filter: drop-shadow(0 0 6px #f464c4);
+}
+
+/* Brillo animado */
+@keyframes brillo-icono {
+  from {
+    filter: drop-shadow(0 0 2px #f464c4);
+  }
+  to {
+    filter: drop-shadow(0 0 10px #f464c4);
+  }
+}

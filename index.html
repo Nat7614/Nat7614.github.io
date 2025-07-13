@@ -7,37 +7,45 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" defer></script>
     <script src="https://www.youtube.com/iframe_api" defer></script>
+
+<!-- Topbar debe ir FUERA de las secciones -->
+     <link rel="stylesheet" href="home section.css">
+<div class="topbar">
+  <div class="app-left">
+    <img src="images/spottrack logo.png" alt="Spottrack Icon" class="app-icon">
+    <span class="app-name">Spottrack</span>
+  </div>
+  <span class="app-version" id="spottrack-version">v4.2</span>
+</div>
+<p>ㅤ</p>
+<p>ㅤ</p>
 </head>
 <body>
     <main id="main-content">
+
          <!-- Apartado de Inicio -->
 <section id="home-section" class="section">
-    <link rel="stylesheet" href="home section.css">
-    <div class="topbar">
-    <div class="app-left">
-        <img src="images/spottrack logo.png" alt="Spottrack Icon" class="app-icon">
-        <span class="app-name">Spottrack</span>
+    
+
+<!-- Sección de Bienvenida Dinámica -->
+ <link rel="stylesheet" href="welcome.css">
+<section class="welcome-section">
+  <div class="welcome-content">
+    <div class="user-icon-container">
+      <i class="fas fa-user-circle user-icon"></i>
     </div>
-    <span class="app-version" id="spottrack-version">v4.2</span>
-</div>
-
-
-
-
-
-
-<!-- Sección de Novedades -->
-<div class="news-section">
-    <div class="news-carousel">
-        <img src="images/novedad1.jpg" alt="Novedad 1" class="active">
-        <img src="images/novedad2.jpg" alt="Novedad 2">
-        <img src="images/novedad3.jpg" alt="Novedad 3">
+    <div class="greeting-text">
+      <h2 id="greeting">¡Buenas noches!</h2>
+      <p id="suggestion">¿Qué escucharás esta noche?</p>
     </div>
-</div>
-<script src="news section.js"></script>
-<link rel="stylesheet" href="news section.css">
+    <!-- Este ícono se llenará desde JavaScript -->
+    <i id="greetingIcon" class="greeting-icon fas fa-moon"></i>
+  </div>
+</section>
+<script src="welcome.js"></script>
 
 
+<p>ㅤ</p>
 
 <!-- Sección de Escuchadas Recientemente -->
 <link rel="stylesheet" href="recientes.css">

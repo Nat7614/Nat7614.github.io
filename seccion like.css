@@ -1,0 +1,80 @@
+/* Estilo general del modal */
+#likes-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  background-color: #121212;
+  color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Encabezado del modal */
+#likes-modal .modal-header {
+  padding: 16px;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: #1db954;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Botón de cerrar (X) */
+#likes-modal .close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* Contenido principal */
+#likes-modal .modal-content {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Lista de canciones */
+#liked-songs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Cada canción */
+.liked-song {
+  padding: 12px;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.2s;
+}
+
+.liked-song:hover {
+  background-color: #2a2a2a;
+}
+
+/* Título de la canción */
+.liked-song .title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Artista */
+.liked-song .artist {
+  font-size: 14px;
+  color: #ccc;
+}
