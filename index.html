@@ -323,235 +323,229 @@
 
         </section>
 
+
+        
+
 <!-- Apartado de Ajustes -->
 <section id="settings-section" class="section hidden">
+  <link rel="stylesheet" href="firebase.css">
+  <link rel="stylesheet" href="sleep timer.css">
+  <link rel="stylesheet" href="borrar recientes.css">
 
-    <link rel="stylesheet" href="firebase.css">
-    <link rel="stylesheet" href="sleep timer.css">
-    <link rel="stylesheet" href="borrar recientes.css">
+  <!-- Panel de Inicio de Sesión -->
+  <div class="container login-container" id="login-container">
+    <h2>Iniciar Sesión</h2>
+    <input type="email" id="login-email" placeholder="Correo electrónico">
+    <input type="password" id="login-password" placeholder="Contraseña">
+    <div class="g-recaptcha" data-sitekey="6LfVo-EqAAAAAKnO-lj24zrEW9N7f0pwokBrMQYf"></div>
+    <style>
+      .g-recaptcha {
+        width: 101% !important;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: center;
+      }
+      .g-recaptcha iframe {
+        transform: scale(85%);
+        transform-origin: 1 0;
+      }
+      @media (min-width: 400px) and (max-width: 767px) {
+        .g-recaptcha {
+          width: 97% !important;
+          justify-content: center;
+        }
+        .g-recaptcha iframe {
+          transform: scale(105%);
+          transform-origin: 0 0;
+        }
+      }
+      @media (min-width: 768px) {
+        .g-recaptcha {
+          width: 100% !important;
+        }
+        .g-recaptcha iframe {
+          transform: scale(0.95);
+          transform-origin: 0 0;
+        }
+      }
+    </style>
+    <button id="loginBtn">Iniciar Sesión</button>
+    <p class="mensaje" id="mensajeLogin"></p>
+    <p class="registro-link">¿No tienes cuenta? <a href="https://spottrack-web.github.io">Crea una ya</a></p>
+  </div>
 
-    <!-- Panel de Inicio de Sesión -->
-    <div class="container login-container" id="login-container">
-        <h2>Iniciar Sesión</h2>
-        <input type="email" id="login-email" placeholder="Correo electrónico">
-        <input type="password" id="login-password" placeholder="Contraseña">
+  <!-- Panel de Perfil (con todos los ajustes integrados) -->
+  <div class="container perfil-container" id="perfil-container" style="display: none;">
+    <h2>Perfil</h2>
+    <div class="profile-picture" id="profile-container">
+      <img id="profile-img" src="" alt="Foto de perfil" class="empty">
+      <span id="plus-icon">+</span>
+      <input type="file" id="file-input" accept="image/png" style="display: none;">
+    </div>
+    <h3 id="username">Nombre de usuario</h3>
+    <button id="change-photo">Cambiar foto de perfil</button>
 
-        <!-- Formulario con reCAPTCHA -->
-        <div class="g-recaptcha" data-sitekey="6LfVo-EqAAAAAKnO-lj24zrEW9N7f0pwokBrMQYf"></div>
-
-        <style>
-            .g-recaptcha {
-                width: 101% !important;
-                margin-top: 10px;
-                margin-bottom: 10px;
-                display: flex;
-                justify-content: center;
-            }
-            .g-recaptcha iframe {
-                transform: scale(85%);
-                transform-origin: 1 0;
-            }
-            @media (min-width: 400px) and (max-width: 767px) {
-                .g-recaptcha {
-                    width: 97% !important;
-                    justify-content: center;
-                }
-                .g-recaptcha iframe {
-                    transform: scale(105%);
-                    transform-origin: 0 0;
-                }
-            }
-            @media (min-width: 768px) {
-                .g-recaptcha {
-                    width: 100% !important;
-                }
-                .g-recaptcha iframe {
-                    transform: scale(0.95);
-                    transform-origin: 0 0;
-                }
-            }
-        </style>
-
-        <button id="loginBtn">Iniciar Sesión</button>
-        <p class="mensaje" id="mensajeLogin"></p>
-        <p class="registro-link">¿No tienes cuenta? <a href="https://spottrack-web.github.io">Crea una ya</a></p>
+    <!-- Cambio de Nombre de Usuario -->
+    <div id="change-username-container" style="display: none;">
+      <input type="text" id="new-username" placeholder="Nuevo Nombre de Usuario">
+      <button id="save-username">Guardar</button>
     </div>
 
-    <!-- Panel de Perfil -->
-    <div class="container perfil-container" id="perfil-container" style="display: none;">
-        <h2>Perfil</h2>
-        <div class="profile-picture" id="profile-container">
-            <img id="profile-img" src="" alt="Foto de perfil" class="empty">
-            <span id="plus-icon">+</span>
-            <input type="file" id="file-input" accept="image/png" style="display: none;">
-        </div>
-        <h3 id="username">Nombre de usuario</h3>
-        <button id="change-photo">Cambiar foto de perfil</button>
+    <button id="change-username">Cambiar nombre de usuario</button>
+    <button id="logoutBtn" class="logout">Cerrar sesión</button>
 
-        <div id="change-username-container" style="display: none;">
-            <input type="text" id="new-username" placeholder="Nuevo Nombre de Usuario">
-            <button id="save-username">Guardar</button>
-        </div>
-
-        <button id="change-username">Cambiar nombre de usuario</button>
-        <button id="logoutBtn" class="logout">Cerrar sesión</button>
-
-        <div class="premium-panel">
-            <h3 id="premium-status">Spottrack Premium</h3>
-            <p id="premium-description">Mejora tu experiencia con Spottrack Premium por tan solo 0,95 USD al mes.</p>
-            <div id="paypal-button-container"></div>
-        </div>
+    <div class="premium-panel">
+      <h3 id="premium-status">Spottrack Premium</h3>
+      <p id="premium-description">Mejora tu experiencia con Spottrack Premium por tan solo 0,95 USD al mes.</p>
+      <div id="paypal-button-container"></div>
     </div>
 
-    <!-- Ajustes (ocultos al inicio) -->
-    <div id="settings-options-container" style="display: none;">
-        <hr>
-        <h2>Ajustar reproducción</h2>
-        <div class="settings-option">
-            <div class="toggle-container">
-                <label for="pause-on-lock">Canción en segundo plano</label>
-                <input type="checkbox" id="pause-on-lock" checked>
-                <span class="icon"></span>
-            </div>
-        </div>
-
-        <div class="settings-option">
-            <div class="toggle-container">
-                <label for="data-saving-mode">Economizador de datos</label>
-                <input type="checkbox" id="data-saving-mode">
-                <span class="icon"></span>
-            </div>
-        </div>
-
-        <hr>
-        <h2>Ajustes premium</h2>
-        <div class="settings-option">
-            <div class="toggle-container">
-                <label for="sleep-timer-toggle">Sleep Timer</label>
-                <input type="checkbox" id="sleep-timer-toggle">
-                <span class="icon"></span>
-            </div>
-        </div>
-
-        <!-- Menú Sleep Timer -->
-        <div id="sleep-timer-menu" class="sleep-timer-menu" style="display: none;">
-            <h3>Configurar Sleep Timer</h3>
-            <div class="custom-time">
-                <label>Tiempo personalizado</label>
-                <input type="number" id="custom-hours" placeholder="Horas" min="0" max="24">
-                <input type="number" id="custom-minutes" placeholder="Minutos" min="0" max="59">
-                <input type="number" id="custom-seconds" placeholder="Segundos" min="0" max="59">
-            </div>
-            <div class="buttons">
-                <button onclick="setCustomSleepTimer()" class="accept-btn">Aceptar</button>
-                <button onclick="cancelSleepTimer()" class="cancel-btn">Cancelar</button>
-            </div>
-            <p id="confirmation-message" class="confirmation-message"></p>
-        </div>
-
-        <hr>
-        <h2>Ajustes de privacidad</h2>
-        <div class="settings-option" id="borrar-recientes-btn">
-            <div class="toggle-container">
-                <label>Borrar últimas escuchadas</label>
-                <span class="icon" style="font-size: 20px; color: #c0392b;">
-                    <i class="fas fa-trash-alt"></i>
-                </span>
-            </div>
-        </div>
-
-        <!-- Menú flotante borrar -->
-        <div class="borrar-menu" id="borrar-menu">
-            <h3>Borrar datos</h3>
-            <p>¿Deseas borrar las canciones escuchadas recientemente?</p>
-            <div class="buttons">
-                <button class="accept-btn" onclick="confirmarBorrado()">Sí, borrar</button>
-                <button class="cancel-btn" onclick="cerrarMenu()">Cancelar</button>
-            </div>
-            <div class="confirmation-message" id="mensaje-confirmacion">
-                Se borraron las últimas escuchadas, requiere reinicio.
-            </div>
-        </div>
+    <!-- Ajustar Reproducción -->
+    <hr>
+    <h2>Ajustar reproducción</h2>
+    <div class="settings-option">
+      <div class="toggle-container">
+        <label for="pause-on-lock">Canción en segundo plano</label>
+        <input type="checkbox" id="pause-on-lock" checked>
+        <span class="icon"></span>
+      </div>
     </div>
 
-    <!-- Scripts específicos -->
-    <script type="module" src="firebase.js"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id=AXxgsqCoEER-XS1VOEgzeABCMh9P_YOD2kNjAy9fkJsFdI1ZJGG3_0TIXkOQY-gJC4fcz4K907auxIxC&vault=true&intent=subscription"></script>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script src="segundo plano.js" defer></script>
-    <script src="ahorro de datos.js" defer></script>
-    <script src="borrar recientes.js" defer></script>
+    <div class="settings-option">
+      <div class="toggle-container">
+        <label for="data-saving-mode">Economizador de datos</label>
+        <input type="checkbox" id="data-saving-mode">
+        <span class="icon"></span>
+      </div>
+    </div>
 
-    <!-- Sleep Timer Script -->
-    <script>
-        let sleepTimer;
-        let isSleepTimerActive = false;
+    <!-- Ajustes Premium -->
+    <hr>
+    <h2>Ajustes premium</h2>
+    <div class="settings-option">
+      <div class="toggle-container">
+        <label for="sleep-timer-toggle">Sleep Timer</label>
+        <input type="checkbox" id="sleep-timer-toggle">
+        <span class="icon"></span>
+      </div>
+    </div>
 
-        document.getElementById("sleep-timer-toggle").addEventListener("change", function () {
-            const menu = document.getElementById("sleep-timer-menu");
-            const premiumStatus = document.getElementById("premium-status").innerText.trim();
+    <!-- Menú Sleep Timer -->
+    <div id="sleep-timer-menu" class="sleep-timer-menu" style="display: none;">
+      <h3>Configurar Sleep Timer</h3>
+      <div class="custom-time">
+        <label>Tiempo personalizado</label>
+        <input type="number" id="custom-hours" placeholder="Horas" min="0" max="24">
+        <input type="number" id="custom-minutes" placeholder="Minutos" min="0" max="59">
+        <input type="number" id="custom-seconds" placeholder="Segundos" min="0" max="59">
+      </div>
+      <div class="buttons">
+        <button onclick="setCustomSleepTimer()" class="accept-btn">Aceptar</button>
+        <button onclick="cancelSleepTimer()" class="cancel-btn">Cancelar</button>
+      </div>
+      <p id="confirmation-message" class="confirmation-message"></p>
+    </div>
 
-            if (!premiumStatus.includes("Spottrack Premium: Activa")) {
-                alert("Necesitas Spottrack Premium para usar esta función...");
-                this.checked = false;
-                return;
-            }
+    <!-- Ajustes de privacidad -->
+    <hr>
+    <h2>Ajustes de privacidad</h2>
+    <div class="settings-option" id="borrar-recientes-btn">
+      <div class="toggle-container">
+        <label>Borrar últimas escuchadas</label>
+        <span class="icon" style="font-size: 20px; color: #c0392b;">
+          <i class="fas fa-trash-alt"></i>
+        </span>
+      </div>
+    </div>
 
-            if (isSleepTimerActive) {
-                cancelSleepTimer();
-            } else {
-                menu.style.display = this.checked ? "block" : "none";
-            }
-        });
+    <!-- Menú flotante borrar -->
+    <div class="borrar-menu" id="borrar-menu">
+      <h3>Borrar datos</h3>
+      <p>¿Deseas borrar las canciones escuchadas recientemente?</p>
+      <div class="buttons">
+        <button class="accept-btn" onclick="confirmarBorrado()">Sí, borrar</button>
+        <button class="cancel-btn" onclick="cerrarMenu()">Cancelar</button>
+      </div>
+      <div class="confirmation-message" id="mensaje-confirmacion">
+        Se borraron las últimas escuchadas, requiere reinicio.
+      </div>
+    </div>
+  </div>
 
-        function setCustomSleepTimer() {
-            let hours = parseInt(document.getElementById("custom-hours").value) || 0;
-            let minutes = parseInt(document.getElementById("custom-minutes").value) || 0;
-            let seconds = parseInt(document.getElementById("custom-seconds").value) || 0;
+  <!-- Scripts -->
+  <script type="module" src="firebase.js"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=AXxgsqCoEER-XS1VOEgzeABCMh9P_YOD2kNjAy9fkJsFdI1ZJGG3_0TIXkOQY-gJC4fcz4K907auxIxC&vault=true&intent=subscription"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src="segundo plano.js" defer></script>
+  <script src="ahorro de datos.js" defer></script>
+  <script src="borrar recientes.js" defer></script>
+  <script>
+    let sleepTimer;
+    let isSleepTimerActive = false;
 
-            if (hours > 24 || (hours === 24 && (minutes > 59 || seconds > 59))) {
-                alert("El tiempo máximo permitido es 24h 59m 59s.");
-                return;
-            }
+    document.getElementById("sleep-timer-toggle").addEventListener("change", function () {
+      const menu = document.getElementById("sleep-timer-menu");
+      const premiumStatus = document.getElementById("premium-status").innerText.trim();
 
-            let totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+      if (!premiumStatus.includes("Spottrack Premium: Activa")) {
+        alert("Necesitas Spottrack Premium para usar esta función...");
+        this.checked = false;
+        return;
+      }
 
-            if (totalSeconds > 0 && totalSeconds <= 89999) {
-                startSleepTimer(totalSeconds);
-            } else {
-                alert("Por favor, introduce un tiempo válido.");
-            }
-        }
+      if (isSleepTimerActive) {
+        cancelSleepTimer();
+      } else {
+        menu.style.display = this.checked ? "block" : "none";
+      }
+    });
 
-        function startSleepTimer(seconds) {
-            clearTimeout(sleepTimer);
-            sleepTimer = setTimeout(() => {
-                location.reload();
-            }, seconds * 1000);
+    function setCustomSleepTimer() {
+      let hours = parseInt(document.getElementById("custom-hours").value) || 0;
+      let minutes = parseInt(document.getElementById("custom-minutes").value) || 0;
+      let seconds = parseInt(document.getElementById("custom-seconds").value) || 0;
 
-            const confirmationMessage = document.getElementById("confirmation-message");
-            confirmationMessage.textContent = `Sleep Timer activado. La app se reiniciará en ${Math.floor(seconds / 60)} minutos.`;
-            confirmationMessage.style.opacity = "1";
+      if (hours > 24 || (hours === 24 && (minutes > 59 || seconds > 59))) {
+        alert("El tiempo máximo permitido es 24h 59m 59s.");
+        return;
+      }
 
-            setTimeout(() => {
-                confirmationMessage.style.opacity = "0";
-                document.getElementById("sleep-timer-menu").style.display = "none";
-            }, 2000);
+      let totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
 
-            isSleepTimerActive = true;
-        }
+      if (totalSeconds > 0 && totalSeconds <= 89999) {
+        startSleepTimer(totalSeconds);
+      } else {
+        alert("Por favor, introduce un tiempo válido.");
+      }
+    }
 
-        function cancelSleepTimer() {
-            clearTimeout(sleepTimer);
-            isSleepTimerActive = false;
-            document.getElementById("sleep-timer-toggle").checked = false;
-            document.getElementById("sleep-timer-menu").style.display = "none";
-        }
-    </script>
+    function startSleepTimer(seconds) {
+      clearTimeout(sleepTimer);
+      sleepTimer = setTimeout(() => {
+        location.reload();
+      }, seconds * 1000);
 
+      const confirmationMessage = document.getElementById("confirmation-message");
+      confirmationMessage.textContent = `Sleep Timer activado. La app se reiniciará en ${Math.floor(seconds / 60)} minutos.`;
+      confirmationMessage.style.opacity = "1";
+
+      setTimeout(() => {
+        confirmationMessage.style.opacity = "0";
+        document.getElementById("sleep-timer-menu").style.display = "none";
+      }, 2000);
+
+      isSleepTimerActive = true;
+    }
+
+    function cancelSleepTimer() {
+      clearTimeout(sleepTimer);
+      isSleepTimerActive = false;
+      document.getElementById("sleep-timer-toggle").checked = false;
+      document.getElementById("sleep-timer-menu").style.display = "none";
+    }
+  </script>
 </section>
-
-
 
 
   </main>
