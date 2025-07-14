@@ -135,34 +135,38 @@
 </div>     
 
 <p>‎‎ <p>
-    <link rel="stylesheet" href="redes.css">
 
+
+
+    <link rel="stylesheet" href="redes.css">
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <!-- Contenedor principal -->
 <div class="social-wrapper">
-    <!-- Botones de redes -->
-    <div class="social-links">
-        <button class="social-btn" onclick="window.location.href='https://discord.gg/gkhFs4AUn6'">
-            <img src="images/discord-icon.png" alt="Discord">
-        </button>
-        <button class="social-btn" onclick="window.location.href='https://spottrack-web.github.io'">
-            <img src="images/spottrack-icon.png" alt="Spottrack Web">
-        </button>
-        <button class="social-btn" onclick="window.location.href='https://patreon.com/Spottrack'">
-            <img src="images/donation-icon.png" alt="Donar">
-        </button>
-        <button class="social-btn" onclick="window.location.href='https://youtube.com/@Spottrack-community'">
-            <img src="images/youtube-icon.png" alt="YouTube">
-        </button>
-        <button class="social-btn" onclick="window.location.href='https://twitter.com/10Subs8297'">
-            <img src="images/x-twitter-icon.png" alt="X Twitter">
-        </button>
-    </div>
-
-    <!-- Cartel del desarrollador -->
-    <div class="dev-footer">
-        <i class=""></i>© Dev NXS 2025
-    </div>
+  <div class="social-links">
+    <button class="social-btn" onclick="window.location.href='https://discord.gg/gkhFs4AUn6'">
+      <i class="fab fa-discord"></i>
+    </button>
+    <button class="social-btn" onclick="window.location.href='https://spottrack-web.github.io'">
+      <i class="fas fa-globe"></i>
+    </button>
+    <button class="social-btn" onclick="window.location.href='https://patreon.com/Spottrack'">
+      <i class="fas fa-hand-holding-heart"></i>
+    </button>
+    <button class="social-btn" onclick="window.location.href='https://youtube.com/@Spottrack-community'">
+      <i class="fab fa-youtube"></i>
+    </button>
+    <button class="social-btn" onclick="window.location.href='https://twitter.com/10Subs8297'">
+      <i class="fab fa-twitter"></i>
+    </button>
+  </div>
 </div>
+<!-- Footer del desarrollador pegado -->
+<div class="dev-footer">
+  <i class=""></i>© Dev NXS 2025 Todos los derechos reservados.
+</div>
+
+
 
 </div>
 </div>
@@ -321,403 +325,175 @@
 
 <!-- Apartado de Ajustes -->
 <section id="settings-section" class="section hidden">
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Spottrack - Iniciar Sesión</title>
-        <link rel="stylesheet" href="firebase.css">
-        <script type="module">
-            // Firebase Configuración
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
-            import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
-            import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js";
-            import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-storage.js";
-    
-            // Configuración de Firebase
-            const firebaseConfig = {
-                apiKey: "AIzaSyABdWdjdSTf33W6zaInDznc8HUWZE2KZ6w",
-                authDomain: "spottrack-888de.firebaseapp.com",
-                projectId: "spottrack-888de",
-                storageBucket: "spottrack-888de.appspot.com",
-                messagingSenderId: "641511662246",
-                appId: "1:641511662246:web:c4c3225daae5edf4ea4a67"
-            };
-    
-            // Inicialización de Firebase
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth(app);
-            const db = getFirestore(app);
-            const storage = getStorage(app);
-    
-            // Manejo de Estado de Autenticación
-onAuthStateChanged(auth, async (user) => {
-    if (user) {
-        document.getElementById("login-container").style.display = "none";
-        document.getElementById("perfil-container").style.display = "block";
 
-        const userDoc = await getDoc(doc(db, "usuarios", user.uid));
-        if (userDoc.exists()) {
-            const userData = userDoc.data();
-            document.getElementById("username").innerText = userData.nombre || "Usuario";
-            document.getElementById("profile-img").src = userData.foto || "";
-            document.getElementById("plus-icon").style.display = userData.foto ? "none" : "block";
-
-            const premiumStatus = document.getElementById("premium-status");
-            const premiumDescription = document.getElementById("premium-description");
-            const paypalContainer = document.getElementById("paypal-button-container");
-
-            if (userData.premium) {
-    premiumStatus.innerHTML = `
-        <div style="
-                color: #00c853;
-                font-weight: bold;
-                font-size: 18px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                text-align: center;
-                margin-bottom: 10px;
-            ">
-                Spottrack Premium: Activa
-            </div>
-            <div style="
-                font-size: 14px;
-                line-height: 1.5;
-                color: #ccc;
-                text-align: left;
-            ">
-                Felicidades, eres usuario premium de Spottrack. Obtienes las siguientes ventajas:
-                <ul style="padding-left: 20px; margin: 10px 0 0 0;">
-                    <li>Puedes indicar el inicio y fin de una canción.</li>
-                    <li>Puedes establecer un tiempo límite para que la música se detenga.</li>
-                    <li>Obtienes un rol especial y ventajas en nuestro servidor de Discord.</li>
-                </ul>
-            </div>
-        </div>
-    `;
-    premiumStatus.style.display = "block";
-
-
-// Añadir una animación profesional
-premiumStatus.classList.add("premium-active");
-
-                
-                premiumDescription.style.display = "none"; // Ocultar descripción
-                paypalContainer.style.display = "none"; // Ocultar botón de PayPal
-            } else {
-                premiumStatus.innerText = "Spottrack Premium";
-                premiumStatus.style.color = "white";
-                premiumStatus.style.fontWeight = "normal";
-
-                premiumDescription.style.display = "block"; // Mostrar descripción
-                paypalContainer.style.display = "block"; // Mostrar botón de PayPal
-            }
-        }
-    } else {
-        document.getElementById("login-container").style.display = "block";
-        document.getElementById("perfil-container").style.display = "none";
-    }
-});
-
-    
-            // Inicio de Sesión
-document.getElementById("loginBtn").addEventListener("click", async () => {
-    const email = document.getElementById("login-email").value;
-    const password = document.getElementById("login-password").value;
-    const mensajeLogin = document.getElementById("mensajeLogin");
-
-    // Verificar si los campos de correo y contraseña están completos
-    if (!email || !password) {
-        mensajeLogin.innerText = "Por favor, completa todos los campos.";
-        mensajeLogin.style.color = "red";
-        return;
-    }
-
-    // Verificar si el reCAPTCHA fue completado
-    const recaptchaResponse = grecaptcha.getResponse(); // Obtener la respuesta del reCAPTCHA
-
-    if (recaptchaResponse.length === 0) {
-        mensajeLogin.innerText = "Por favor, completa el reCAPTCHA.";
-        mensajeLogin.style.color = "red";
-        return;
-    }
-
-    // Mostrar mensaje de "Iniciando sesión..."
-    mensajeLogin.innerText = "Iniciando sesión...";
-    mensajeLogin.style.color = "blue";
-
-    try {
-        // Intentar iniciar sesión con Firebase
-        await signInWithEmailAndPassword(auth, email, password);
-
-        // Ocultar el contenedor de login y mostrar el contenedor de perfil
-        document.getElementById("login-container").style.display = "none";
-        document.getElementById("perfil-container").style.display = "block";
-    } catch (error) {
-        // Mostrar mensaje de error si la autenticación falla
-        mensajeLogin.innerText = "Error: " + error.message;
-        mensajeLogin.style.color = "red";
-    }
-});
-
-    
-            // Cambio de Foto de Perfil
-            document.getElementById("change-photo").addEventListener("click", () => {
-                document.getElementById("file-input").click();
-            });
-    
-            // Subir Foto de Perfil
-            document.getElementById("file-input").addEventListener("change", async (event) => {
-                const file = event.target.files[0];
-                if (file && file.type.startsWith("image/")) {
-                    const storageRef = ref(storage, `profile_pictures/${auth.currentUser.uid}`);
-                    const uploadResult = await uploadBytes(storageRef, file);
-                    const photoURL = await getDownloadURL(uploadResult.ref);
-    
-                    await updateDoc(doc(db, "usuarios", auth.currentUser.uid), { foto: photoURL });
-                    document.getElementById("profile-img").src = photoURL;
-                    document.getElementById("plus-icon").style.display = "none";
-                } else {
-                }
-            });
-    
-            // Cambio de Nombre de Usuario
-            document.getElementById("change-username").addEventListener("click", () => {
-                document.getElementById("change-username-container").style.display = "block";
-            });
-    
-            // Guardar Nuevo Nombre de Usuario
-            document.getElementById("save-username").addEventListener("click", async () => {
-                const newUsername = document.getElementById("new-username").value;
-                if (newUsername.trim() !== "") {
-                    await updateDoc(doc(db, "usuarios", auth.currentUser.uid), { nombre: newUsername });
-                    document.getElementById("username").innerText = newUsername;
-                    document.getElementById("change-username-container").style.display = "none";
-                } else {
-                    alert("El nombre no puede estar vacío.");
-                }
-            });
-    
-            // Cerrar Sesión
-            document.getElementById("logoutBtn").addEventListener("click", () => {
-                signOut(auth).then(() => {
-                    document.getElementById("perfil-container").style.display = "none";
-                    document.getElementById("login-container").style.display = "block";
-                });
-            });
-    
-            // Integración con PayPal para Spottrack Premium
-            paypal.Buttons({
-                style: { shape: 'pill', color: 'gold', layout: 'vertical', label: 'subscribe', height: 40 },
-                createSubscription: function(data, actions) {
-                    return actions.subscription.create({ plan_id: 'P-6GC75737B9128194DM6R5U3Y' });
-                },
-                onApprove: async function(data, actions) {
-                    const user = auth.currentUser;
-                    if (user) {
-                        const expiration = Date.now() + 30 * 24 * 60 * 60 * 1000;
-                        await updateDoc(doc(db, "usuarios", user.uid), { premium: true, expira: expiration });
-    
-                        document.getElementById("paypal-button-container").style.display = "none";
-                        document.getElementById("premium-status").innerText = "Spottrack Premium: Activa";
-                    }
-                }
-            }).render('#paypal-button-container');
-        </script>
-    </head>
-    <body>
-        <!-- Panel de Inicio de Sesión -->
-        <div class="container login-container" id="login-container">
-            <h2>Iniciar Sesión</h2>
-            <input type="email" id="login-email" placeholder="Correo electrónico">
-            <input type="password" id="login-password" placeholder="Contraseña">
-
-      <!-- Cargar el script de reCAPTCHA -->
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-
-<!-- Formulario con reCAPTCHA -->
-<form action="/tu_backend" method="POST">
-    <!-- Otros campos del formulario, como correo y contraseña -->
-
-    <!-- El widget reCAPTCHA -->
-    <div class="g-recaptcha" data-sitekey="6LfVo-EqAAAAAKnO-lj24zrEW9N7f0pwokBrMQYf"></div>
-</form>
-
-
-<style>
-
-/* Estilo específico para el reCAPTCHA */
-    .g-recaptcha {
-        width: 101% !important; /* Asegura que se ajuste al ancho del formulario */
-        margin-top: 10px;
-        margin-bottom: 10px;
-        display: flex;
-        justify-content: center; /* Centra el recaptcha en su contenedor */
-    }
-    
-    /* Opcional: ajustar el tamaño del contenedor reCAPTCHA si sigue sobresaliendo */
-    .g-recaptcha iframe {
-        transform: scale(85%); /* Ajusta el tamaño para que se vea más pequeño si es necesario */
-        transform-origin: 1 0; /* Mantiene la alineación en la esquina superior izquierda */
-    }
-    
-    
-/* 📱 Teléfonos modernos (400px a 767px) */
-@media (min-width: 400px) and (max-width: 767px) {
-    .g-recaptcha {
-        width: 97% !important;
-        justify-content: center;
-    }
-
-    .g-recaptcha iframe {
-        transform: scale(105%);
-        transform-origin: 0 0;
-    }
-}
-
-/* 💻 Tablets y pantallas grandes (768px en adelante) */
-@media (min-width: 768px) {
-    .g-recaptcha {
-        width: 100% !important;
-    }
-
-    .g-recaptcha iframe {
-        transform: scale(0.95);
-        transform-origin: 0 0;
-    }
-}
-
-    </style>
-
-            <button id="loginBtn">Iniciar Sesión</button>
-            <p>‎ </p>
-            <p class="mensaje" id="mensajeLogin"></p>
-            <p class="registro-link">¿No tienes cuenta? <a href="https://spottrack-web.github.io">Crea una ya</a></p>
-        </div>
-    
-        <!-- Panel de Perfil -->
-        <div class="container perfil-container" id="perfil-container" style="display: none;">
-            <h2>Perfil</h2>
-            <p>‎ </p>
-            <p>‎ </p>
-            <div class="profile-picture" id="profile-container">
-                <img id="profile-img" src="" alt="Foto de perfil" class="empty">
-                <span id="plus-icon">+</span>
-                <input type="file" id="file-input" accept="image/png" style="display: none;">
-            </div>
-            <p>‎ </p>
-            <h3 id="username">Nombre de usuario</h3>
-            <p>‎ </p>
-            <button id="change-photo">Cambiar foto de perfil</button>
-    
-            <!-- Cambio de Nombre de Usuario -->
-            <div id="change-username-container" style="display: none;">
-                <input type="text" id="new-username" placeholder="Nuevo Nombre de Usuario">
-                <button id="save-username">Guardar</button>
-            </div>
-    
-            <button id="change-username">Cambiar nombre de usuario</button>
-            <button id="logoutBtn" class="logout">Cerrar sesión</button>
-    
-            <div class="premium-panel">
-                <h3 id="premium-status">Spottrack Premium</h3>
-                <p>‎ </p>
-                <p id="premium-description">Mejora tu experiencia con Spottrack Premium por tan solo 0,95 USD al mes.</p>
-                <p>‎ </p>
-                <div id="paypal-button-container"></div>
-            </div>
-            
-    
-            
-    
-        <!-- Scripts -->
-        <script src="https://www.paypal.com/sdk/js?client-id=AXxgsqCoEER-XS1VOEgzeABCMh9P_YOD2kNjAy9fkJsFdI1ZJGG3_0TIXkOQY-gJC4fcz4K907auxIxC&vault=true&intent=subscription"></script>
-    </body>
-    </html>
-      
-<p>____________________________________</p>
-<p>‎ 
-  <h2>‎ ‎Ajustar reproduccion</h2>
-<!-- Opción para detener música cuando el dispositivo se apaga -->
-<script src="segundo plano.js" defer></script>
-
-<div class="settings-option">
-    <div class="toggle-container">
-        <label for="pause-on-lock">Canción en segundo plano</label>
-        <input type="checkbox" id="pause-on-lock" checked>
-        <span class="icon"></span>
-    </div>
-</div>
-
-
-<!-- Opción de ahorro de datos -->
- <script src="ahorro de datos.js"></script>
-<div class="settings-option">
-    <div class="toggle-container">
-        <label for="data-saving-mode">Economizador de datos</label>
-        <input type="checkbox" id="data-saving-mode">
-        <span class="icon"></span>
-    </div>
-</div>
-
-<p>____________________________________</p>
-<p>‎ </p>
-<h2>Ajustes premium</h2>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleep Timer</title>
+    <link rel="stylesheet" href="firebase.css">
     <link rel="stylesheet" href="sleep timer.css">
-</head>
-<body>
-    <!-- Opción de Sleep Timer -->
-    <div class="settings-option">
-        <div class="toggle-container">
-            <label for="sleep-timer-toggle">Sleep Timer</label>
-            <input type="checkbox" id="sleep-timer-toggle">
-            <span class="icon"></span>
+    <link rel="stylesheet" href="borrar recientes.css">
+
+    <!-- Panel de Inicio de Sesión -->
+    <div class="container login-container" id="login-container">
+        <h2>Iniciar Sesión</h2>
+        <input type="email" id="login-email" placeholder="Correo electrónico">
+        <input type="password" id="login-password" placeholder="Contraseña">
+
+        <!-- Formulario con reCAPTCHA -->
+        <div class="g-recaptcha" data-sitekey="6LfVo-EqAAAAAKnO-lj24zrEW9N7f0pwokBrMQYf"></div>
+
+        <style>
+            .g-recaptcha {
+                width: 101% !important;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                display: flex;
+                justify-content: center;
+            }
+            .g-recaptcha iframe {
+                transform: scale(85%);
+                transform-origin: 1 0;
+            }
+            @media (min-width: 400px) and (max-width: 767px) {
+                .g-recaptcha {
+                    width: 97% !important;
+                    justify-content: center;
+                }
+                .g-recaptcha iframe {
+                    transform: scale(105%);
+                    transform-origin: 0 0;
+                }
+            }
+            @media (min-width: 768px) {
+                .g-recaptcha {
+                    width: 100% !important;
+                }
+                .g-recaptcha iframe {
+                    transform: scale(0.95);
+                    transform-origin: 0 0;
+                }
+            }
+        </style>
+
+        <button id="loginBtn">Iniciar Sesión</button>
+        <p class="mensaje" id="mensajeLogin"></p>
+        <p class="registro-link">¿No tienes cuenta? <a href="https://spottrack-web.github.io">Crea una ya</a></p>
+    </div>
+
+    <!-- Panel de Perfil -->
+    <div class="container perfil-container" id="perfil-container" style="display: none;">
+        <h2>Perfil</h2>
+        <div class="profile-picture" id="profile-container">
+            <img id="profile-img" src="" alt="Foto de perfil" class="empty">
+            <span id="plus-icon">+</span>
+            <input type="file" id="file-input" accept="image/png" style="display: none;">
+        </div>
+        <h3 id="username">Nombre de usuario</h3>
+        <button id="change-photo">Cambiar foto de perfil</button>
+
+        <div id="change-username-container" style="display: none;">
+            <input type="text" id="new-username" placeholder="Nuevo Nombre de Usuario">
+            <button id="save-username">Guardar</button>
+        </div>
+
+        <button id="change-username">Cambiar nombre de usuario</button>
+        <button id="logoutBtn" class="logout">Cerrar sesión</button>
+
+        <div class="premium-panel">
+            <h3 id="premium-status">Spottrack Premium</h3>
+            <p id="premium-description">Mejora tu experiencia con Spottrack Premium por tan solo 0,95 USD al mes.</p>
+            <div id="paypal-button-container"></div>
         </div>
     </div>
 
-    <!-- Menú flotante del Sleep Timer -->
-    <div id="sleep-timer-menu" class="sleep-timer-menu" style="display: none;">
-        <h3>Configurar Sleep Timer</h3>
-
-        <!-- Configuración personalizada -->
-        <div class="custom-time">
-            <label>Tiempo personalizado</label>
-            <input type="number" id="custom-hours" placeholder="Horas" min="0" max="24">
-            <input type="number" id="custom-minutes" placeholder="Minutos" min="0" max="59">
-            <input type="number" id="custom-seconds" placeholder="Segundos" min="0" max="59">
+    <!-- Ajustes (ocultos al inicio) -->
+    <div id="settings-options-container" style="display: none;">
+        <hr>
+        <h2>Ajustar reproducción</h2>
+        <div class="settings-option">
+            <div class="toggle-container">
+                <label for="pause-on-lock">Canción en segundo plano</label>
+                <input type="checkbox" id="pause-on-lock" checked>
+                <span class="icon"></span>
+            </div>
         </div>
 
-        <!-- Botones Aceptar / Cancelar alineados -->
-        <div class="buttons">
-            <button onclick="setCustomSleepTimer()" class="accept-btn">Aceptar</button>
-            <button onclick="cancelSleepTimer()" class="cancel-btn">Cancelar</button>
+        <div class="settings-option">
+            <div class="toggle-container">
+                <label for="data-saving-mode">Economizador de datos</label>
+                <input type="checkbox" id="data-saving-mode">
+                <span class="icon"></span>
+            </div>
         </div>
 
-        <!-- Mensaje de confirmación -->
-        <p id="confirmation-message" class="confirmation-message"></p>
+        <hr>
+        <h2>Ajustes premium</h2>
+        <div class="settings-option">
+            <div class="toggle-container">
+                <label for="sleep-timer-toggle">Sleep Timer</label>
+                <input type="checkbox" id="sleep-timer-toggle">
+                <span class="icon"></span>
+            </div>
+        </div>
+
+        <!-- Menú Sleep Timer -->
+        <div id="sleep-timer-menu" class="sleep-timer-menu" style="display: none;">
+            <h3>Configurar Sleep Timer</h3>
+            <div class="custom-time">
+                <label>Tiempo personalizado</label>
+                <input type="number" id="custom-hours" placeholder="Horas" min="0" max="24">
+                <input type="number" id="custom-minutes" placeholder="Minutos" min="0" max="59">
+                <input type="number" id="custom-seconds" placeholder="Segundos" min="0" max="59">
+            </div>
+            <div class="buttons">
+                <button onclick="setCustomSleepTimer()" class="accept-btn">Aceptar</button>
+                <button onclick="cancelSleepTimer()" class="cancel-btn">Cancelar</button>
+            </div>
+            <p id="confirmation-message" class="confirmation-message"></p>
+        </div>
+
+        <hr>
+        <h2>Ajustes de privacidad</h2>
+        <div class="settings-option" id="borrar-recientes-btn">
+            <div class="toggle-container">
+                <label>Borrar últimas escuchadas</label>
+                <span class="icon" style="font-size: 20px; color: #c0392b;">
+                    <i class="fas fa-trash-alt"></i>
+                </span>
+            </div>
+        </div>
+
+        <!-- Menú flotante borrar -->
+        <div class="borrar-menu" id="borrar-menu">
+            <h3>Borrar datos</h3>
+            <p>¿Deseas borrar las canciones escuchadas recientemente?</p>
+            <div class="buttons">
+                <button class="accept-btn" onclick="confirmarBorrado()">Sí, borrar</button>
+                <button class="cancel-btn" onclick="cerrarMenu()">Cancelar</button>
+            </div>
+            <div class="confirmation-message" id="mensaje-confirmacion">
+                Se borraron las últimas escuchadas, requiere reinicio.
+            </div>
+        </div>
     </div>
 
+    <!-- Scripts específicos -->
+    <script type="module" src="firebase.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AXxgsqCoEER-XS1VOEgzeABCMh9P_YOD2kNjAy9fkJsFdI1ZJGG3_0TIXkOQY-gJC4fcz4K907auxIxC&vault=true&intent=subscription"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="segundo plano.js" defer></script>
+    <script src="ahorro de datos.js" defer></script>
+    <script src="borrar recientes.js" defer></script>
+
+    <!-- Sleep Timer Script -->
     <script>
         let sleepTimer;
         let isSleepTimerActive = false;
 
-        document.getElementById("sleep-timer-toggle").addEventListener("change", function() {
+        document.getElementById("sleep-timer-toggle").addEventListener("change", function () {
             const menu = document.getElementById("sleep-timer-menu");
             const premiumStatus = document.getElementById("premium-status").innerText.trim();
 
             if (!premiumStatus.includes("Spottrack Premium: Activa")) {
-                alert("Necesitas Spottrack Premium para usar esta función con la que podras establecer un tiempo para que se reinicié la app, si te gusta escuchar musica por las noches pero no quieres que suene toda la noche con esta opcion la musica se detendra en el tiempo que tu quieras ¡Suscribete a Spottrack Premium y disfruta de la ventaja!.");
-                this.checked = false; // Desactiva el toggle
+                alert("Necesitas Spottrack Premium para usar esta función...");
+                this.checked = false;
                 return;
             }
 
@@ -743,7 +519,7 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
             if (totalSeconds > 0 && totalSeconds <= 89999) {
                 startSleepTimer(totalSeconds);
             } else {
-                alert("Por favor, introduce un tiempo válido (máx. 24h 59m 59s).");
+                alert("Por favor, introduce un tiempo válido.");
             }
         }
 
@@ -753,14 +529,14 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
                 location.reload();
             }, seconds * 1000);
 
-            let confirmationMessage = document.getElementById("confirmation-message");
+            const confirmationMessage = document.getElementById("confirmation-message");
             confirmationMessage.textContent = `Sleep Timer activado. La app se reiniciará en ${Math.floor(seconds / 60)} minutos.`;
             confirmationMessage.style.opacity = "1";
 
             setTimeout(() => {
-                confirmationMessage.style.opacity = "0"; 
-                document.getElementById("sleep-timer-menu").style.display = "none"; 
-            }, 2000); 
+                confirmationMessage.style.opacity = "0";
+                document.getElementById("sleep-timer-menu").style.display = "none";
+            }, 2000);
 
             isSleepTimerActive = true;
         }
@@ -772,47 +548,12 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
             document.getElementById("sleep-timer-menu").style.display = "none";
         }
     </script>
-</body>
-</html>
 
-
-<p>____________________________________</p>
-<p>‎ </p>
-<h2>Ajustes de privacidad</h2>
-
-<!-- Opción de Borrar Últimas Escuchadas -->
-<link rel="stylesheet" href="borrar recientes.css">
-<script src="borrar recientes.js" defer></script>
-
-<div class="settings-option" id="borrar-recientes-btn">
-    <div class="toggle-container">
-        <label>Borrar últimas escuchadas</label>
-        <span class="icon" style="font-size: 20px; color: #c0392b;">
-  <i class="fas fa-trash-alt"></i>
-</span>
-
-    </div>
-</div>
-
-<!-- Menú flotante de confirmación -->
-<div class="borrar-menu" id="borrar-menu">
-    <h3>Borrar datos</h3>
-    <p>‎</p>
-    <p>¿Deseas borrar las canciones escuchadas recientemente?</p>
-    <div class="buttons">
-        <button class="accept-btn" onclick="confirmarBorrado()">Sí, borrar</button>
-        <button class="cancel-btn" onclick="cerrarMenu()">Cancelar</button>
-    </div>
-    <div class="confirmation-message" id="mensaje-confirmacion">
-        Se borraron las últimas escuchadas, requiere reinicio.
-    </div>
-</div>
-
-
-
-
-</html>
 </section>
+
+
+
+
   </main>
 <p>‎ ‎ 
 <p>‎ 

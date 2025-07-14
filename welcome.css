@@ -1,4 +1,3 @@
-
 /* Subcontenedor tipo canción, más alto */
 .welcome-content {
   display: flex;
@@ -9,9 +8,10 @@
   border-radius: 6px;
   max-width: 600px;
   width: 100%;
-  height: 90px; /* más alto */
+  height: 90px;
   overflow: hidden;
   position: relative;
+  margin: 0 auto; /* Centrado lateral */
 }
 
 /* Icono de usuario */
@@ -20,9 +20,8 @@
   padding: 10px;
   border-radius: 6px;
   flex-shrink: 0;
-  margin-left: -30px; /* Desplaza el icono a la izquierda */
+  margin-left: -30px;
 }
-
 
 .user-icon {
   font-size: 50px;
@@ -34,6 +33,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-left: -10px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -71,5 +71,72 @@
   }
   to {
     filter: drop-shadow(0 0 10px #f464c4);
+  }
+}
+
+/* 📱 Media Query para teléfonos modernos (400px a 767px) */
+@media (min-width: 400px) and (max-width: 767px) {
+  .welcome-content {
+    width: 90%;
+    max-width: 600px;
+    padding: 14px 16px;
+    height: 95px;
+    gap: 10px;
+    margin: 0 auto; /* Centrado lateral */
+  }
+
+  .user-icon {
+    font-size: 55px;
+    margin-left: 50px;
+  }
+
+  .greeting-text {
+    margin-left: 0px;
+  }
+
+  .greeting-text h2 {
+    font-size: 1.2rem;
+  }
+
+  .greeting-text p {
+    font-size: 1rem;
+  }
+
+  .greeting-icon {
+    font-size: 30px;
+    right: 16px;
+  }
+}
+
+/* 💻 Media Query para tablets y pantallas grandes (768px en adelante) */
+@media (min-width: 768px) {
+  .welcome-content {
+    width: 85%;
+    max-width: 600px;
+    padding: 20px 24px;
+    height: 100px;
+    gap: 12px;
+    margin: 0 auto; /* Centrado lateral */
+  }
+
+  .user-icon {
+    font-size: 65px;
+  }
+
+  .greeting-text {
+    margin-left: 14px;
+  }
+
+  .greeting-text h2 {
+    font-size: 1.5rem;
+  }
+
+  .greeting-text p {
+    font-size: 1.1rem;
+  }
+
+  .greeting-icon {
+    font-size: 36px;
+    right: 18px;
   }
 }
