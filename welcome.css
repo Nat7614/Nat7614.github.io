@@ -2,7 +2,6 @@
 .welcome-content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   background: #0d0d22;
   padding: 20px 24px;
   border-radius: 6px;
