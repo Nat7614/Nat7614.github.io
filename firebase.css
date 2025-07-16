@@ -22,7 +22,7 @@
 
 /* Estilos de los botones */
 .container button {
-    width: calc(100% + 20px); /* más ancho que el contenedor */
+    width: 100%;
     padding: 12px;
     margin: 10px 0;
     background: linear-gradient(45deg, #8a2be2, #ff69b4, #00bfff);
@@ -30,7 +30,6 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transform: translateX(-10px); /* centra el botón con el nuevo ancho */
 }
 
 
