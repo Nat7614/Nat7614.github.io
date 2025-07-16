@@ -64,3 +64,11 @@ body {
         font-size: 1.1em;
     }
 }
+
+.topbar.hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.4s ease, opacity 0.4s ease, visibility 0.4s ease;
+}
