@@ -1,12 +1,18 @@
-// Esperar a que el DOM esté completamente cargado
 document.addEventListener("DOMContentLoaded", function () {
     const topbarToggle = document.getElementById("topbarToggle");
     const topbar = document.querySelector(".topbar");
 
     if (!topbarToggle || !topbar) return;
 
-    // Cargar la configuración guardada en localStorage
-    if (localStorage.getItem("hideTopbar") === "true") {
+    // Obtener el valor guardado (si existe)
+    const savedSetting = localStorage.getItem("hideTopbar");
+
+    // Si es la primera vez (no hay valor), ocultar la barra y activar el checkbox
+    if (savedSetting === null) {
+        topbarToggle.checked = true;
+        topbar.classList.add("hidden");
+        localStorage.setItem("hideTopbar", "true"); // Guardar como activado
+    } else if (savedSetting === "true") {
         topbarToggle.checked = true;
         topbar.classList.add("hidden");
     } else {
