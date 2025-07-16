@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Cargar configuración guardada
   const hideTopbar = localStorage.getItem("hideTopbar") === "true";
   toggle.checked = hideTopbar;
-  topbar.style.display = hideTopbar ? "none" : "flex";
+  topbar.classList.toggle("hidden", hideTopbar);
 });
 
 function toggleTopbarOption() {
@@ -13,11 +13,6 @@ function toggleTopbarOption() {
   const topbar = document.querySelector(".topbar");
   const shouldHide = toggle.checked;
 
-  if (shouldHide) {
-    topbar.style.display = "none";
-  } else {
-    topbar.style.display = "flex";
-  }
-
+  topbar.classList.toggle("hidden", shouldHide);
   localStorage.setItem("hideTopbar", shouldHide.toString());
 }
