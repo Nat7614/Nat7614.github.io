@@ -1,3 +1,11 @@
+/* 🔧 Desactivar highlight táctil (cuadro azul) globalmente */
+* {
+  -webkit-tap-highlight-color: transparent; /* Chrome, WebView Android */
+  tap-highlight-color: transparent;         /* Estándar */
+  outline: none;                            /* Quita el borde al presionar con teclado/mouse */
+}
+
+
 /* Notificación de error tipo Discord */
 #error-message {
     display: none;
@@ -75,7 +83,7 @@ body {
     max-width: 495px; /* Máximo ancho */
     padding: 15px;
     border-radius: 10px;
-    background-color: #0d0d22;
+    background-color: #000000;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
     cursor: pointer; /* Todo el contenedor es clicable */
     transition: background-color 0.3s ease;
