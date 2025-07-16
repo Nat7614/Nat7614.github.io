@@ -480,6 +480,15 @@
     </div>
   </div>
 
+  <!-- Opción para desactivar la barra superior -->
+<div class="settings-option" onclick="toggleTopbarOption()">
+  <div class="toggle-container">
+    <span>Desactivar barra superior</span>
+    <input type="checkbox" id="topbarToggle" />
+  </div>
+</div>
+
+
   <!-- Scripts -->
   <script type="module" src="firebase.js"></script>
   <script src="https://www.paypal.com/sdk/js?client-id=AXxgsqCoEER-XS1VOEgzeABCMh9P_YOD2kNjAy9fkJsFdI1ZJGG3_0TIXkOQY-gJC4fcz4K907auxIxC&vault=true&intent=subscription"></script>
@@ -487,6 +496,7 @@
   <script src="segundo plano.js" defer></script>
   <script src="ahorro de datos.js" defer></script>
   <script src="borrar recientes.js" defer></script>
+  <script src="home-section.js"></script>
   <script>
     let sleepTimer;
     let isSleepTimerActive = false;
