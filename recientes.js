@@ -8,6 +8,7 @@ import {
   arrayRemove,
   setDoc
 } from 'https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js';
+import 'https://www.gstatic.com/firebasejs/9.1.2/firebase-storage.js'; // ← añadida como pediste
 
 document.addEventListener('DOMContentLoaded', () => {
     const lista = document.querySelector('.recientes-lista');
