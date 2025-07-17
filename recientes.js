@@ -1,11 +1,12 @@
 import { auth, db } from './firebase.js';
-    doc,
-  getDoc,
-  updateDoc,
-  arrayUnion,
-  arrayRemove
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js';
-import {
+import { 
+  doc, 
+  getDoc, 
+  updateDoc, 
+  arrayUnion, 
+  arrayRemove,
+  setDoc
 } from 'https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js';
 
 document.addEventListener('DOMContentLoaded', () => {
