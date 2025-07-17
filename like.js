@@ -31,7 +31,8 @@ onAuthStateChanged(getAuth(), async (user) => {
 setInterval(async () => {
   if (!window.player || typeof player.getVideoData !== "function" || !currentUser) return;
 
-  const videoId = player.getVideoData().video_id;
+  const videoData = player.getVideoData?.();
+  const videoId = videoData?.video_id;
 
   if (!videoId) {
     likeButton.disabled = true;
@@ -50,7 +51,7 @@ setInterval(async () => {
       const userSnap = await getDoc(userDocRef);
 
       if (userSnap.exists()) {
-        const userLikes = userSnap.data().likes || [];
+        const userLikes = userSnap.data()?.likes || [];
 
         if (userLikes.includes(videoId)) {
           likeButton.classList.add("liked");
@@ -66,15 +67,16 @@ setInterval(async () => {
 
 // Evento para dar o quitar like
 likeButton.addEventListener("click", async () => {
-  if (!currentUser || likeButton.disabled || !player) return;
+  if (!currentUser || likeButton.disabled || !player || typeof player.getVideoData !== "function") return;
 
-  const videoId = player.getVideoData().video_id;
+  const videoData = player.getVideoData?.();
+  const videoId = videoData?.video_id;
   if (!videoId) return;
 
   try {
     const userDocRef = doc(db, "usuarios", currentUser.uid);
     const userSnap = await getDoc(userDocRef);
-    const currentLikes = userSnap.exists() ? userSnap.data().likes || [] : [];
+    const currentLikes = userSnap.exists() ? userSnap.data()?.likes || [] : [];
 
     if (currentLikes.includes(videoId)) {
       await updateDoc(userDocRef, {
