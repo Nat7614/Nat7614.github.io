@@ -99,3 +99,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     observer.observe(document.body, { childList: true, subtree: true });
 });
+
+function agregarCancionReciente(videoId) {
+    onAuthStateChanged(auth, async (user) => {
+        try {
+            let recientes = [];
+
+            if (user) {
+                const docRef = doc(db, "usuarios", user.uid);
+                const docSnap = await getDoc(docRef);
+                recientes = docSnap.exists() ? docSnap.data().recientes || [] : [];
+            } else {
+                recientes = JSON.parse(localStorage.getItem('spottrack_recientes')) || [];
+            }
+
+            // Evitar duplicados
+            recientes = recientes.filter(c => c.id !== videoId);
+
+            // Añadir al principio
+            recientes.unshift({ id: videoId });
+
+            // Limitar a 5
+            if (recientes.length > 5) recientes = recientes.slice(0, 5);
+
+            // Guardar
+            if (user) {
+                await setDoc(doc(db, "usuarios", user.uid), {
+                    recientes: recientes
+                }, { merge: true });
+            } else {
+                localStorage.setItem('spottrack_recientes', JSON.stringify(recientes));
+            }
+        } catch (error) {
+            console.error("Error al guardar canción reciente:", error);
+        }
+    });
+}
