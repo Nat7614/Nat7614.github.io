@@ -11,6 +11,7 @@
   overflow: hidden;
   position: relative;
   margin: 0 auto; /* Centrado lateral */
+  gap: 12px; /* 🆕 Espacio entre el ícono y el texto */
 }
 
 /* Icono de usuario */
@@ -19,7 +20,7 @@
   padding: 10px;
   border-radius: 6px;
   flex-shrink: 0;
-  margin-left: -30px;
+  /* ❌ Eliminado margin-left negativo */
 }
 
 .user-icon {
@@ -32,7 +33,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: -10px;
+  /* ❌ Eliminado margin-left negativo */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -80,17 +81,12 @@
     max-width: 600px;
     padding: 14px 16px;
     height: 95px;
-    gap: 10px;
-    margin: 0 auto; /* Centrado lateral */
+    gap: 12px;
+    margin: 0 auto;
   }
 
   .user-icon {
     font-size: 55px;
-    margin-left: 50px;
-  }
-
-  .greeting-text {
-    margin-left: 0px;
   }
 
   .greeting-text h2 {
@@ -114,16 +110,12 @@
     max-width: 600px;
     padding: 20px 24px;
     height: 100px;
-    gap: 12px;
-    margin: 0 auto; /* Centrado lateral */
+    gap: 14px;
+    margin: 0 auto;
   }
 
   .user-icon {
     font-size: 65px;
-  }
-
-  .greeting-text {
-    margin-left: 14px;
   }
 
   .greeting-text h2 {
