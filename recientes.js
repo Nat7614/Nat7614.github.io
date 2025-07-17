@@ -1,124 +1,155 @@
-// recientes.js
-import { auth, db } from './firebase.js';
-import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js';
+import { db } from "./firebase.js";
 import {
   doc,
   getDoc,
   updateDoc,
   arrayUnion,
-  arrayRemove,
-} from 'https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js';
+} from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js";
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
 
-let currentUser = null;
+document.addEventListener("DOMContentLoaded", () => {
+  const lista = document.querySelector(".recientes-lista");
+  const section = document.querySelector(".recientes-section");
+  const apiKey = "AIzaSyCiEjKo8cps3pDY1XeatDdVhQHfZfrYahE";
 
-// 1) Detectar usuario actual
-onAuthStateChanged(auth, user => {
-  currentUser = user;
-  renderRecientes();
-});
+  const auth = getAuth();
 
-// 2) Función para renderizar la lista
-async function renderRecientes() {
-  const lista = document.querySelector('.recientes-lista');
-  const apiKey = 'AIzaSyCiEjKo8cps3pDY1XeatDdVhQHfZfrYahE';
-  let recientes = [];
-
-  // Obtener array según login
-  if (currentUser) {
-    const docRef = doc(db, "usuarios", currentUser.uid);
-    const snap = await getDoc(docRef);
-    if (snap.exists()) recientes = snap.data().recientes || [];
-  } else {
-    recientes = JSON.parse(localStorage.getItem('spottrack_recientes')) || [];
-  }
-
-  // Mostrar mensaje si no hay
-  if (recientes.length === 0) {
-    const mensaje = currentUser
-      ? "Sin canciones"
-      : "Sin canciones, recomendamos iniciar sesión para no perder los datos de esta sección.";
-    lista.innerHTML = `<div style="
-      display:flex;justify-content:center;align-items:center;
-      height:100%;min-height:140px;color:white;opacity:0.6;
-      text-align:center;font-size:16px;width:100%;
-    ">${mensaje}</div>`;
-    return;
-  }
-
-  // Rellenar lista
-  lista.innerHTML = ''; // limpiar
-  for (const { id } of recientes) {
-    const res = await fetch(
-      `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${id}&key=${apiKey}`
-    );
-    const data = await res.json();
-    if (!data.items || !data.items[0]) continue;
-    const video = data.items[0];
-    const thumb = video.snippet.thumbnails.medium.url;
-    const title = video.snippet.title;
-    const channel = video.snippet.channelTitle;
-    const duration = formatDuration(video.contentDetails.duration);
-
-    const li = document.createElement('li');
-    li.innerHTML = `
-      <img src="${thumb}" alt="${title}">
-      <div class="song-title"><span>${title}</span></div>
-      <div class="song-meta">${channel}</div>
-      <div class="song-meta">${duration}</div>
-    `;
-    li.addEventListener('click', () => {
-      showSection('search');
-      setTimeout(() => playSong(id, title, channel), 100);
-    });
-    lista.appendChild(li);
-  }
-}
-
-// 3) Función de formateo
-function formatDuration(iso) {
-  const m = iso.match(/(\d+)M/)?.[1] || 0;
-  const s = iso.match(/(\d+)S/)?.[1] || 0;
-  return `${m}:${s.toString().padStart(2,'0')}`;
-}
-
-// 4) Observador para detectar nuevo video
-const observer = new MutationObserver(muts => {
-  const player = document.getElementById('youtube-player');
-  const vid = player?.dataset.videoId;
-  if (vid) agregarCancionReciente(vid);
-});
-observer.observe(document.body, { childList: true, subtree: true });
-
-// 5) Añadir a recientes
-async function agregarCancionReciente(videoId) {
-  try {
-    let recientes = [];
-
-    if (currentUser) {
-      const ref = doc(db, "usuarios", currentUser.uid);
-      const snap = await getDoc(ref);
-      recientes = snap.exists() ? snap.data().recientes || [] : [];
-    } else {
-      recientes = JSON.parse(localStorage.getItem('spottrack_recientes')) || [];
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      lista.innerHTML = `
+        <div style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          min-height: 140px;
+          color: white;
+          opacity: 0.6;
+          text-align: center;
+          font-size: 16px;
+          width: 100%;
+        ">
+          Inicia sesión para ver esta sección
+        </div>`;
+      return;
     }
 
-    // Filtrar duplicados y cap a 5
-    recientes = [{ id: videoId }, ...recientes.filter(c => c.id !== videoId)];
-    if (recientes.length > 5) recientes = recientes.slice(0, 5);
+    try {
+      const userDoc = doc(db, "usuarios", user.uid);
+      const userSnap = await getDoc(userDoc);
 
-    if (currentUser) {
-      // Guardar en Firestore
-      await updateDoc(doc(db, "usuarios", currentUser.uid), {
+      if (!userSnap.exists()) {
+        lista.innerHTML = mostrarMensajeSinCanciones();
+        return;
+      }
+
+      const recientes = userSnap.data()?.recientes || [];
+
+      if (recientes.length === 0) {
+        lista.innerHTML = mostrarMensajeSinCanciones();
+        return;
+      }
+
+      lista.innerHTML = ""; // limpiar
+
+      recientes.forEach((videoId) => {
+        fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${videoId}&key=${apiKey}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (!data.items || data.items.length === 0) return;
+
+            const video = data.items[0];
+            const thumbnail = video.snippet.thumbnails.medium.url;
+            const title = video.snippet.title;
+            const channel = video.snippet.channelTitle;
+            const duration = formatDuration(video.contentDetails.duration);
+
+            const li = document.createElement("li");
+            li.innerHTML = `
+              <img src="${thumbnail}" alt="${title}">
+              <div class="song-title"><span>${title}</span></div>
+              <div class="song-meta">${channel}</div>
+              <div class="song-meta">${duration}</div>
+            `;
+
+            li.addEventListener("click", () => {
+              showSection("search");
+              setTimeout(() => {
+                playSong(videoId, title, channel);
+              }, 100);
+            });
+
+            lista.appendChild(li);
+          })
+          .catch((err) => {
+            console.error("Error al cargar canción reciente:", err);
+          });
+      });
+    } catch (err) {
+      console.error("Error cargando recientes:", err);
+    }
+  });
+
+  // Guarda el video actual como escuchado recientemente
+  setInterval(async () => {
+    const user = auth.currentUser;
+    if (!user || !window.player || typeof player.getVideoData !== "function") return;
+
+    const videoData = player.getVideoData();
+    const videoId = videoData?.video_id;
+    if (!videoId) return;
+
+    try {
+      const userDocRef = doc(db, "usuarios", user.uid);
+      const userSnap = await getDoc(userDocRef);
+
+      let recientes = userSnap.exists() ? userSnap.data().recientes || [] : [];
+
+      // Si ya está, lo quitamos para moverlo al principio
+      recientes = recientes.filter((id) => id !== videoId);
+      recientes.unshift(videoId); // Agregar al inicio
+
+      // Limitar a 5 canciones
+      if (recientes.length > 5) {
+        recientes = recientes.slice(0, 5);
+      }
+
+      await updateDoc(userDocRef, {
         recientes: recientes
       });
-    } else {
-      // Guardar en localStorage
-      localStorage.setItem('spottrack_recientes', JSON.stringify(recientes));
+    } catch (err) {
+      console.error("Error guardando recientes:", err);
     }
+  }, 2000); // Guarda cada 2 segundos si cambia video
 
-    // Volver a renderizar
-    renderRecientes();
-  } catch (e) {
-    console.error("Error guardando recientes:", e);
+  function formatDuration(iso) {
+    const match = iso.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+    const h = parseInt(match[1]) || 0;
+    const m = parseInt(match[2]) || 0;
+    const s = parseInt(match[3]) || 0;
+    return h > 0
+      ? `${h}:${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`
+      : `${m}:${s.toString().padStart(2, "0")}`;
   }
-}
+
+  function mostrarMensajeSinCanciones() {
+    return `
+      <div style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        min-height: 140px;
+        color: white;
+        opacity: 0.6;
+        text-align: center;
+        font-size: 16px;
+        width: 100%;
+      ">
+        Sin canciones
+      </div>`;
+  }
+});
