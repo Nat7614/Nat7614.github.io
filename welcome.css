@@ -6,12 +6,12 @@
   padding: 20px 24px;
   border-radius: 6px;
   max-width: 600px;
-  width: 100%;
+  width: 99%;
   height: 90px;
   overflow: hidden;
   position: relative;
   margin: 0 auto; /* Centrado lateral */
-  gap: 12px; /* 🆕 Espacio entre el ícono y el texto */
+  gap: 7px; /* 🆕 Espacio entre el ícono y el texto */
 }
 
 /* Icono de usuario */
@@ -20,6 +20,7 @@
   padding: 10px;
   border-radius: 6px;
   flex-shrink: 0;
+  margin-left: -20px;
   /* ❌ Eliminado margin-left negativo */
 }
 
