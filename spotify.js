@@ -1,8 +1,6 @@
 import { doc, updateDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
-import { firebaseConfig } from './firebase.js';
-
-// import { auth, db } from './firebase.js';
+import { auth, db } from './firebase.js';
 
 const spotifyBox = document.getElementById("spotify-container");
 const spotifyText = document.getElementById("spotify-text");
