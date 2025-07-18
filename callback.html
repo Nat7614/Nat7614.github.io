@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Spottrack Spotify Callback</title>
+</head>
+<body>
+  <script>
+    (function() {
+      const hash = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+      const accessToken = params.get("access_token");
+      const state = params.get("state");
+      const storedState = localStorage.getItem("spotify_auth_state");
+
+      if (!accessToken) {
+        // No hay token, redirigir normal
+        window.location.href = "https://nat7614.github.io";
+        return;
+      }
+
+      // Validar estado (si guardaste uno antes de enviar a Spotify)
+      if (state && storedState && state !== storedState) {
+        alert("Error: estado no coincide. Intenta vincular de nuevo.");
+        window.location.href = "https://nat7614.github.io";
+        return;
+      }
+
+      // Limpia el estado guardado, ya que ya fue validado o no se usa
+      localStorage.removeItem("spotify_auth_state");
+
+      // Guardar token en sessionStorage para mayor seguridad (se borra al cerrar pestaña)
+      sessionStorage.setItem("spotify_token", accessToken);
+
+      // Redirigir a la app principal (Spottrack)
+      window.location.href = "https://nat7614.github.io";
+    })();
+  </script>
+</body>
+</html>
