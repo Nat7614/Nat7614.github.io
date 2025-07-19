@@ -182,7 +182,7 @@
 .scrolling-text {
   display: inline-block;
   white-space: nowrap;
-  padding-left: 100%;
+  padding-left: 130%;
   animation: scroll-title 8s linear infinite;
 }
 
@@ -191,7 +191,7 @@
     transform: translateX(0%);
   }
   100% {
-    transform: translateX(-130%);
+    transform: translateX(-100%);
   }
 }
 
