@@ -1,3 +1,4 @@
+/* Contenedor principal */
 .likes-container {
   width: 94%;
   max-width: 400px;
@@ -6,8 +7,10 @@
   border-radius: 14px;
   padding: 16px;
   box-shadow: 0 0 8px rgba(244, 100, 196, 0.4);
+  overflow-x: hidden; /* Evita desplazamiento horizontal */
 }
 
+/* Encabezado del contenedor */
 .likes-header {
   display: flex;
   align-items: center;
@@ -15,6 +18,7 @@
   margin-bottom: 15px;
 }
 
+/* Título + icono */
 .likes-title {
   font-size: 20px;
   font-weight: 600;
@@ -24,7 +28,7 @@
   justify-content: space-between;
   width: 100%;
   position: relative;
-  padding-right: 32px; /* espacio para el icono */
+  padding-right: 32px;
 }
 
 .likes-title .likes-icon {
@@ -45,13 +49,14 @@
   }
 }
 
+/* Contenedor scrollable */
 .likes-content {
   max-height: 200px;
   overflow-y: auto;
-  width: 70%;
-  max-width: 400px;
+  overflow-x: hidden; /* Previene desplazamiento lateral */
 }
 
+/* Lista de canciones */
 .likes-list {
   list-style: none;
   padding: 0;
@@ -60,6 +65,7 @@
   gap: 10px;
 }
 
+/* Cada canción */
 .likes-list li {
   display: flex;
   align-items: center;
@@ -73,19 +79,24 @@
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Imagen de la canción */
 .likes-list img {
-  width: 30px;
+  width: 80px;
   height: 60px;
   border-radius: 8px;
   object-fit: cover;
   margin-right: 12px;
 }
 
+/* Info de la canción */
 .song-info {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
+/* Título de la canción */
 .song-title {
   font-weight: bold;
   color: white;
@@ -94,13 +105,17 @@
   text-overflow: ellipsis;
 }
 
+/* Metadatos debajo del título */
 .song-meta {
   font-size: 12px;
   color: #ccc;
   margin-top: 4px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-/* Botón like (activo) */
+/* Botón de like */
 .like-btn {
   font-size: 18px;
   color: #f464c4;
