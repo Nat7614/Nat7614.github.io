@@ -78,7 +78,7 @@
 .trending-songs .song-title {
     font-weight: bold;
     font-size: 0.95rem;
-    color: #fdfdfd;
+    color: #ffffff;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -16,7 +16,7 @@
 }
 
 .likes-title {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
   color: #f464c4;
   display: flex;
@@ -30,7 +30,7 @@
 .likes-title .likes-icon {
   position: absolute;
   right: 0;
-  font-size: 22px;
+  font-size: 27px;
   color: #f464c4;
   animation: brillo-icono 2s infinite alternate;
   filter: drop-shadow(0 0 6px #f464c4);
@@ -64,7 +64,7 @@
   align-items: center;
   background-color: #000; /* Color negro puro */
   border-radius: 10px;
-  padding: 10px;
+  padding: 5px;
   transition: background 0.2s;
   gap: 12px;
   overflow: hidden;
@@ -134,7 +134,7 @@
 /* BOTÓN LIKE */
 .likes-list .like-toggle {
   font-size: 18px;
-  color: #f464c4;
+  color: #af0606;
   cursor: pointer;
   transition: transform 0.2s;
   background: transparent;
@@ -150,7 +150,7 @@
   display: flex;
   align-items: center;
   background-color: #000; /* negro puro */
-  padding: 10px;
+  padding: 5px;
   border-radius: 8px;
   margin-bottom: 10px;
   transition: background 0.3s;
