@@ -1,6 +1,5 @@
 // library-music.js
 
-// IndexedDB setup
 const DB_NAME = "SpottrackMusicDB";
 const DB_VERSION = 1;
 const STORE_NAME = "songs";
@@ -11,9 +10,8 @@ let currentSongElement = null;
 let currentSongURL = null;
 let songListData = [];
 
-const mp3IconPath = "images/mp3-icon.png";  // ruta al icono para mp3/mp4 thumbnails
+const mp3IconPath = "images/mp3-icon.png";
 
-// Abre o crea la base de datos
 function openDB() {
   return new Promise((resolve, reject) => {
     const req = indexedDB.open(DB_NAME, DB_VERSION);
@@ -31,7 +29,6 @@ function openDB() {
   });
 }
 
-// Guardar canción en IndexedDB
 function saveSongToDB(song) {
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE_NAME, "readwrite");
@@ -42,7 +39,6 @@ function saveSongToDB(song) {
   });
 }
 
-// Borrar canción de IndexedDB
 function deleteSongFromDB(id) {
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE_NAME, "readwrite");
@@ -53,7 +49,6 @@ function deleteSongFromDB(id) {
   });
 }
 
-// Cargar todas las canciones
 function loadSongsFromDB() {
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE_NAME, "readonly");
@@ -64,12 +59,10 @@ function loadSongsFromDB() {
   });
 }
 
-// ID único basado en nombre + tamaño
 function generateSongID(file) {
   return `${file.name}-${file.size}`;
 }
 
-// Maneja selección de archivo
 async function handleFileSelect(event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -78,45 +71,49 @@ async function handleFileSelect(event) {
   const id = generateSongID(file);
   if (songListData.some(s => s.id === id)) return;
 
-  const song = { id, name: file.name, file, type: file.type };
+  const arrayBuffer = await file.arrayBuffer(); // Convierte el archivo
+
+  const song = {
+    id,
+    name: file.name,
+    type: file.type,
+    buffer: arrayBuffer,
+  };
+
   await saveSongToDB(song);
   songListData.push(song);
   renderSongItem(song);
   document.getElementById('no-songs').style.display = 'none';
 }
 
-// Renderiza un item en la lista
 function renderSongItem(song) {
   const list = document.getElementById('song-list');
   const li = document.createElement('li');
   li.className = 'song-item';
   li.dataset.songId = song.id;
 
-  // Thumbnail
   const thumb = document.createElement('img');
   thumb.className = 'song-thumb';
   thumb.src = mp3IconPath;
-  thumb.width = 40; thumb.height = 40;
+  thumb.width = 40;
+  thumb.height = 40;
   thumb.style.objectFit = 'cover';
   thumb.style.borderRadius = '6px';
   thumb.style.marginRight = '10px';
   li.appendChild(thumb);
 
-  // Title
   const title = document.createElement('span');
   title.className = 'song-title';
   const name = song.name;
-  title.innerText = name.length > 20 ? name.substring(0,20) + "..." : name;
+  title.innerText = name.length > 20 ? name.substring(0, 20) + "..." : name;
   li.appendChild(title);
 
-  // Play button
   const playBtn = document.createElement('button');
   playBtn.className = 'play-button';
   playBtn.innerHTML = '<i class="fa fa-play"></i>';
   playBtn.addEventListener('click', () => playPauseSong(song, li, playBtn));
   li.appendChild(playBtn);
 
-  // Delete button
   const delBtn = document.createElement('button');
   delBtn.className = 'delete-button';
   delBtn.innerHTML = '<i class="fa fa-trash"></i>';
@@ -126,8 +123,10 @@ function renderSongItem(song) {
   list.appendChild(li);
 }
 
-// Play / Pause logic
 function playPauseSong(song, li, btn) {
+  const blob = new Blob([song.buffer], { type: song.type });
+  const url = URL.createObjectURL(blob);
+
   if (audio && currentSongElement === li) {
     if (audio.paused) {
       audio.play();
@@ -138,13 +137,15 @@ function playPauseSong(song, li, btn) {
     }
     return;
   }
-  // Stop previous
+
   if (audio) {
     audio.pause();
-    currentSongElement.querySelector('.play-button').innerHTML = '<i class="fa fa-play"></i>';
+    if (currentSongElement) {
+      currentSongElement.querySelector('.play-button').innerHTML = '<i class="fa fa-play"></i>';
+    }
   }
-  // Start new
-  audio = new Audio(URL.createObjectURL(song.file));
+
+  audio = new Audio(url);
   audio.loop = true;
   audio.play();
   btn.innerHTML = '<i class="fa fa-pause"></i>';
@@ -152,7 +153,6 @@ function playPauseSong(song, li, btn) {
   audio.onended = () => audio.play();
 }
 
-// Eliminar canción
 async function deleteSong(li, id) {
   li.remove();
   songListData = songListData.filter(s => s.id !== id);
@@ -167,7 +167,6 @@ async function deleteSong(li, id) {
   }
 }
 
-// Al cargar la página, inicializa lista
 window.onload = async () => {
   await openDB();
   songListData = await loadSongsFromDB();
