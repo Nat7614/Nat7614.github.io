@@ -48,6 +48,8 @@
 .likes-content {
   max-height: 200px;
   overflow-y: auto;
+  width: 70%;
+  max-width: 400px;
 }
 
 .likes-list {
@@ -72,7 +74,7 @@
 }
 
 .likes-list img {
-  width: 80px;
+  width: 30px;
   height: 60px;
   border-radius: 8px;
   object-fit: cover;
