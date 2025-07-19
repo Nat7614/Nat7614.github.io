@@ -1,4 +1,4 @@
-// likes.js
+// section-like.js
 import { db } from "./firebase.js";
 import {
   doc,
@@ -61,9 +61,13 @@ function renderLikeSong({ videoId, title, channel, duration, thumbnail }, uid) {
   const li = document.createElement("li");
   li.innerHTML = `
     <img src="${thumbnail}" alt="${title}">
-    <div class="song-title">${title}</div>
-    <div class="song-meta">${channel}</div>
-    <div class="song-meta">${duration}</div>
+    <div class="song-info">
+      <div class="song-title">${title}</div>
+      <div class="song-meta">
+        <span class="artist">${channel}</span>
+        <span class="duration">${duration}</span>
+      </div>
+    </div>
     <button class="like-toggle liked" title="Quitar de Me gusta">
       <i class="fas fa-heart"></i>
     </button>

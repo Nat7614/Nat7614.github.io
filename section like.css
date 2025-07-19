@@ -7,7 +7,7 @@
   border-radius: 14px;
   padding: 16px;
   box-shadow: 0 0 8px rgba(244, 100, 196, 0.4);
-  overflow-x: hidden; /* Evita desplazamiento horizontal */
+  overflow-x: hidden;
 }
 
 /* Encabezado del contenedor */
@@ -53,7 +53,7 @@
 .likes-content {
   max-height: 200px;
   overflow-y: auto;
-  overflow-x: hidden; /* Previene desplazamiento lateral */
+  overflow-x: hidden;
 }
 
 /* Lista de canciones */
@@ -73,6 +73,7 @@
   border-radius: 10px;
   padding: 10px;
   transition: background 0.2s;
+  gap: 12px;
 }
 
 .likes-list li:hover {
@@ -85,19 +86,19 @@
   height: 60px;
   border-radius: 8px;
   object-fit: cover;
-  margin-right: 12px;
+  flex-shrink: 0;
 }
 
 /* Info de la canción */
-.song-info {
+.likes-list .song-info {
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
 }
 
-/* Título de la canción */
-.song-title {
+/* Título */
+.likes-list .song-title {
   font-weight: bold;
   color: white;
   white-space: nowrap;
@@ -105,25 +106,40 @@
   text-overflow: ellipsis;
 }
 
-/* Metadatos debajo del título */
-.song-meta {
+/* Metadatos (artista + duración) */
+.likes-list .song-meta {
   font-size: 12px;
   color: #ccc;
   margin-top: 4px;
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+
+.likes-list .song-meta .artist {
+  flex: 1 1 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.likes-list .song-meta .duration {
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 /* Botón de like */
-.like-toggle liked {
+.likes-list .like-toggle {
   font-size: 18px;
   color: #f464c4;
   cursor: pointer;
-  margin-left: 8px;
+  margin-left: auto;
   transition: transform 0.2s;
+  border: none;
+  background: transparent;
 }
 
-.like-btn:hover {
+.likes-list .like-toggle:hover {
   transform: scale(1.1);
 }
