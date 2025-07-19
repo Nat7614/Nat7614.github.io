@@ -169,19 +169,20 @@ async function deleteSong(li, id) {
 
 window.onload = async () => {
   await openDB();
-  songListData.forEach(song => {
-  if (song.buffer instanceof ArrayBuffer === false) {
-    // Si no es un ArrayBuffer, conviértelo (esto corrige posibles problemas)
-    song.buffer = new Uint8Array(song.buffer).buffer;
-  }
-  renderSongItem(song);
-});
+  const songs = await loadSongsFromDB();
+  songListData = songs;
 
-  if (!songListData.length) {
+  if (!songs.length) {
     document.getElementById('no-songs').style.display = 'block';
   } else {
     document.getElementById('no-songs').style.display = 'none';
-    songListData.forEach(renderSongItem);
+    songs.forEach(song => {
+      if (!(song.buffer instanceof ArrayBuffer)) {
+        song.buffer = new Uint8Array(song.buffer).buffer;
+      }
+      renderSongItem(song);
+    });
   }
+
   document.getElementById('file-input').addEventListener('change', handleFileSelect);
 };
