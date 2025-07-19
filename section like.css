@@ -1,12 +1,11 @@
 .likes-container {
-  width: 95%;
-  max-width: 750px;
-  margin: 0 auto;
+  width: 94%;
+  max-width: 400px;
+  margin: 0 auto 30px auto;
   background: rgba(255, 255, 255, 0.04);
   border-radius: 14px;
   padding: 16px;
   box-shadow: 0 0 8px rgba(244, 100, 196, 0.4);
-  margin-bottom: 30px;
 }
 
 .likes-header {
@@ -20,7 +19,6 @@
   font-size: 20px;
   font-weight: 600;
   color: #f464c4;
-  position: relative;
   display: flex;
   align-items: center;
 }
@@ -62,7 +60,6 @@
   border-radius: 10px;
   padding: 10px;
   transition: background 0.2s;
-  cursor: pointer;
 }
 
 .likes-list li:hover {
@@ -93,4 +90,18 @@
 .song-meta {
   font-size: 12px;
   color: #ccc;
+  margin-top: 4px;
+}
+
+/* Botón like (activo) */
+.like-btn {
+  font-size: 18px;
+  color: #f464c4;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: transform 0.2s;
+}
+
+.like-btn:hover {
+  transform: scale(1.1);
 }
