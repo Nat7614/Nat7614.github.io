@@ -63,7 +63,7 @@
 .likes-list li {
   display: flex;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.06);
+  background-color: #000; /* Color negro puro */
   border-radius: 10px;
   padding: 10px;
   transition: background 0.2s;
@@ -88,23 +88,41 @@
   min-width: 0;
 }
 
+/* TÍTULO desplazante */
 .likes-list .song-title {
   font-weight: bold;
   color: white;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  position: relative;
+  height: 20px;
 }
 
-/* METADATOS: artista y duración */
+.likes-list .song-title .scrolling-text {
+  display: inline-block;
+  white-space: nowrap;
+  padding-left: 100%;
+  animation: scroll-title 8s linear infinite;
+}
+
+@keyframes scroll-title {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* METADATOS: artista y duración en columna */
 .likes-list .song-meta {
   font-size: 12px;
   color: #ccc;
   margin-top: 4px;
   display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: nowrap;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
 }
 
 .likes-list .artist,
@@ -127,4 +145,70 @@
 
 .likes-list .like-toggle:hover {
   transform: scale(1.1);
+}
+
+.like-item {
+  display: flex;
+  align-items: center;
+  background-color: #000; /* negro puro */
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: background 0.3s;
+  width: 100%;
+}
+
+.like-thumb {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+.song-info {
+  flex: 1;
+  overflow: hidden;
+}
+
+.song-title {
+  font-size: 16px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+  height: 22px;
+}
+
+.scrolling-text {
+  display: inline-block;
+  white-space: nowrap;
+  padding-left: 100%;
+  animation: scroll-title 8s linear infinite;
+}
+
+@keyframes scroll-title {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.song-meta {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.like-toggle {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 20px;
+  margin-left: 10px;
+  cursor: pointer;
 }

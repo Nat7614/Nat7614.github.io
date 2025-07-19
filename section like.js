@@ -58,10 +58,13 @@ onAuthStateChanged(auth, async (user) => {
 
 function renderLikeSong({ videoId, title, channel, duration, thumbnail }, uid) {
   const li = document.createElement("li");
+  li.classList.add("like-item");
   li.innerHTML = `
-    <img src="${thumbnail}" alt="${title}">
+    <img src="${thumbnail}" alt="${title}" class="like-thumb">
     <div class="song-info">
-      <div class="song-title">${title}</div>
+      <div class="song-title">
+        <span class="scrolling-text">${title}</span>
+      </div>
       <div class="song-meta">
         <span class="artist">${channel}</span>
         <span class="duration">${duration}</span>
