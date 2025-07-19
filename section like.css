@@ -5,7 +5,6 @@
   background: rgba(255, 255, 255, 0.04);
   border-radius: 14px;
   padding: 16px;
-  box-shadow: 0 0 8px rgba(244, 100, 196, 0.4);
   overflow: hidden;
 }
 
@@ -194,14 +193,6 @@
   100% {
     transform: translateX(-100%);
   }
-}
-
-.song-meta {
-  margin-top: 4px;
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  color: #ccc;
 }
 
 .like-toggle {
