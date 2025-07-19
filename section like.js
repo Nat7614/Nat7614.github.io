@@ -114,7 +114,7 @@ function showEmpty() {
       opacity: 0.6;
       text-align: center;
       font-size: 16px;
-      width: 100%;
+      width: 70%;
     ">
       Aún no tienes canciones con me gusta 💔
     </div>`;
