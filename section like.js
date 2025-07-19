@@ -1,4 +1,3 @@
-// section-like.js
 import { db } from "./firebase.js";
 import {
   doc,
@@ -68,7 +67,7 @@ function renderLikeSong({ videoId, title, channel, duration, thumbnail }, uid) {
         <span class="duration">${duration}</span>
       </div>
     </div>
-    <button class="like-toggle liked" title="Quitar de Me gusta">
+    <button class="like-toggle" title="Quitar de Me gusta">
       <i class="fas fa-heart"></i>
     </button>
   `;

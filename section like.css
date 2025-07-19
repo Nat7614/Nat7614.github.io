@@ -1,16 +1,14 @@
-/* Contenedor principal */
 .likes-container {
   width: 80%;
-  max-width: 300px;
+  max-width: 320px;
   margin: 0 auto 30px auto;
   background: rgba(255, 255, 255, 0.04);
   border-radius: 14px;
   padding: 16px;
   box-shadow: 0 0 8px rgba(244, 100, 196, 0.4);
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
-/* Encabezado del contenedor */
 .likes-header {
   display: flex;
   align-items: center;
@@ -18,7 +16,6 @@
   margin-bottom: 15px;
 }
 
-/* Título + icono */
 .likes-title {
   font-size: 20px;
   font-weight: 600;
@@ -26,7 +23,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 80%;
+  width: 100%;
   position: relative;
   padding-right: 32px;
 }
@@ -49,14 +46,11 @@
   }
 }
 
-/* Contenedor scrollable */
 .likes-content {
   max-height: 200px;
   overflow-y: auto;
-  overflow-x: hidden;
 }
 
-/* Lista de canciones */
 .likes-list {
   list-style: none;
   padding: 0;
@@ -65,7 +59,7 @@
   gap: 10px;
 }
 
-/* Cada canción */
+/* ITEM DE CANCION */
 .likes-list li {
   display: flex;
   align-items: center;
@@ -74,13 +68,10 @@
   padding: 10px;
   transition: background 0.2s;
   gap: 12px;
+  overflow: hidden;
 }
 
-.likes-list li:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Imagen de la canción */
+/* IMAGEN */
 .likes-list img {
   width: 80px;
   height: 60px;
@@ -89,15 +80,14 @@
   flex-shrink: 0;
 }
 
-/* Info de la canción */
+/* INFO */
 .likes-list .song-info {
   flex: 1;
-  min-width: 0;
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
-/* Título */
 .likes-list .song-title {
   font-weight: bold;
   color: white;
@@ -106,38 +96,33 @@
   text-overflow: ellipsis;
 }
 
-/* Metadatos (artista + duración) */
+/* METADATOS: artista y duración */
 .likes-list .song-meta {
   font-size: 12px;
   color: #ccc;
   margin-top: 4px;
   display: flex;
   justify-content: space-between;
-  flex-wrap: nowrap;
   gap: 10px;
+  flex-wrap: nowrap;
 }
 
-.likes-list .song-meta .artist {
-  flex: 1 1 auto;
+.likes-list .artist,
+.likes-list .duration {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.likes-list .song-meta .duration {
-  flex-shrink: 0;
-  white-space: nowrap;
-}
-
-/* Botón de like */
+/* BOTÓN LIKE */
 .likes-list .like-toggle {
   font-size: 18px;
   color: #f464c4;
   cursor: pointer;
-  margin-left: auto;
   transition: transform 0.2s;
-  border: none;
   background: transparent;
+  border: none;
+  padding: 4px;
 }
 
 .likes-list .like-toggle:hover {
