@@ -1,114 +1,181 @@
-let audio = null;  // Variable para almacenar el audio actual
-let currentSongElement = null;  // Elemento de la canción que está en reproducción
-let currentSongURL = null;  // URL del archivo de audio actual
-let songListData = [];  // Array para almacenar las canciones añadidas
+// library-music.js
 
-// Genera un ID único para cada canción basado en el nombre y tamaño del archivo
+// IndexedDB setup
+const DB_NAME = "SpottrackMusicDB";
+const DB_VERSION = 1;
+const STORE_NAME = "songs";
+
+let db;
+let audio = null;
+let currentSongElement = null;
+let currentSongURL = null;
+let songListData = [];
+
+const mp3IconPath = "images/mp3-icon.png";  // ruta al icono para mp3/mp4 thumbnails
+
+// Abre o crea la base de datos
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onerror = () => reject("Error abriendo IndexedDB");
+    req.onsuccess = () => {
+      db = req.result;
+      resolve(db);
+    };
+    req.onupgradeneeded = e => {
+      db = e.target.result;
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        db.createObjectStore(STORE_NAME, { keyPath: "id" });
+      }
+    };
+  });
+}
+
+// Guardar canción en IndexedDB
+function saveSongToDB(song) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, "readwrite");
+    const store = tx.objectStore(STORE_NAME);
+    const req = store.put(song);
+    req.onsuccess = () => resolve();
+    req.onerror = () => reject("Error guardando canción");
+  });
+}
+
+// Borrar canción de IndexedDB
+function deleteSongFromDB(id) {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, "readwrite");
+    const store = tx.objectStore(STORE_NAME);
+    const req = store.delete(id);
+    req.onsuccess = () => resolve();
+    req.onerror = () => reject("Error eliminando canción");
+  });
+}
+
+// Cargar todas las canciones
+function loadSongsFromDB() {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, "readonly");
+    const store = tx.objectStore(STORE_NAME);
+    const req = store.getAll();
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject("Error cargando canciones");
+  });
+}
+
+// ID único basado en nombre + tamaño
 function generateSongID(file) {
-    return `${file.name}-${file.size}`;
+  return `${file.name}-${file.size}`;
 }
 
-// Maneja la selección del archivo de audio
-function handleFileSelect(event) {
-    const file = event.target.files[0];
-    
-    if (file) {
-        const songID = generateSongID(file);
-        addSongToList(songID, file.name, URL.createObjectURL(file));
-    }
+// Maneja selección de archivo
+async function handleFileSelect(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  await openDB();
+
+  const id = generateSongID(file);
+  if (songListData.some(s => s.id === id)) return;
+
+  const song = { id, name: file.name, file, type: file.type };
+  await saveSongToDB(song);
+  songListData.push(song);
+  renderSongItem(song);
+  document.getElementById('no-songs').style.display = 'none';
 }
 
-// Añade la canción a la lista de reproducción
-function addSongToList(id, name, fileURL) {
-    const songList = document.getElementById('song-list');
-    document.getElementById('no-songs').style.display = 'none';
+// Renderiza un item en la lista
+function renderSongItem(song) {
+  const list = document.getElementById('song-list');
+  const li = document.createElement('li');
+  li.className = 'song-item';
+  li.dataset.songId = song.id;
 
-    // Verificar si la canción ya está en la lista
-    if (songListData.some(song => song.id === id)) {
-        return; // Si ya existe, no la añadimos de nuevo
-    }
+  // Thumbnail
+  const thumb = document.createElement('img');
+  thumb.className = 'song-thumb';
+  thumb.src = mp3IconPath;
+  thumb.width = 40; thumb.height = 40;
+  thumb.style.objectFit = 'cover';
+  thumb.style.borderRadius = '6px';
+  thumb.style.marginRight = '10px';
+  li.appendChild(thumb);
 
-    // Agregar la canción al array de datos
-    songListData.push({ id, name, fileURL });
+  // Title
+  const title = document.createElement('span');
+  title.className = 'song-title';
+  const name = song.name;
+  title.innerText = name.length > 20 ? name.substring(0,20) + "..." : name;
+  li.appendChild(title);
 
-    const songItem = document.createElement('li');
-    songItem.className = 'song-item';
-    songItem.dataset.songId = id;  // Asignamos el ID único al elemento
+  // Play button
+  const playBtn = document.createElement('button');
+  playBtn.className = 'play-button';
+  playBtn.innerHTML = '<i class="fa fa-play"></i>';
+  playBtn.addEventListener('click', () => playPauseSong(song, li, playBtn));
+  li.appendChild(playBtn);
 
-    const title = document.createElement('span');
-    title.className = 'song-title';
+  // Delete button
+  const delBtn = document.createElement('button');
+  delBtn.className = 'delete-button';
+  delBtn.innerHTML = '<i class="fa fa-trash"></i>';
+  delBtn.addEventListener('click', () => deleteSong(li, song.id));
+  li.appendChild(delBtn);
 
-    // Limitar el título a 15 caracteres y agregar "..." si es necesario
-    const truncatedName = name.length > 15 ? name.substring(0, 15) + "..." : name;
-    title.innerText = truncatedName;
-
-    songItem.appendChild(title);
-
-    const playButton = document.createElement('button');
-    playButton.className = 'play-button';
-    playButton.innerHTML = '<i class="fa fa-play"></i>';  // Icono de reproducir
-    playButton.addEventListener('click', () => playPauseSong(fileURL, songItem, playButton));
-    songItem.appendChild(playButton);
-
-    const deleteButton = document.createElement('button');
-    deleteButton.className = 'delete-button';
-    deleteButton.innerHTML = '<i class="fa fa-trash"></i>';  // Icono de eliminar
-    deleteButton.addEventListener('click', () => deleteSong(songItem, id));
-    songItem.appendChild(deleteButton);
-
-    songList.appendChild(songItem);
+  list.appendChild(li);
 }
 
-// Reproduce o pausa la canción seleccionada
-function playPauseSong(fileURL, songItem, playButton) {
-    // Pausa la canción actual si se está reproduciendo
-    if (audio && currentSongElement === songItem) {
-        if (audio.paused) {
-            audio.play();
-            playButton.innerHTML = '<i class="fa fa-pause"></i>';  // Cambia a icono de pausa
-        } else {
-            audio.pause();
-            playButton.innerHTML = '<i class="fa fa-play"></i>';  // Cambia a icono de reproducir
-        }
+// Play / Pause logic
+function playPauseSong(song, li, btn) {
+  if (audio && currentSongElement === li) {
+    if (audio.paused) {
+      audio.play();
+      btn.innerHTML = '<i class="fa fa-pause"></i>';
     } else {
-        // Detiene la canción actual si es una diferente
-        if (audio) {
-            audio.pause();
-            currentSongElement.querySelector('.play-button').innerHTML = '<i class="fa fa-play"></i>';
-        }
-
-        // Carga y reproduce la nueva canción
-        audio = new Audio(fileURL);
-        audio.loop = true;  // Configura el audio para reproducirse en bucle
-        audio.play();
-        playButton.innerHTML = '<i class="fa fa-pause"></i>';  // Cambia a icono de pausa
-        currentSongElement = songItem;
-        currentSongURL = fileURL;
-
-        // Configura el botón para volver a reproducir en bucle al terminar
-        audio.onended = () => {
-            audio.play();
-        };
+      audio.pause();
+      btn.innerHTML = '<i class="fa fa-play"></i>';
     }
+    return;
+  }
+  // Stop previous
+  if (audio) {
+    audio.pause();
+    currentSongElement.querySelector('.play-button').innerHTML = '<i class="fa fa-play"></i>';
+  }
+  // Start new
+  audio = new Audio(URL.createObjectURL(song.file));
+  audio.loop = true;
+  audio.play();
+  btn.innerHTML = '<i class="fa fa-pause"></i>';
+  currentSongElement = li;
+  audio.onended = () => audio.play();
 }
 
-// Elimina una canción de la lista
-function deleteSong(songItem, songID) {
-    const songList = document.getElementById('song-list');
-    songList.removeChild(songItem);
-
-    // Quitar la canción del array de datos
-    songListData = songListData.filter(song => song.id !== songID);
-
-    if (songList.children.length === 0) {
-        document.getElementById('no-songs').style.display = 'block';
-    }
-
-    // Detiene la canción actual si se está eliminando
-    if (currentSongElement === songItem) {
-        audio.pause();
-        audio = null;
-        currentSongElement = null;
-        currentSongURL = null;
-    }
+// Eliminar canción
+async function deleteSong(li, id) {
+  li.remove();
+  songListData = songListData.filter(s => s.id !== id);
+  await deleteSongFromDB(id);
+  if (!document.getElementById('song-list').children.length) {
+    document.getElementById('no-songs').style.display = 'block';
+  }
+  if (currentSongElement === li) {
+    audio.pause();
+    audio = null;
+    currentSongElement = null;
+  }
 }
+
+// Al cargar la página, inicializa lista
+window.onload = async () => {
+  await openDB();
+  songListData = await loadSongsFromDB();
+  if (!songListData.length) {
+    document.getElementById('no-songs').style.display = 'block';
+  } else {
+    document.getElementById('no-songs').style.display = 'none';
+    songListData.forEach(renderSongItem);
+  }
+  document.getElementById('file-input').addEventListener('change', handleFileSelect);
+};
