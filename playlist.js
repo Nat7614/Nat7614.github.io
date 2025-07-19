@@ -43,7 +43,7 @@ export async function createPlaylist() {
 
   const playlistData = {
     name,
-    desc,
+    description: desc,
     songs: [],
     createdAt: new Date()
   };
