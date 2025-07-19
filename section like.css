@@ -21,12 +21,17 @@
   color: #f464c4;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  padding-right: 32px; /* espacio para el icono */
 }
 
-.likes-icon {
+.likes-title .likes-icon {
+  position: absolute;
+  right: 0;
   font-size: 22px;
   color: #f464c4;
-  margin-left: 8px;
   animation: brillo-icono 2s infinite alternate;
   filter: drop-shadow(0 0 6px #f464c4);
 }
