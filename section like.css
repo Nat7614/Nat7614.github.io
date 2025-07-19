@@ -1,0 +1,96 @@
+.likes-container {
+  width: 95%;
+  max-width: 750px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 0 8px rgba(244, 100, 196, 0.4);
+  margin-bottom: 30px;
+}
+
+.likes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.likes-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #f464c4;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.likes-icon {
+  font-size: 22px;
+  color: #f464c4;
+  margin-left: 8px;
+  animation: brillo-icono 2s infinite alternate;
+  filter: drop-shadow(0 0 6px #f464c4);
+}
+
+@keyframes brillo-icono {
+  from {
+    filter: drop-shadow(0 0 2px #f464c4);
+  }
+  to {
+    filter: drop-shadow(0 0 10px #f464c4);
+  }
+}
+
+.likes-content {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.likes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.likes-list li {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 10px;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.likes-list li:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.likes-list img {
+  width: 80px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-right: 12px;
+}
+
+.song-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.song-title {
+  font-weight: bold;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-meta {
+  font-size: 12px;
+  color: #ccc;
+}
