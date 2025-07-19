@@ -108,13 +108,13 @@ function showEmpty() {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100%;
+      height: 10%;
       min-height: 140px;
       color: white;
       opacity: 0.6;
       text-align: center;
       font-size: 16px;
-      width: 70%;
+      width: 7%;
     ">
       Aún no tienes canciones con me gusta 💔
     </div>`;
