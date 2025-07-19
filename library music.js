@@ -169,7 +169,14 @@ async function deleteSong(li, id) {
 
 window.onload = async () => {
   await openDB();
-  songListData = await loadSongsFromDB();
+  songListData.forEach(song => {
+  if (song.buffer instanceof ArrayBuffer === false) {
+    // Si no es un ArrayBuffer, conviértelo (esto corrige posibles problemas)
+    song.buffer = new Uint8Array(song.buffer).buffer;
+  }
+  renderSongItem(song);
+});
+
   if (!songListData.length) {
     document.getElementById('no-songs').style.display = 'block';
   } else {
