@@ -48,7 +48,7 @@ export async function createPlaylist() {
     createdAt: new Date()
   };
 
-  await addDoc(collection(db, "users", currentUserId, "playlists"), playlistData);
+  await addDoc(collection(db, "usuarios", currentUserId, "playlists"), playlistData);
   closeCreatePlaylistModal();
   loadPlaylists();
 }
