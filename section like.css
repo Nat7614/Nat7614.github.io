@@ -116,7 +116,7 @@
 }
 
 /* Botón de like */
-.like-btn {
+.like-toggle liked {
   font-size: 18px;
   color: #f464c4;
   cursor: pointer;
