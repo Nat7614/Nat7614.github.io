@@ -103,18 +103,20 @@ function formatDuration(iso) {
 }
 
 function showEmpty() {
-  likesContainer.innerHTML = `
+  const likesContent = document.querySelector(".likes-content");
+  if (!likesContent) return;
+
+  likesContent.innerHTML = `
     <div style="
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 10%;
-      min-height: 140px;
+      height: 140px;
       color: white;
       opacity: 0.6;
       text-align: center;
-      font-size: 16px;
-      width: 7%;
+      font-size: 15px;
+      width: 100%;
     ">
       Aún no tienes canciones con me gusta 💔
     </div>`;
