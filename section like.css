@@ -1,7 +1,7 @@
 /* Contenedor principal */
 .likes-container {
-  width: 94%;
-  max-width: 400px;
+  width: 80%;
+  max-width: 300px;
   margin: 0 auto 30px auto;
   background: rgba(255, 255, 255, 0.04);
   border-radius: 14px;
@@ -26,7 +26,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  width: 80%;
   position: relative;
   padding-right: 32px;
 }
