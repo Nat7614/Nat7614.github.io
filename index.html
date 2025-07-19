@@ -296,51 +296,12 @@
             <h1></h1>
 </h1>
 
-
-
-<!-- Contenedor donde se mostrarán las playlists del usuario -->
-  <div id="user-playlists" class="playlist-grid"></div>
-
-  <!-- Botón flotante para añadir nueva playlist -->
-  <button class="fab" id="create-playlist-btn">＋</button>
-</section>
-
-<!-- Modal deslizable para crear nueva playlist -->
-<div id="create-playlist-modal" class="bottom-modal hidden">
-  <h2>Crear Playlist</h2>
-  <input type="text" id="playlist-name" placeholder="Nombre de la Playlist" required>
-  <input type="text" id="playlist-desc" placeholder="Descripción (opcional)">
-  <button id="confirm-create-playlist">Crear</button>
-  <button id="cancel-create-playlist">Cancelar</button>
-</div>
-
-<!-- Modal para importar canciones -->
-<div id="import-options" class="bottom-modal hidden">
-  <h2>Importar canciones</h2>
-  <p>Selecciona un método para importar tus canciones:</p>
-  <button id="import-spotify-btn">Importar desde Spotify (.csv)</button>
-  <button disabled>Importar desde YouTube (Próximamente)</button>
-</div>
-
-<!-- Modal de pasos para importar desde Spotify -->
-<div id="spotify-import-steps" class="bottom-modal hidden">
-  <h2>Importar Playlist de Spotify</h2>
-  <ol>
-    <li>Ve a <a href="https://exportify.net" target="_blank">Exportify.net</a> e inicia sesión con tu cuenta de Spotify.</li>
-    <li>Descarga tu playlist como archivo .CSV.</li>
-    <li>Haz clic abajo para subir el archivo.</li>
-  </ol>
-  <button id="upload-csv-btn">Importar Playlist</button>
-  <input type="file" id="csv-input" accept=".csv" style="display: none;">
-</div>
-
-<!-- Enlaces externos -->
-<link rel="stylesheet" href="playlist.css" />
-<script type="module" src="playlist.js"></script>
-
-
-
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spottrack - Lista de Canciones</title>
     <link rel="stylesheet" href="library music.css">
 </head>
 <body>
