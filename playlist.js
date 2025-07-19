@@ -2,10 +2,7 @@
 import { db, auth } from './firebase.js';
 import {
   collection,
-  doc,
   addDoc,
-  setDoc,
-  getDoc,
   getDocs,
   updateDoc,
   arrayUnion
@@ -15,18 +12,27 @@ import {
 } from 'https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js';
 
 let currentUserId = null;
-const playlistGrid = document.getElementById('user-playlists');
-const fabButton = document.querySelector('.fab');
 
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    currentUserId = user.uid;
-    fabButton.disabled = false;
-    loadPlaylists();
-  } else {
-    currentUserId = null;
-    fabButton.disabled = true;
-    playlistGrid.innerHTML = "<p>Inicia sesión para ver tus playlists.</p>";
+document.addEventListener("DOMContentLoaded", () => {
+  const playlistGrid = document.getElementById('user-playlists');
+  const fabButton = document.querySelector('.fab');
+
+  // Escuchar cambios de sesión
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      currentUserId = user.uid;
+      if (fabButton) fabButton.disabled = false;
+      loadPlaylists();
+    } else {
+      currentUserId = null;
+      if (fabButton) fabButton.disabled = true;
+      if (playlistGrid) playlistGrid.innerHTML = "<p>Inicia sesión para ver tus playlists.</p>";
+    }
+  });
+
+  // Evento botón FAB para abrir modal
+  if (fabButton) {
+    fabButton.addEventListener("click", openCreatePlaylistModal);
   }
 });
 
@@ -48,6 +54,9 @@ export async function createPlaylist() {
 }
 
 export async function loadPlaylists() {
+  const playlistGrid = document.getElementById('user-playlists');
+  if (!playlistGrid || !currentUserId) return;
+
   playlistGrid.innerHTML = "";
   const snapshot = await getDocs(collection(db, "users", currentUserId, "playlists"));
   snapshot.forEach(doc => {
@@ -64,18 +73,18 @@ export async function loadPlaylists() {
 }
 
 export function openCreatePlaylistModal() {
-  document.getElementById('create-playlist-modal').classList.remove('hidden');
+  document.getElementById('create-playlist-modal')?.classList.remove('hidden');
 }
 
 export function closeCreatePlaylistModal() {
-  document.getElementById('create-playlist-modal').classList.add('hidden');
+  document.getElementById('create-playlist-modal')?.classList.add('hidden');
   document.getElementById('playlist-name').value = '';
   document.getElementById('playlist-desc').value = '';
 }
 
 export function showSpotifyImportSteps() {
-  document.getElementById('import-options').classList.add('hidden');
-  document.getElementById('spotify-import-steps').classList.remove('hidden');
+  document.getElementById('import-options')?.classList.add('hidden');
+  document.getElementById('spotify-import-steps')?.classList.remove('hidden');
 }
 
 export async function handleCSVImport(event) {
@@ -93,7 +102,7 @@ export async function handleCSVImport(event) {
       };
     }).filter(song => song.title && song.artist);
 
-    // Guardar en Firebase (asumiendo que el usuario ya creó una playlist recientemente)
+    // Guardar en la última playlist creada
     const playlistsRef = collection(db, "users", currentUserId, "playlists");
     const snapshot = await getDocs(playlistsRef);
     const latest = snapshot.docs[snapshot.docs.length - 1];
@@ -104,7 +113,7 @@ export async function handleCSVImport(event) {
     }
 
     alert("Playlist importada exitosamente.");
-    document.getElementById('spotify-import-steps').classList.add('hidden');
+    document.getElementById('spotify-import-steps')?.classList.add('hidden');
     loadPlaylists();
   };
   reader.readAsText(file);
