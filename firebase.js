@@ -120,11 +120,6 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
   }
 });
 
-// Cambiar foto de perfil
-document.getElementById("change-photo").addEventListener("click", () => {
-  document.getElementById("file-input").click();
-});
-
 document.getElementById("file-input").addEventListener("change", async (event) => {
   const file = event.target.files[0];
   if (file && file.type.startsWith("image/")) {
