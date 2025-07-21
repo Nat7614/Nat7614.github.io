@@ -151,7 +151,7 @@
 /* 📱 Teléfonos modernos (400px a 767px) */
 @media (min-width: 400px) and (max-width: 767px) {
     .song-container {
-        width: 90%;
+        width: 94%;
         max-width: 400px;
         margin: 20px auto;
     }
