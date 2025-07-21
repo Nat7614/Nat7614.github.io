@@ -3,124 +3,92 @@ import {
   doc,
   getDoc,
   updateDoc,
-  arrayUnion,
 } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js";
 import {
   getAuth,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js";
 
-// IndexedDB
-const dbName = "spottrackCache";
-const storeName = "recientes";
-
-function openDB() {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open(dbName, 1);
-    request.onerror = () => reject("Error abriendo IndexedDB");
-    request.onsuccess = () => resolve(request.result);
-    request.onupgradeneeded = (e) => {
-      const db = e.target.result;
-      if (!db.objectStoreNames.contains(storeName)) {
-        db.createObjectStore(storeName, { keyPath: "videoId" });
-      }
-    };
-  });
-}
-
-function saveToCache(data) {
-  openDB().then((db) => {
-    const tx = db.transaction(storeName, "readwrite");
-    const store = tx.objectStore(storeName);
-    store.put(data);
-  });
-}
-
-function getAllFromCache() {
-  return new Promise(async (resolve) => {
-    const db = await openDB();
-    const tx = db.transaction(storeName, "readonly");
-    const store = tx.objectStore(storeName);
-    const req = store.getAll();
-    req.onsuccess = () => resolve(req.result);
-    req.onerror = () => resolve([]);
-  });
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   const lista = document.querySelector(".recientes-lista");
   const apiKey = "AIzaSyCiEjKo8cps3pDY1XeatDdVhQHfZfrYahE";
   const auth = getAuth();
 
+  const LOCAL_STORAGE_KEY = "recientesLocal";
+
+  function saveToLocalRecientes(videoId) {
+    let recientes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
+    recientes = recientes.filter(id => id !== videoId); // Eliminar duplicados
+    recientes.unshift(videoId);
+    if (recientes.length > 5) {
+      recientes = recientes.slice(0, 5);
+    }
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(recientes));
+  }
+
+  function getLocalRecientes() {
+    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
+  }
+
+  async function fetchAndRender(videoId) {
+    try {
+      const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${videoId}&key=${apiKey}`);
+      const data = await res.json();
+      if (!data.items || data.items.length === 0) return;
+
+      const video = data.items[0];
+      const item = {
+        videoId,
+        title: video.snippet.title,
+        channel: video.snippet.channelTitle,
+        duration: formatDuration(video.contentDetails.duration),
+        thumbnail: video.snippet.thumbnails.medium.url,
+      };
+      renderSong(item);
+    } catch (err) {
+      console.error("Error obteniendo datos de video:", err);
+    }
+  }
+
   onAuthStateChanged(auth, async (user) => {
-    if (!user) {
-      mostrarOffline();
+    lista.innerHTML = "";
+    const recientes = user
+      ? (await getDoc(doc(db, "usuarios", user.uid))).data()?.recientes || []
+      : getLocalRecientes();
+
+    if (recientes.length === 0) {
+      lista.innerHTML = mostrarMensajeSinCanciones();
       return;
     }
 
-    try {
-      const userDoc = doc(db, "usuarios", user.uid);
-      const userSnap = await getDoc(userDoc);
-      const recientes = userSnap.data()?.recientes || [];
-
-      if (recientes.length === 0) {
-        mostrarOffline();
-        return;
-      }
-
-      lista.innerHTML = "";
-
-      for (const videoId of recientes) {
-        const cached = await getFromCache(videoId);
-        if (cached) {
-          renderSong(cached);
-        } else {
-          fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${videoId}&key=${apiKey}`)
-            .then((res) => res.json())
-            .then((data) => {
-              if (!data.items || data.items.length === 0) return;
-
-              const video = data.items[0];
-              const item = {
-                videoId,
-                title: video.snippet.title,
-                channel: video.snippet.channelTitle,
-                duration: formatDuration(video.contentDetails.duration),
-                thumbnail: video.snippet.thumbnails.medium.url,
-              };
-
-              saveToCache(item);
-              renderSong(item);
-            });
-        }
-      }
-    } catch (err) {
-      console.error("Error:", err);
+    for (const videoId of recientes) {
+      await fetchAndRender(videoId);
     }
   });
 
   setInterval(async () => {
     const user = auth.currentUser;
-    if (!user || !window.player || typeof player.getVideoData !== "function") return;
+    if (!window.player || typeof player.getVideoData !== "function") return;
 
-    const videoData = player.getVideoData();
-    const videoId = videoData?.video_id;
+    const videoId = player.getVideoData()?.video_id;
     if (!videoId) return;
 
-    try {
-      const userDocRef = doc(db, "usuarios", user.uid);
-      const userSnap = await getDoc(userDocRef);
-
-      let recientes = userSnap.exists() ? userSnap.data().recientes || [] : [];
-      recientes = recientes.filter((id) => id !== videoId);
-      recientes.unshift(videoId);
-      if (recientes.length > 5) {
-        recientes = recientes.slice(0, 5);
+    if (user) {
+      try {
+        const userDocRef = doc(db, "usuarios", user.uid);
+        const userSnap = await getDoc(userDocRef);
+        let recientes = userSnap.exists() ? userSnap.data().recientes || [] : [];
+        recientes = recientes.filter((id) => id !== videoId);
+        recientes.unshift(videoId);
+        if (recientes.length > 5) {
+          recientes = recientes.slice(0, 5);
+        }
+        await updateDoc(userDocRef, { recientes });
+      } catch (err) {
+        console.error("Error guardando recientes en Firestore:", err);
       }
-
-      await updateDoc(userDocRef, { recientes });
-    } catch (err) {
-      console.error("Error guardando recientes:", err);
+    } else {
+      saveToLocalRecientes(videoId);
     }
   }, 2000);
 
@@ -139,28 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 100);
     });
     lista.appendChild(li);
-  }
-
-  async function getFromCache(videoId) {
-    const db = await openDB();
-    const tx = db.transaction(storeName, "readonly");
-    const store = tx.objectStore(storeName);
-    return new Promise((resolve) => {
-      const req = store.get(videoId);
-      req.onsuccess = () => resolve(req.result);
-      req.onerror = () => resolve(null);
-    });
-  }
-
-  function mostrarOffline() {
-    getAllFromCache().then((cachedItems) => {
-      if (cachedItems.length === 0) {
-        lista.innerHTML = mostrarMensajeSinCanciones();
-        return;
-      }
-      lista.innerHTML = "";
-      cachedItems.forEach(renderSong);
-    });
   }
 
   function formatDuration(iso) {
