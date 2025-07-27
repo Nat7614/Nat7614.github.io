@@ -384,31 +384,33 @@ html, body {
 /* Ajustes para móviles modernos (400px a 767px) */
 @media (min-width: 400px) and (max-width: 767px) {
     #player {
-        width: 90%;        /* Ocupa el 90% del ancho, deja espacio lateral */
-        max-width: 400px;  /* Limita el ancho máximo */
-        margin: 0 auto;    /* Centrado horizontal */
+        width: 90%;
+        max-width: 400px;
+        margin: 0 auto;
         padding: 15px;
     }
 
     #search-input {
-        width: 100%;        /* Un poco menos que 100% para dejar margen */
+        width: 100%;
         padding: 10px 15px;
         border-radius: 30px;
     }
 
     .search-container {
-        width: 100%;        /* Centrado con margen lateral */
-        max-width: 400px;  /* No demasiado ancho */
+        width: 90%;
+        max-width: 400px;
         margin: 20px auto;
         gap: 6px;
     }
 
-    #search-button {
-        padding: 10px 15px;
-        border-radius: 30px;
-        font-size: 14px;
+    #search-results {
+        width: 70%;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0 10px;
     }
 }
+
 
 /* Ajustes para tablets y pantallas grandes (768px en adelante) */
 @media (min-width: 768px) {

@@ -2,8 +2,8 @@
 .events-section {
     font-family: Arial, sans-serif;
     background: rgba(30, 30, 30, 0.9);
-    width: 100%; /* Siempre ocupa el 100% del ancho del dispositivo */
-    max-width: 320px; /* Ancho máximo fijo para pantallas grandes */
+    width: 102%; /* Siempre ocupa el 100% del ancho del dispositivo */
+    max-width: 340px; /* Ancho máximo fijo para pantallas grandes */
     margin: 0 auto; /* Centrado en la pantalla */
     padding: 20px;
     background: #0d0d22;
@@ -153,7 +153,7 @@
 /* 📱 Teléfonos modernos (400px a 767px) */
 @media (min-width: 400px) and (max-width: 767px) {
     .events-section {
-        width: 90%;              /* No ocupa todo el ancho */
+        width: 98%;              /* No ocupa todo el ancho */
         max-width: 400px;        /* Ancho máximo cómodo en móviles */
         margin: 0 auto;          /* Centrado horizontal */
         padding: 20px 15px;      /* Espaciado interno para que el contenido no toque los bordes */

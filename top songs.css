@@ -1,8 +1,8 @@
 /* Contenedor principal */
 .trending-songs {
     font-family: Arial, sans-serif;
-    width: 100%;
-    max-width: 320px; /* Base para pantallas pequeñas */
+    width: 102%;
+    max-width: 340px; /* Base para pantallas pequeñas */
     margin: 0 auto;
     padding: 20px;
     background: #0d0d22;
@@ -139,7 +139,7 @@
 /* 📱 Media Query para teléfonos modernos (400px a 767px) */
 @media (min-width: 400px) and (max-width: 767px) {
     .trending-songs {
-        width: 90%;
+        width: 98%;
         max-width: 400px;
         margin: 0 auto;
     }
