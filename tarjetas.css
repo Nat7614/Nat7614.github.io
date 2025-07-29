@@ -1,0 +1,153 @@
+#accesos-container {
+  padding: 16px;
+  background-color: #0d0d22;
+  border-radius: 12px;
+  margin: 0 auto;
+  width: auto; /* Puedes modificarlo desde HTML */
+  max-width: 94%; /* Evita que se desborde */
+}
+
+.tarjetas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.tarjeta {
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  background-color: #000000;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  min-height: 64px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.tarjeta:hover {
+  transform: scale(1.02);
+}
+
+.icono-contenedor {
+  width: 56px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  flex-shrink: 0;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+/* Colores para el borde izquierdo con degradado */
+
+.borde-rojo .icono-contenedor {
+  background: linear-gradient(to bottom right, #ce072b, #690717); /* rojo más oscuro */
+}
+
+.borde-azul .icono-contenedor {
+  background: linear-gradient(to bottom right, #0d0f29, #04040c); /* azul profundo más oscuro */
+}
+
+.borde-amarillo .icono-contenedor {
+  background: linear-gradient(to bottom right, #231e3b, #100e1e); /* púrpura oscuro */
+}
+
+.borde-verde .icono-contenedor {
+  background: linear-gradient(to bottom right, #fbbf24, #5f4802); /* dorado oscuro */
+}
+
+/* Título con ícono a la derecha */
+.accesos-section .section-title {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  color: #f464c4;
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Ícono animado al lado del título */
+.accesos-section .section-title .icon-acceso {
+  color: #f464c4;
+  font-size: 1.3em;
+  animation: brillo-icono 2s infinite alternate;
+  filter: drop-shadow(0 0 4px #f464c4);
+}
+
+/* Animación */
+@keyframes brillo-icono {
+  from {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+
+.tarjeta span {
+  padding: 0 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  color: white;
+  flex: 1;
+}
+
+/* 📱 Media Query para móviles (400px a 767px) */
+@media (min-width: 400px) and (max-width: 767px) {
+   #accesos-container {
+   padding: 16px;
+   background-color: #0d0d22;
+   border-radius: 12px;
+   margin: 0 auto;
+   width: auto; /* Puedes modificarlo desde HTML */
+   max-width: 98%; /* Evita que se desborde */
+}
+
+  .tarjetas-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tarjeta {
+    min-height: 64px;
+  }
+
+  .icono-contenedor {
+    width: 50px;
+    font-size: 18px;
+  }
+
+  .tarjeta span {
+    font-size: 0.9rem;
+  }
+}
+
+/* 💻 Media Query para tablets y pantallas grandes */
+@media (min-width: 768px) {
+  .tarjetas-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .tarjeta {
+    min-height: 72px;
+  }
+
+  .icono-contenedor {
+    width: 56px;
+    font-size: 20px;
+  }
+
+  .tarjeta span {
+    font-size: 1rem;
+  }
+}
