@@ -64,22 +64,26 @@ function onPlayerReady(event) {
     // Esperamos a que el usuario seleccione una canción
 }
 
-// Función para manejar el cambio de estado del reproductor
 function onPlayerStateChange(event) {
-    if (event.data === YT.PlayerState.PLAYING && !isPlaying) {
-        isPlaying = true;
-        startUpdatingProgress(); // Iniciar la actualización del progreso
-    } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
-        isPlaying = false;
-        clearInterval(updateInterval); // Detener la actualización del progreso
+    const icon = document.getElementById('playpause-button').querySelector('i');
 
-        // Si el video ha terminado, reiniciarlo para crear un bucle
-        if (event.data === YT.PlayerState.ENDED) {
-            player.seekTo(0); // Reiniciar el video al principio
-            player.playVideo(); // Reproducir el video de nuevo
-        }
+    if (event.data === YT.PlayerState.PLAYING) {
+        isPlaying = true;
+        startUpdatingProgress();
+        if (icon) icon.className = 'fas fa-pause'; // Cambia a ícono de pausa
+    } else if (event.data === YT.PlayerState.PAUSED) {
+        isPlaying = false;
+        clearInterval(updateInterval);
+        if (icon) icon.className = 'fas fa-play'; // Cambia a ícono de play
+    } else if (event.data === YT.PlayerState.ENDED) {
+        isPlaying = false;
+        clearInterval(updateInterval);
+        if (icon) icon.className = 'fas fa-play';
+        player.seekTo(0);
+        player.playVideo(); // Si quieres bucle automático
     }
 }
+
 
 // Función para reproducir una canción
 function playSong(videoId, videoTitle, channelTitle) {
@@ -358,23 +362,27 @@ setTimeout(() => {
 
 
 // Evento para pausar o reproducir el video
-document.getElementById('playpause-button').addEventListener('click', function() {
-    if (player && typeof player.getPlayerState === 'function') {
-        const playerState = player.getPlayerState();
+const playPauseBtn = document.getElementById('playpause-button');
 
-        // Si no hay canción agregada (estado -1 es cuando no hay video cargado)
-        if (playerState === -1) {
+playPauseBtn.addEventListener('click', function () {
+    if (player && typeof player.getPlayerState === 'function') {
+        const state = player.getPlayerState();
+        const icon = playPauseBtn.querySelector('i');
+
+        if (state === -1) {
             showWarningMessage('No hay ninguna canción agregada');
-        } else if (playerState === YT.PlayerState.PLAYING) {
+        } else if (state === YT.PlayerState.PLAYING) {
             player.pauseVideo();
+            if (icon) icon.className = 'fas fa-play'; // Cambia a ícono de play
         } else {
             player.playVideo();
+            if (icon) icon.className = 'fas fa-pause'; // Cambia a ícono de pausa
         }
     } else {
-        // Si el reproductor no está inicializado, mostrar el error
         showWarningMessage('No hay ninguna canción agregada');
     }
 });
+
 
 // Función para mostrar el mensaje de error con sonido
 function showError(message) {
