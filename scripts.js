@@ -71,18 +71,37 @@ function onPlayerStateChange(event) {
         isPlaying = true;
         startUpdatingProgress();
         if (icon) icon.className = 'fas fa-pause'; // Cambia a ícono de pausa
+
+        // Puente a Android: aviso que se empezó a reproducir
+        if (window.AndroidBridge && typeof window.AndroidBridge.onPlay === 'function') {
+            window.AndroidBridge.onPlay();
+        }
+
     } else if (event.data === YT.PlayerState.PAUSED) {
         isPlaying = false;
         clearInterval(updateInterval);
         if (icon) icon.className = 'fas fa-play'; // Cambia a ícono de play
+
+        // Puente a Android: aviso que se pausó la reproducción
+        if (window.AndroidBridge && typeof window.AndroidBridge.onPause === 'function') {
+            window.AndroidBridge.onPause();
+        }
+
     } else if (event.data === YT.PlayerState.ENDED) {
         isPlaying = false;
         clearInterval(updateInterval);
         if (icon) icon.className = 'fas fa-play';
+
+        // Puente a Android: aviso que terminó la reproducción
+        if (window.AndroidBridge && typeof window.AndroidBridge.onPause === 'function') {
+            window.AndroidBridge.onPause();
+        }
+
         player.seekTo(0);
-        player.playVideo(); // Si quieres bucle automático
+        player.playVideo(); // Si querés bucle automático
     }
 }
+
 
 
 // Función para reproducir una canción
