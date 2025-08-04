@@ -1,15 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
     const paisGuardado = localStorage.getItem('spottrack_pais');
-    if (!paisGuardado) mostrarMenuSeleccionPais();
+    if (!paisGuardado) {
+        mostrarMenuSeleccionPais();
+    }
 
     function mostrarMenuSeleccionPais() {
+        // Evitar crear dos veces el overlay
+        if (document.getElementById('pais-overlay')) return;
+
         const overlay = document.createElement('div');
         overlay.id = 'pais-overlay';
         overlay.innerHTML = `
             <div id="pais-modal">
-                <h2>Selecciona tu país</h2>
-                <p>ㅤ<p>
-                <p>Esta preferencia determinará el contenido de musica segun tu pais. No podras cambiar esto luego. </p>
+                <h2>¡Bienvenido a Spottrack!</h2>
+                <p>Disfruta de la mejor música adaptada a tu gusto, disfruta de musica con pantalla apagada y escucha sin conexion a internet con el modo offline.</p>
+                <p>Spottrack aun le falta mucho por mejorar asi que paciencia, estamos trabajando constantemente para mejorar tu experiencia ¡Pronto tendras mas funciones y mejoras! aqui abajo puedes tener tu cuenta o simplemente elegir el pais y finalizar todo sin cuenta (te recomendamos iniciar sesion).</p>
+                <div id="auth-buttons">
+                    <button id="btn-login">Iniciar sesión</button>
+                    <button id="btn-register">Registrarse</button>
+                </div>
+                <hr style="margin: 15px 0; border-color: #333;">
+                <h3>Selecciona tu país</h3>
+                <p>Esta preferencia determinará el contenido musical según tu país. No podrás cambiar esto luego.</p>
                 <select id="pais-select">
                     <option value="" disabled selected>Elige un país</option>
                     <option value="AR">Argentina</option>
@@ -35,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <option value="ES">España</option>
                     <option value="US">Estados Unidos</option>
                 </select>
-                <button id="guardar-pais">Guardar</button>
+                <button id="finalizar-pais">Finalizar</button>
             </div>
         `;
         document.body.appendChild(overlay);
@@ -57,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 color: white;
                 padding: 20px;
                 width: 90%;
-                max-width: 300px;
+                max-width: 320px;
                 border-radius: 10px;
                 text-align: center;
                 margin-left: auto;
@@ -66,7 +78,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             #pais-modal h2 {
                 margin-top: 0;
+                margin-bottom: 10px;
+                white-space: nowrap;
                 color: #f464c4;
+            }
+            #pais-modal h3 {
+                margin-top: 15px;
+                color: #f464c4;
+            }
+            #pais-modal p {
+                margin: 6px 0;
+                font-size: 14px;
             }
             #pais-modal select {
                 margin-top: 10px;
@@ -78,9 +100,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 background-color: #1a1a40;
                 color: white;
             }
-            #guardar-pais {
+            #finalizar-pais {
                 margin-top: 15px;
-                background-color: #f464c4;
+                background: linear-gradient(45deg, #a64bf4, #f464c4, #4bf4e1);
                 color: white;
                 border: none;
                 padding: 10px 20px;
@@ -88,17 +110,101 @@ document.addEventListener('DOMContentLoaded', () => {
                 cursor: pointer;
                 font-size: 16px;
             }
+            #auth-buttons {
+                display: flex;
+                justify-content: space-between;
+                gap: 10px;
+                margin-top: 10px;
+            }
+            #auth-buttons button {
+                flex: 1;
+                padding: 8px;
+                font-size: 14px;
+                border: none;
+                border-radius: 6px;
+                background: linear-gradient(45deg, #a64bf4, #f464c4, #4bf4e1);
+                color: white;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+            #auth-buttons button:hover {
+                background-color: #292952;
+            }
         `;
         document.head.appendChild(estilo);
 
-        document.getElementById('guardar-pais').addEventListener('click', () => {
+        document.getElementById('finalizar-pais').addEventListener('click', () => {
             const paisSeleccionado = document.getElementById('pais-select').value;
             if (paisSeleccionado) {
                 localStorage.setItem('spottrack_pais', paisSeleccionado);
                 document.getElementById('pais-overlay').remove();
+                showSection('home'); // Para asegurarnos que vuelve a home
                 location.reload();
             }
         });
+
+        document.getElementById('btn-login').addEventListener('click', () => {
+            showSection('settings');
+            const overlay = document.getElementById('pais-overlay');
+            if (overlay) overlay.remove();
+        });
+
+        document.getElementById('btn-register').addEventListener('click', () => {
+            window.location.href = 'https://spottrack-web.github.io';
+        });
+    }
+
+    // Secciones
+    const homeSection = document.getElementById('home-section');
+    const searchSection = document.getElementById('search-section');
+    const playlistSection = document.getElementById('playlist-section');
+    const settingsSection = document.getElementById('settings-section');
+
+    const homeTab = document.getElementById('home-tab');
+    const searchTab = document.getElementById('search-tab');
+    const playlistTab = document.getElementById('playlist-tab');
+    const settingsTab = document.getElementById('settings-tab');
+
+    homeTab.addEventListener('click', () => showSection('home'));
+    searchTab.addEventListener('click', () => showSection('search'));
+    playlistTab.addEventListener('click', () => showSection('playlist'));
+    settingsTab.addEventListener('click', () => showSection('settings'));
+
+    function showSection(section) {
+        homeSection.style.display = 'none';
+        searchSection.style.display = 'none';
+        playlistSection.style.display = 'none';
+        settingsSection.style.display = 'none';
+
+        homeTab.classList.remove('active');
+        searchTab.classList.remove('active');
+        playlistTab.classList.remove('active');
+        settingsTab.classList.remove('active');
+
+        if (section === 'home') {
+            homeSection.style.display = 'block';
+            homeTab.classList.add('active');
+
+            // Mostrar menú país si aún no se ha elegido
+            const paisGuardado = localStorage.getItem('spottrack_pais');
+            if (!paisGuardado && !document.getElementById('pais-overlay')) {
+                mostrarMenuSeleccionPais();
+            }
+
+        } else if (section === 'search') {
+            searchSection.style.display = 'block';
+            searchTab.classList.add('active');
+        } else if (section === 'playlist') {
+            playlistSection.style.display = 'block';
+            playlistTab.classList.add('active');
+        } else if (section === 'settings') {
+            settingsSection.style.display = 'block';
+            settingsTab.classList.add('active');
+
+            // Cierra menú país si está abierto
+            const overlay = document.getElementById('pais-overlay');
+            if (overlay) overlay.remove();
+        }
     }
 
     // TENDENCIAS
@@ -132,14 +238,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 li.style.position = 'relative';
 
                 li.innerHTML = `
-    <img src="${thumbnail}" alt="${title}">
-    <div class="song-info">
-        <span class="song-title"><span class="scrolling-text">${title}</span></span>
-        <span class="song-meta"><strong>Artista:</strong> ${channel}</span>
-        <span class="song-meta"><strong>Duración:</strong> ${duration}</span>
-    </div>
-`;
-
+                    <img src="${thumbnail}" alt="${title}">
+                    <div class="song-info">
+                        <span class="song-title"><span class="scrolling-text">${title}</span></span>
+                        <span class="song-meta"><strong>Artista:</strong> ${channel}</span>
+                        <span class="song-meta"><strong>Duración:</strong> ${duration}</span>
+                    </div>
+                `;
 
                 if (index < 3) {
                     const topLabel = document.createElement('div');
@@ -199,12 +304,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return h > 0
             ? `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
             : `${m}:${s.toString().padStart(2, '0')}`;
-    } 
+    }
 
-// ✅ Mostrar código del país al lado de "Spottrack 4.1"
-const versionElement = document.getElementById('spottrack-version');
-if (versionElement && regionCode) {
-    versionElement.innerHTML = `v4.2 <span style="font-size: 0.75em; vertical-align: middle; opacity: 0.6; margin-left: 6px;">${regionCode}</span>`;
-}
-
+    // Mostrar código del país al lado de la versión
+    const versionElement = document.getElementById('spottrack-version');
+    if (versionElement && regionCode) {
+        versionElement.innerHTML = `v4.2 <span style="font-size: 0.75em; vertical-align: middle; opacity: 0.6; margin-left: 6px;">${regionCode}</span>`;
+    }
 });
