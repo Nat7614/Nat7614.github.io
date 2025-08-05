@@ -104,7 +104,6 @@ function onPlayerStateChange(event) {
 
 
 
-// Función para reproducir una canción
 function playSong(videoId, videoTitle, channelTitle) {
     if (player && typeof player.loadVideoById === 'function') {
         player.loadVideoById(videoId);
@@ -115,11 +114,18 @@ function playSong(videoId, videoTitle, channelTitle) {
         document.getElementById('duration').textContent = '0:00';
 
         // Notificar a otros scripts que hay una canción cargada
-window.currentVideoInfo = {
-    id: videoId,
-    title: videoTitle,
-    channel: channelTitle
-};
+        window.currentVideoInfo = {
+            id: videoId,
+            title: videoTitle,
+            channel: channelTitle
+        };
+
+        // ✅ Enviar datos a Android para mostrar en notificación
+        if (window.Android && typeof window.Android.updateNotification === "function") {
+            const miniatura = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+            window.Android.updateNotification(videoTitle || "", channelTitle || "", miniatura);
+        }
+
 
 
         try {
@@ -519,3 +525,23 @@ document.getElementById('show-advantages').addEventListener('click', function() 
     const menu = document.getElementById('advantages-menu');
     menu.classList.toggle('show');
 });
+
+// Funciones que Android llamará desde el puente Java ↔ JS
+function playFromAndroid() {
+    if (player && typeof player.playVideo === "function") {
+        player.playVideo();
+    }
+}
+
+function pauseFromAndroid() {
+    if (player && typeof player.pauseVideo === "function") {
+        player.pauseVideo();
+    }
+}
+
+function nextFromAndroid() {
+    if (indiceCancionActual + 1 < listaCanciones.length) {
+        indiceCancionActual++;
+        reproducirCancion(listaCanciones[indiceCancionActual]);
+    }
+}
