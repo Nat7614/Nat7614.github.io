@@ -1,4 +1,6 @@
 // Variables globales
+const BACKEND_URL = "https://banked-music.onrender.com"; // URL actualizada de tu backend
+
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
 const resultList = document.getElementById('result-list');
@@ -90,7 +92,7 @@ async function searchSongs(query) {
     resultList.innerHTML = '<p>Buscando...</p>';
 
     try {
-        const res = await fetch(`http://localhost:3000/search?q=${encodeURIComponent(query)}`);
+        const res = await fetch(`${BACKEND_URL}/search?q=${encodeURIComponent(query)}`);
         if (!res.ok) throw new Error('Error en la búsqueda');
         const tracks = await res.json();
 
@@ -113,7 +115,7 @@ async function searchSongs(query) {
 async function playTrack(track) {
     try {
         // Obtener URL de stream
-        const streamRes = await fetch(`http://localhost:3000/stream/${track.id}`);
+        const streamRes = await fetch(`${BACKEND_URL}/stream/${track.id}`);
         if (!streamRes.ok) throw new Error('Error al obtener la URL de audio');
         const streamData = await streamRes.json();
 
