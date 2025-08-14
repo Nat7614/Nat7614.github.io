@@ -1,11 +1,11 @@
 // Variables globales
-const BACKEND_URL = "https://banked-music.onrender.com"; // URL actualizada de tu backend
+const BACKEND_URL = "https://banked-music.onrender.com";
 
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
 const resultList = document.getElementById('result-list');
 const playerContainer = document.getElementById('player');
-const youtubePlayerDiv = document.getElementById('youtube-player'); // Aquí pondremos la miniatura
+const youtubePlayerDiv = document.getElementById('youtube-player');
 const songTitleEl = document.getElementById('song-title');
 const artistNameEl = document.getElementById('artist-name');
 const playpauseButton = document.getElementById('playpause-button');
@@ -32,7 +32,7 @@ function formatTime(seconds) {
     return `${min}:${sec < 10 ? '0' : ''}${sec}`;
 }
 
-// Actualiza la barra de progreso y tiempo actual
+// Actualiza barra progreso
 function updateProgress() {
     if (!audioPlayer.duration) return;
     seekBar.max = Math.floor(audioPlayer.duration);
@@ -41,7 +41,7 @@ function updateProgress() {
     durationEl.textContent = formatTime(audioPlayer.duration);
 }
 
-// Muestra mensaje de advertencia temporal
+// Muestra advertencia temporal
 function showWarningMessage(msg) {
     if (!warningMessageEl) return;
     warningMessageEl.textContent = msg;
@@ -51,37 +51,32 @@ function showWarningMessage(msg) {
     }, 4000);
 }
 
-// Limpia lista resultados
+// Limpia resultados
 function clearResults() {
     resultList.innerHTML = '';
 }
 
-// Mostrar resultados en la lista sin botón, clic en todo el li
+// Muestra resultados con duración correcta
 function displayResults(tracks) {
     clearResults();
-
     tracks.forEach(track => {
         const li = document.createElement('li');
-
         li.className = 'result-item';
         li.innerHTML = `
             <div class="thumbnail"><img src="${track.thumbnail}" alt="${track.title}"></div>
             <div class="result-details">
                 <h3 class="result-title">${track.title}</h3>
                 <p class="result-artist">${track.author}</p>
-                <p class="result-duration">${track.duration}</p>
+                <p class="result-duration">${formatTime(track.durationSeconds)}</p>
             </div>
         `;
-
         li.style.cursor = 'pointer';
-
         li.addEventListener('click', () => playTrack(track));
-
         resultList.appendChild(li);
     });
 }
 
-// Busca canciones en backend Banked
+// Busca canciones rápido con yt-search
 async function searchSongs(query) {
     if (!query) {
         showWarningMessage('Por favor ingresa un término de búsqueda.');
@@ -111,11 +106,10 @@ async function searchSongs(query) {
     }
 }
 
-// Reproduce track: obtiene stream y actualiza UI
+// Reproduce canción
 async function playTrack(track) {
     try {
-        // Obtener URL de stream
-        const streamRes = await fetch(`${BACKEND_URL}/stream/${track.id}`);
+        const streamRes = await fetch(`${BACKEND_URL}/audio?id=${track.videoId}`);
         if (!streamRes.ok) throw new Error('Error al obtener la URL de audio');
         const streamData = await streamRes.json();
 
@@ -124,25 +118,18 @@ async function playTrack(track) {
             return;
         }
 
-        // Configura y reproduce audio
         audioPlayer.src = streamData.audioUrl;
-        audioPlayer.loop = true;  // <-- Activar loop para repetir canción
+        audioPlayer.loop = true;
         await audioPlayer.play();
-
         currentTrack = track;
 
-        // Actualiza info canción
         songTitleEl.textContent = track.title;
         artistNameEl.textContent = track.author;
-
-        // Actualiza la miniatura en el div #youtube-player
         youtubePlayerDiv.innerHTML = `<img src="${track.thumbnail}" alt="${track.title}" style="width:100%; height:100%; object-fit: cover; border-radius: 10px;">`;
 
-        // Cambia icono play/pause a pause
         const icon = playpauseButton.querySelector('i');
         if (icon) icon.className = 'fas fa-pause';
 
-        // Inicia actualizar barra progreso
         if (updateInterval) clearInterval(updateInterval);
         updateInterval = setInterval(updateProgress, 500);
 
@@ -152,39 +139,31 @@ async function playTrack(track) {
     }
 }
 
-// Maneja play/pause botón
+// Play/pause
 playpauseButton.addEventListener('click', () => {
-    if (!audioPlayer.src) {
-        showWarningMessage('No hay canción cargada.');
-        return;
-    }
-
+    if (!audioPlayer.src) return showWarningMessage('No hay canción cargada.');
     if (audioPlayer.paused) {
         audioPlayer.play();
-        const icon = playpauseButton.querySelector('i');
-        if (icon) icon.className = 'fas fa-pause';
+        playpauseButton.querySelector('i').className = 'fas fa-pause';
     } else {
         audioPlayer.pause();
-        const icon = playpauseButton.querySelector('i');
-        if (icon) icon.className = 'fas fa-play';
+        playpauseButton.querySelector('i').className = 'fas fa-play';
     }
 });
 
-// Mueve la barra de progreso (seek)
+// Barra progreso
 seekBar.addEventListener('input', () => {
     if (!audioPlayer.duration) return;
     audioPlayer.currentTime = seekBar.value;
     updateProgress();
 });
 
-// Botón next: salta 10 seg adelante
+// Botones next/prev 10s
 document.getElementById('next-button').addEventListener('click', () => {
     if (!audioPlayer.duration) return;
     audioPlayer.currentTime = Math.min(audioPlayer.currentTime + 10, audioPlayer.duration);
     updateProgress();
 });
-
-// Botón prev: salta 10 seg atrás
 document.getElementById('prev-button').addEventListener('click', () => {
     if (!audioPlayer.duration) return;
     audioPlayer.currentTime = Math.max(audioPlayer.currentTime - 10, 0);
@@ -194,38 +173,22 @@ document.getElementById('prev-button').addEventListener('click', () => {
 // Botón buscar
 searchButton.addEventListener('click', () => {
     const query = searchInput.value.trim();
-    if (!query) {
-        showWarningMessage('Por favor ingresa un término de búsqueda.');
-        return;
-    }
+    if (!query) return showWarningMessage('Por favor ingresa un término de búsqueda.');
     searchSongs(query);
 });
+searchInput.addEventListener('keydown', e => { if(e.key==='Enter') searchButton.click(); });
 
-// Buscar con Enter en input
-searchInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-        searchButton.click();
-    }
-});
-
-// Cuando termina la canción (aunque en loop no se dispara, lo dejamos para limpieza)
+// Eventos audio
 audioPlayer.addEventListener('ended', () => {
-    // No limpiamos updateInterval para que la barra siga funcionando en loop
-    const icon = playpauseButton.querySelector('i');
-    if (icon) icon.className = 'fas fa-play';
+    playpauseButton.querySelector('i').className = 'fas fa-play';
     seekBar.value = 0;
     currentTimeEl.textContent = '0:00';
 });
-
-// Limpia intervalo cuando se pausa para optimizar recursos
 audioPlayer.addEventListener('pause', () => {
     clearInterval(updateInterval);
-    const icon = playpauseButton.querySelector('i');
-    if (icon) icon.className = 'fas fa-play';
+    playpauseButton.querySelector('i').className = 'fas fa-play';
 });
-
-// Activa el intervalo de actualización cuando se reproduce o reanuda
 audioPlayer.addEventListener('play', () => {
-    if (updateInterval) clearInterval(updateInterval);
+    if(updateInterval) clearInterval(updateInterval);
     updateInterval = setInterval(updateProgress, 500);
 });

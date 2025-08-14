@@ -1,158 +1,147 @@
 let startTime = null;
 let endTime = null;
 let isCustomRangeActive = false;
-let lastVideoDuration = null; // Para detectar si la duración del video cambia
 
 document.addEventListener("DOMContentLoaded", function () {
-    const pencilButton = document.getElementById("edit-timing");
-    const modal = document.getElementById("timing-modal");
-    const startInput = document.getElementById("start-time");
-    const endInput = document.getElementById("end-time");
-    const saveButton = document.getElementById("save-timing");
-    const cancelButton = document.getElementById("cancel-timing");
+  const pencilButton = document.getElementById("edit-timing");
+  const modal = document.getElementById("timing-modal");
+  const startInput = document.getElementById("start-time");
+  const endInput = document.getElementById("end-time");
+  const saveButton = document.getElementById("save-timing");
+  const cancelButton = document.getElementById("cancel-timing");
 
-    // Función para actualizar el estado del botón dependiendo si hay un video cargado
-    function updateButtonState() {
-        if (player && player.getVideoData().video_id) {
-            pencilButton.disabled = false; // Habilita el botón si hay un video
-        } else {
-            pencilButton.disabled = true;  // Deshabilita el botón si no hay video
-        }
+  // Actualizar estado botón según si hay audio cargado
+  function updateButtonState() {
+    if (audioPlayer && audioPlayer.src) {
+      pencilButton.disabled = false;
+    } else {
+      pencilButton.disabled = true;
+      resetCustomization();
+    }
+  }
+
+  // Actualizar cada segundo
+  setInterval(updateButtonState, 1000);
+
+  pencilButton.addEventListener("click", () => {
+    const premiumStatus = document.getElementById("premium-status").innerText.trim();
+
+    if (!premiumStatus.includes("Spottrack Premium: Activa")) {
+      alert("Necesitas Spottrack Premium para usar esta función con la que podras personalizar el tiempo de inicio y fin de una cancion ¡Suscribete a Spottrack Premium y disfruta de esta ventaja!.");
+      return;
     }
 
-    // Verificar cada segundo si el video ha cambiado para habilitar o deshabilitar el botón
-    setInterval(updateButtonState, 1000);
+    if (!audioPlayer || audioPlayer.paused) {
+      alert("Debes estar reproduciendo una canción para habilitar/deshabilitar la opción de reproducción personalizada.");
+      return;
+    }
 
-    // Activar o desactivar el menú de personalización
-    pencilButton.addEventListener("click", function () {
-        const premiumStatus = document.getElementById("premium-status").innerText.trim();
+    if (isCustomRangeActive) {
+      resetCustomization();
+      modal.style.display = "none";
+    } else {
+      // Cargar valores previos
+      startInput.value = formatTime(startTime) || "";
+      endInput.value = formatTime(endTime) || "";
+      modal.style.display = "block";
+      toggleButtonActive(true);
+    }
+  });
 
-        // Verificación de estado Premium
-        if (!premiumStatus.includes("Spottrack Premium: Activa")) {
-            alert("Necesitas Spottrack Premium para usar esta función con la que podras personalizar el tiempo de inicio y fin de una cancion ¡Suscribete a Spottrack Premium y disfruta de esta ventaja!.");
-            return; // No permite abrir el modal si no tiene Premium
-        }
+  cancelButton.addEventListener("click", () => {
+    modal.style.display = "none";
+    toggleButtonActive(isCustomRangeActive);
+  });
 
-        if (!player || player.getPlayerState() !== YT.PlayerState.PLAYING) {
-            alert("Debes estar reproduciendo un video/musica para habilitar/desactivar la opción de reproducción personalizada.");
-            return;
-        }
+  saveButton.addEventListener("click", () => {
+    if (!audioPlayer) return alert("Reproductor no disponible");
 
-        if (isCustomRangeActive) {
-            // Si ya está activado, desactivamos
-            resetCustomization();
-        } else {
-            // Si no está activado, lo activamos y abrimos el modal
-            modal.style.display = "block";
-            toggleButtonActive(true); // Activar el botón
-        }
-    });
+    const duration = audioPlayer.duration;
+    const start = parseTime(startInput.value);
+    const end = parseTime(endInput.value);
 
-    cancelButton.addEventListener("click", function () {
-        modal.style.display = "none";
-        toggleButtonActive(false); // Desactivar el botón al cancelar
-    });
+    if (
+      start === null ||
+      end === null ||
+      start < 0 ||
+      end <= start ||
+      end > duration
+    ) {
+      alert("Rango de tiempo inválido. Verifica los valores ingresados.");
+      return;
+    }
 
-    saveButton.addEventListener("click", function () {
-        const videoDuration = player.getDuration();
-        const start = parseTime(startInput.value);
-        const end = parseTime(endInput.value);
-
-        // Validación de los valores de tiempo
-        if (start === null || end === null || start < 0 || end <= start || end > videoDuration) {
-            alert("Rango de tiempo inválido. Verifica los valores ingresados.");
-            return;
-        }
-
-        startTime = start;
-        endTime = end;
-        isCustomRangeActive = true;
-        modal.style.display = "none";
-        toggleButtonActive(true); // Mantener el botón activado después de guardar
-        player.seekTo(startTime);  // Establece el inicio de la canción
-    });
+    startTime = start;
+    endTime = end;
+    isCustomRangeActive = true;
+    modal.style.display = "none";
+    toggleButtonActive(true);
+    audioPlayer.currentTime = startTime;
+  });
 });
 
-// Función para convertir el tiempo ingresado en segundos
+// Parsear tiempo mm:ss o hh:mm:ss a segundos
 function parseTime(timeString) {
-    let timeInSeconds = 0;
-    
-    // Reemplazar los : por espacio y separar
-    let timeParts = timeString.replace(':', ' ').split(' ');
+  if (!timeString) return null;
 
-    // Convertir todos los valores a segundos
-    if (timeParts.length === 1) {
-        timeInSeconds = parseInt(timeParts[0], 10);
-    } else if (timeParts.length === 2) {
-        timeInSeconds = parseInt(timeParts[0], 10) * 60 + parseInt(timeParts[1], 10);
-    } else if (timeParts.length === 3) {
-        timeInSeconds = parseInt(timeParts[0], 10) * 3600 + parseInt(timeParts[1], 10) * 60 + parseInt(timeParts[2], 10);
-    } else {
-        return null; // Tiempo inválido
-    }
+  const parts = timeString.split(":").map((p) => p.trim());
+  if (parts.some((p) => isNaN(p) || p === "")) return null;
 
-    return timeInSeconds;
+  let seconds = 0;
+  if (parts.length === 1) {
+    seconds = parseInt(parts[0], 10);
+  } else if (parts.length === 2) {
+    seconds = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+  } else if (parts.length === 3) {
+    seconds =
+      parseInt(parts[0], 10) * 3600 +
+      parseInt(parts[1], 10) * 60 +
+      parseInt(parts[2], 10);
+  } else {
+    return null;
+  }
+  return seconds;
 }
 
-// Cambiar color del botón según si está activado o no
+// Formatear segundos a mm:ss o hh:mm:ss
+function formatTime(seconds) {
+  if (seconds === null || isNaN(seconds)) return "";
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = Math.floor(seconds % 60);
+  if (h > 0) return `${h}:${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+  return `${m}:${s.toString().padStart(2, "0")}`;
+}
+
 function toggleButtonActive(isActive = true) {
-    const pencilButton = document.getElementById("edit-timing");
-    if (isActive) {
-        pencilButton.classList.add("active");  // Añadir la clase para activar la iluminación
-    } else {
-        pencilButton.classList.remove("active");  // Eliminar la clase para desactivar la iluminación
-    }
+  const pencilButton = document.getElementById("edit-timing");
+  if (isActive) pencilButton.classList.add("active");
+  else pencilButton.classList.remove("active");
 }
 
-// Restablecer la personalización cuando cambie la canción (basado en duración)
-function onPlayerStateChange(event) {
-    if (event.data === YT.PlayerState.ENDED || event.data === YT.PlayerState.PAUSED) {
-        // Resetear la personalización si la canción termina o se pausa
-        resetCustomization();
-    }
-
-    if (event.data === YT.PlayerState.PLAYING) {
-        const currentVideoDuration = player.getDuration();
-        
-        // Si la duración del video cambia (lo que indica que la canción cambió), desactivar la personalización
-        if (lastVideoDuration !== currentVideoDuration) {
-            resetCustomization();
-        }
-
-        lastVideoDuration = currentVideoDuration;
-
-        const currentTime = player.getCurrentTime();
-        // Si la canción ha llegado al tiempo final, reinicia al tiempo de inicio
-        if (isCustomRangeActive && currentTime >= endTime) {
-            player.seekTo(startTime); // Regresa al tiempo de inicio
-        }
-    }
-}
-
-// Limpiar los inputs de tiempo
 function clearInputs() {
-    const startInput = document.getElementById("start-time");
-    const endInput = document.getElementById("end-time");
-    startInput.value = '';
-    endInput.value = '';
+  document.getElementById("start-time").value = "";
+  document.getElementById("end-time").value = "";
 }
 
-// Resetear la personalización
 function resetCustomization() {
-    isCustomRangeActive = false;
-    startTime = null;
-    endTime = null;
-    clearInputs();  // Limpiar los campos de tiempo
-    toggleButtonActive(false);  // Desactivar el botón de lápiz
+  isCustomRangeActive = false;
+  startTime = null;
+  endTime = null;
+  clearInputs();
+  toggleButtonActive(false);
 }
 
-// Continuamente verificar el tiempo del reproductor mientras se reproduce
-setInterval(function() {
-    if (isCustomRangeActive) {
-        const currentTime = player.getCurrentTime();
-        // Si la canción llega al tiempo final, vuelve al inicio
-        if (currentTime >= endTime) {
-            player.seekTo(startTime);
-        }
+// Loop personalizado: chequear cada 500ms si debe regresar al inicio
+setInterval(() => {
+  if (isCustomRangeActive && audioPlayer && !audioPlayer.paused) {
+    if (audioPlayer.currentTime >= endTime) {
+      audioPlayer.currentTime = startTime;
     }
-}, 1000); // Revisa cada segundo
+  }
+}, 500);
+
+// Opcional: si querés reiniciar la personalización al cambiar de canción
+audioPlayer.addEventListener('loadedmetadata', () => {
+  resetCustomization();
+});
