@@ -1,5 +1,5 @@
 // Variables globales
-const BACKEND_URL = "https://banked-music.onrender.com";
+const BANKED_URL = "https://banked-music-production.up.railway.app";
 
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
