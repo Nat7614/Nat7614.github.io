@@ -3,9 +3,7 @@ const BACKEND_URL = "https://banked-music.onrender.com";
 const PIPED_INSTANCES = [
     "https://pipedapi.leptons.xyz",
     "https://pipedapi.nosebs.ru",
-    "https://api.piped.yt",
-    "https://pipedapi-libre.kavin.rocks",
-    "https://pipedapi.kavin.rocks"
+    "https://api.piped.yt"
 ];
 
 const searchInput = document.getElementById('search-input');
@@ -221,3 +219,4 @@ audioPlayer.addEventListener('play', () => {
     if(updateInterval) clearInterval(updateInterval);
     updateInterval = setInterval(updateProgress, 500);
 });
+
