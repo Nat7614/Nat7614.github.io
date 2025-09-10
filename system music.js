@@ -1,6 +1,12 @@
 // Variables globales
 const BACKEND_URL = "https://banked-music.onrender.com";
-const PIPED_API = "https://pipedapi.kavin.rocks";
+const PIPED_INSTANCES = [
+    "https://pipedapi.leptons.xyz",
+    "https://pipedapi.nosebs.ru",
+    "https://api.piped.yt",
+    "https://pipedapi-libre.kavin.rocks",
+    "https://pipedapi.kavin.rocks"
+];
 
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
@@ -107,27 +113,42 @@ async function searchSongs(query) {
     }
 }
 
-// Reproduce canción (stream desde Piped API)
+// Obtiene URL de audio desde Piped con fallback
+async function getPipedAudio(videoId) {
+    for (let instance of PIPED_INSTANCES) {
+        try {
+            const res = await fetch(`${instance}/streams/${videoId}`);
+            if (!res.ok) continue;
+            const data = await res.json();
+            if (data.audioStreams && data.audioStreams.length) {
+                return data.audioStreams[0].url;
+            }
+        } catch (e) {
+            console.warn(`Instancia Piped falló: ${instance}`);
+        }
+    }
+    return null;
+}
+
+// Reproduce canción (stream desde Piped API con fallback y backend)
 async function playTrack(track) {
     try {
-        const pipedRes = await fetch(`${PIPED_API}/streams/${track.videoId}`);
-        if (!pipedRes.ok) throw new Error('Error al obtener stream de Piped');
-        const pipedData = await pipedRes.json();
+        let audioUrl = await getPipedAudio(track.videoId);
 
-        if (!pipedData.audioStreams || !pipedData.audioStreams.length) {
-            showWarningMessage('No se pudo obtener el audio desde Piped.');
-            return;
+        // Fallback a backend si todas las instancias fallan
+        if (!audioUrl) {
+            const streamRes = await fetch(`${BACKEND_URL}/audio?id=${track.videoId}`);
+            const streamData = await streamRes.json();
+            audioUrl = streamData.audioUrl;
         }
 
-        // Elegimos el primer stream disponible (puedes filtrar por bitrate/codec si quieres)
-        const audioUrl = pipedData.audioStreams[0].url;
+        if (!audioUrl) return showWarningMessage('No se pudo obtener el audio.');
 
         audioPlayer.src = audioUrl;
-        audioPlayer.loop = false; // mejor sin loop automático
+        audioPlayer.loop = false;
         await audioPlayer.play();
         currentTrack = track;
 
-        // Actualiza UI
         songTitleEl.textContent = track.title;
         artistNameEl.textContent = track.author;
         youtubePlayerDiv.innerHTML = `
