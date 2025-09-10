@@ -1,5 +1,6 @@
 // Variables globales
 const BACKEND_URL = "https://banked-music.onrender.com";
+const PIPED_API = "https://pipedapi.kavin.rocks";
 
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
@@ -76,7 +77,7 @@ function displayResults(tracks) {
     });
 }
 
-// Busca canciones rápido con yt-search
+// Busca canciones con backend (yt-search)
 async function searchSongs(query) {
     if (!query) {
         showWarningMessage('Por favor ingresa un término de búsqueda.');
@@ -106,26 +107,33 @@ async function searchSongs(query) {
     }
 }
 
-// Reproduce canción
+// Reproduce canción (stream desde Piped API)
 async function playTrack(track) {
     try {
-        const streamRes = await fetch(`${BACKEND_URL}/audio?id=${track.videoId}`);
-        if (!streamRes.ok) throw new Error('Error al obtener la URL de audio');
-        const streamData = await streamRes.json();
+        const pipedRes = await fetch(`${PIPED_API}/streams/${track.videoId}`);
+        if (!pipedRes.ok) throw new Error('Error al obtener stream de Piped');
+        const pipedData = await pipedRes.json();
 
-        if (!streamData.audioUrl) {
-            showWarningMessage('No se pudo obtener la URL de audio.');
+        if (!pipedData.audioStreams || !pipedData.audioStreams.length) {
+            showWarningMessage('No se pudo obtener el audio desde Piped.');
             return;
         }
 
-        audioPlayer.src = streamData.audioUrl;
-        audioPlayer.loop = true;
+        // Elegimos el primer stream disponible (puedes filtrar por bitrate/codec si quieres)
+        const audioUrl = pipedData.audioStreams[0].url;
+
+        audioPlayer.src = audioUrl;
+        audioPlayer.loop = false; // mejor sin loop automático
         await audioPlayer.play();
         currentTrack = track;
 
+        // Actualiza UI
         songTitleEl.textContent = track.title;
         artistNameEl.textContent = track.author;
-        youtubePlayerDiv.innerHTML = `<img src="${track.thumbnail}" alt="${track.title}" style="width:100%; height:100%; object-fit: cover; border-radius: 10px;">`;
+        youtubePlayerDiv.innerHTML = `
+            <img src="${track.thumbnail}" alt="${track.title}"
+                 style="width:100%; height:100%; object-fit: cover; border-radius: 10px;">
+        `;
 
         const icon = playpauseButton.querySelector('i');
         if (icon) icon.className = 'fas fa-pause';
