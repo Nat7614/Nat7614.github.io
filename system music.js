@@ -1,10 +1,5 @@
 // Variables globales
 const BACKEND_URL = "https://banked-music.onrender.com";
-const PIPED_INSTANCES = [
-    "https://pipedapi.leptons.xyz",
-    "https://pipedapi.nosebs.ru",
-    "https://api.piped.yt"
-];
 
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
@@ -81,7 +76,7 @@ function displayResults(tracks) {
     });
 }
 
-// Busca canciones con backend (yt-search)
+// Busca canciones rápido con yt-search
 async function searchSongs(query) {
     if (!query) {
         showWarningMessage('Por favor ingresa un término de búsqueda.');
@@ -111,48 +106,26 @@ async function searchSongs(query) {
     }
 }
 
-// Obtiene URL de audio desde Piped con fallback
-async function getPipedAudio(videoId) {
-    for (let instance of PIPED_INSTANCES) {
-        try {
-            const res = await fetch(`${instance}/streams/${videoId}`);
-            if (!res.ok) continue;
-            const data = await res.json();
-            if (data.audioStreams && data.audioStreams.length) {
-                return data.audioStreams[0].url;
-            }
-        } catch (e) {
-            console.warn(`Instancia Piped falló: ${instance}`);
-        }
-    }
-    return null;
-}
-
-// Reproduce canción (stream desde Piped API con fallback y backend)
+// Reproduce canción
 async function playTrack(track) {
     try {
-        let audioUrl = await getPipedAudio(track.videoId);
+        const streamRes = await fetch(`${BACKEND_URL}/audio?id=${track.videoId}`);
+        if (!streamRes.ok) throw new Error('Error al obtener la URL de audio');
+        const streamData = await streamRes.json();
 
-        // Fallback a backend si todas las instancias fallan
-        if (!audioUrl) {
-            const streamRes = await fetch(`${BACKEND_URL}/audio?id=${track.videoId}`);
-            const streamData = await streamRes.json();
-            audioUrl = streamData.audioUrl;
+        if (!streamData.audioUrl) {
+            showWarningMessage('No se pudo obtener la URL de audio.');
+            return;
         }
 
-        if (!audioUrl) return showWarningMessage('No se pudo obtener el audio.');
-
-        audioPlayer.src = audioUrl;
-        audioPlayer.loop = false;
+        audioPlayer.src = streamData.audioUrl;
+        audioPlayer.loop = true;
         await audioPlayer.play();
         currentTrack = track;
 
         songTitleEl.textContent = track.title;
         artistNameEl.textContent = track.author;
-        youtubePlayerDiv.innerHTML = `
-            <img src="${track.thumbnail}" alt="${track.title}"
-                 style="width:100%; height:100%; object-fit: cover; border-radius: 10px;">
-        `;
+        youtubePlayerDiv.innerHTML = `<img src="${track.thumbnail}" alt="${track.title}" style="width:100%; height:100%; object-fit: cover; border-radius: 10px;">`;
 
         const icon = playpauseButton.querySelector('i');
         if (icon) icon.className = 'fas fa-pause';
@@ -219,4 +192,3 @@ audioPlayer.addEventListener('play', () => {
     if(updateInterval) clearInterval(updateInterval);
     updateInterval = setInterval(updateProgress, 500);
 });
-
