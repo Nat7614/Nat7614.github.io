@@ -1,5 +1,5 @@
 // Variables globales
-const BACKEND_URL = "https://banked-music.onrender.com";
+const BACKEND_URL = "https://banked-music-production.up.railway.app";
 
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
@@ -192,3 +192,4 @@ audioPlayer.addEventListener('play', () => {
     if(updateInterval) clearInterval(updateInterval);
     updateInterval = setInterval(updateProgress, 500);
 });
+
