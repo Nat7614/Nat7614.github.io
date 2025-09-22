@@ -1,5 +1,6 @@
 // Variables globales
-const BACKEND_URL = "https://banked-music-production.up.railway.app";
+const BACKEND_URL = "https://mainline.proxy.rlwy.net"; // Proxy de Railway
+const BACKEND_PORT = 8080;
 
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
@@ -25,7 +26,7 @@ if (!audioPlayer) {
 let currentTrack = null;
 let updateInterval = null;
 
-// Cache de URLs de audio para no golpear tanto el backend
+// Cache de URLs de audio
 const audioUrlCache = new Map();
 
 // Formatea segundos a mm:ss
@@ -59,7 +60,7 @@ function clearResults() {
     resultList.innerHTML = '';
 }
 
-// Muestra resultados con duración correcta
+// Muestra resultados
 function displayResults(tracks) {
     clearResults();
     tracks.forEach(track => {
@@ -74,23 +75,20 @@ function displayResults(tracks) {
             </div>
         `;
         li.style.cursor = 'pointer';
-        li.addEventListener('click', () => playTrackWithRetry(track));
+        li.addEventListener('click', () => playTrackWithRetry(track, 5));
         resultList.appendChild(li);
     });
 }
 
-// Busca canciones rápido con yt-search
+// Busca canciones
 async function searchSongs(query) {
-    if (!query) {
-        showWarningMessage('Por favor ingresa un término de búsqueda.');
-        return;
-    }
+    if (!query) return showWarningMessage('Por favor ingresa un término de búsqueda.');
 
     clearResults();
     resultList.innerHTML = '<p>Buscando...</p>';
 
     try {
-        const res = await fetch(`${BACKEND_URL}/search?q=${encodeURIComponent(query)}`);
+        const res = await fetch(`${BACKEND_URL}:${BACKEND_PORT}/search?q=${encodeURIComponent(query)}`);
         if (!res.ok) throw new Error('Error en la búsqueda');
         const tracks = await res.json();
 
@@ -101,7 +99,6 @@ async function searchSongs(query) {
         }
 
         displayResults(tracks);
-
     } catch (error) {
         clearResults();
         resultList.innerHTML = '<p>Error al buscar. Intenta de nuevo.</p>';
@@ -109,14 +106,14 @@ async function searchSongs(query) {
     }
 }
 
-// Reintentos al reproducir la canción
-async function playTrackWithRetry(track, retries = 3) {
+// Reintentos al reproducir
+async function playTrackWithRetry(track, retries = 5) {
     for (let i = 0; i < retries; i++) {
         try {
             await playTrack(track);
-            return; // Si funciona, salimos
+            return;
         } catch (err) {
-            console.warn(`Intento ${i+1} de reproducir "${track.title}" falló:`, err.message);
+            console.warn(`Intento ${i + 1} de reproducir "${track.title}" falló:`, err.message);
             if (i === retries - 1) {
                 showWarningMessage(`No se pudo reproducir "${track.title}" después de ${retries} intentos.`);
             }
@@ -130,13 +127,13 @@ async function playTrack(track) {
         try {
             let audioUrl = audioUrlCache.get(track.videoId);
             if (!audioUrl) {
-                const streamRes = await fetch(`${BACKEND_URL}/audio?id=${track.videoId}`);
+                const streamRes = await fetch(`${BACKEND_URL}:${BACKEND_PORT}/audio?id=${track.videoId}`);
                 if (!streamRes.ok) throw new Error('Error al obtener la URL de audio');
                 const streamData = await streamRes.json();
                 if (!streamData.audioUrl) throw new Error('No se pudo obtener la URL de audio.');
 
                 audioUrl = streamData.audioUrl;
-                audioUrlCache.set(track.videoId, audioUrl); // cachear URL para no golpear backend
+                audioUrlCache.set(track.videoId, audioUrl);
             }
 
             audioPlayer.src = audioUrl;
@@ -154,10 +151,10 @@ async function playTrack(track) {
             if (updateInterval) clearInterval(updateInterval);
             updateInterval = setInterval(updateProgress, 500);
 
-            resolve(); // todo bien
+            resolve();
         } catch (error) {
             console.error(`[ERROR /playTrack] "${track.title}":`, error);
-            reject(error); // para que se pueda reintentar
+            reject(error);
         }
     });
 }
@@ -215,4 +212,3 @@ audioPlayer.addEventListener('play', () => {
     if(updateInterval) clearInterval(updateInterval);
     updateInterval = setInterval(updateProgress, 500);
 });
-
