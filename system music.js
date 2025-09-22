@@ -25,6 +25,9 @@ if (!audioPlayer) {
 let currentTrack = null;
 let updateInterval = null;
 
+// Cache de URLs de audio para no golpear tanto el backend
+const audioUrlCache = new Map();
+
 // Formatea segundos a mm:ss
 function formatTime(seconds) {
     const min = Math.floor(seconds / 60);
@@ -67,11 +70,11 @@ function displayResults(tracks) {
             <div class="result-details">
                 <h3 class="result-title">${track.title}</h3>
                 <p class="result-artist">${track.author}</p>
-                <p class="result-duration">${formatTime(track.durationSeconds)}</p>
+                <p class="result-duration">Duración: ${formatTime(track.duration)}</p>
             </div>
         `;
         li.style.cursor = 'pointer';
-        li.addEventListener('click', () => playTrack(track));
+        li.addEventListener('click', () => playTrackWithRetry(track));
         resultList.appendChild(li);
     });
 }
@@ -106,37 +109,57 @@ async function searchSongs(query) {
     }
 }
 
+// Reintentos al reproducir la canción
+async function playTrackWithRetry(track, retries = 3) {
+    for (let i = 0; i < retries; i++) {
+        try {
+            await playTrack(track);
+            return; // Si funciona, salimos
+        } catch (err) {
+            console.warn(`Intento ${i+1} de reproducir "${track.title}" falló:`, err.message);
+            if (i === retries - 1) {
+                showWarningMessage(`No se pudo reproducir "${track.title}" después de ${retries} intentos.`);
+            }
+        }
+    }
+}
+
 // Reproduce canción
 async function playTrack(track) {
-    try {
-        const streamRes = await fetch(`${BACKEND_URL}/audio?id=${track.videoId}`);
-        if (!streamRes.ok) throw new Error('Error al obtener la URL de audio');
-        const streamData = await streamRes.json();
+    return new Promise(async (resolve, reject) => {
+        try {
+            let audioUrl = audioUrlCache.get(track.videoId);
+            if (!audioUrl) {
+                const streamRes = await fetch(`${BACKEND_URL}/audio?id=${track.videoId}`);
+                if (!streamRes.ok) throw new Error('Error al obtener la URL de audio');
+                const streamData = await streamRes.json();
+                if (!streamData.audioUrl) throw new Error('No se pudo obtener la URL de audio.');
 
-        if (!streamData.audioUrl) {
-            showWarningMessage('No se pudo obtener la URL de audio.');
-            return;
+                audioUrl = streamData.audioUrl;
+                audioUrlCache.set(track.videoId, audioUrl); // cachear URL para no golpear backend
+            }
+
+            audioPlayer.src = audioUrl;
+            audioPlayer.loop = true;
+            await audioPlayer.play();
+            currentTrack = track;
+
+            songTitleEl.textContent = track.title;
+            artistNameEl.textContent = track.author;
+            youtubePlayerDiv.innerHTML = `<img src="${track.thumbnail}" alt="${track.title}" style="width:100%; height:100%; object-fit: cover; border-radius: 10px;">`;
+
+            const icon = playpauseButton.querySelector('i');
+            if (icon) icon.className = 'fas fa-pause';
+
+            if (updateInterval) clearInterval(updateInterval);
+            updateInterval = setInterval(updateProgress, 500);
+
+            resolve(); // todo bien
+        } catch (error) {
+            console.error(`[ERROR /playTrack] "${track.title}":`, error);
+            reject(error); // para que se pueda reintentar
         }
-
-        audioPlayer.src = streamData.audioUrl;
-        audioPlayer.loop = true;
-        await audioPlayer.play();
-        currentTrack = track;
-
-        songTitleEl.textContent = track.title;
-        artistNameEl.textContent = track.author;
-        youtubePlayerDiv.innerHTML = `<img src="${track.thumbnail}" alt="${track.title}" style="width:100%; height:100%; object-fit: cover; border-radius: 10px;">`;
-
-        const icon = playpauseButton.querySelector('i');
-        if (icon) icon.className = 'fas fa-pause';
-
-        if (updateInterval) clearInterval(updateInterval);
-        updateInterval = setInterval(updateProgress, 500);
-
-    } catch (error) {
-        console.error(error);
-        showWarningMessage('Error al reproducir la canción.');
-    }
+    });
 }
 
 // Play/pause
