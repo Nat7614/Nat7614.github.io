@@ -205,159 +205,165 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // --- TENDENCIAS Y REPRODUCCION CON BACKEND BANKED ---
-  const tendenciasContainer = document.getElementById('tendencias-lista');
-  const apiKey = 'AIzaSyCiEjKo8cps3pDY1XeatDdVhQHfZfrYahE';
-  const toggleButton = document.createElement('button');
-  const regionCode = localStorage.getItem('spottrack_pais') || 'MX';
+ // --- TENDENCIAS Y REPRODUCCIÓN CON BACKEND BANKED ONLINE ---
+const tendenciasContainer = document.getElementById('tendencias-lista');
+const apiKey = 'AIzaSyCiEjKo8cps3pDY1XeatDdVhQHfZfrYahE';
+const toggleButton = document.createElement('button');
+const regionCode = localStorage.getItem('spottrack_pais') || 'MX';
+const BACKEND_URL = "https://banked-music-production.up.railway.app";
 
-  toggleButton.textContent = '▼ Ver más';
-  toggleButton.style.marginTop = '10px';
-  toggleButton.style.background = 'none';
-  toggleButton.style.border = 'none';
-  toggleButton.style.color = '#f464c4';
-  toggleButton.style.cursor = 'pointer';
-  toggleButton.style.fontSize = '14px';
+toggleButton.textContent = '▼ Ver más';
+toggleButton.style.marginTop = '10px';
+toggleButton.style.background = 'none';
+toggleButton.style.border = 'none';
+toggleButton.style.color = '#f464c4';
+toggleButton.style.cursor = 'pointer';
+toggleButton.style.fontSize = '14px';
 
-  let showingAll = false;
-  let allItems = [];
+let showingAll = false;
+let allItems = [];
 
-  // Llamada a API YouTube para tendencias (videoCategoryId=10 es música)
-  fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&chart=mostPopular&videoCategoryId=10&maxResults=15&regionCode=${regionCode}&key=${apiKey}`)
-    .then(response => response.json())
-    .then(async data => {
-      if (!data.items) {
-        tendenciasContainer.innerHTML = '<p>No se encontraron tendencias.</p>';
-        return;
+// Obtener tendencias de YouTube
+fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&chart=mostPopular&videoCategoryId=10&maxResults=15&regionCode=${regionCode}&key=${apiKey}`)
+  .then(response => response.json())
+  .then(data => {
+    if (!data.items) {
+      tendenciasContainer.innerHTML = '<p>No se encontraron tendencias.</p>';
+      return;
+    }
+
+    data.items.forEach((video, index) => {
+      const videoId = video.id;
+      const title = video.snippet.title;
+      const channel = video.snippet.channelTitle;
+      const thumbnail = video.snippet.thumbnails.medium.url;
+      const duration = isoDurationToSeconds(video.contentDetails.duration);
+
+      // Crear item de lista
+      const li = document.createElement('li');
+      li.style.position = 'relative';
+      li.innerHTML = `
+        <img src="${thumbnail}" alt="${title}">
+        <div class="song-info">
+          <span class="song-title"><span class="scrolling-text">${title}</span></span>
+          <span class="song-meta"><strong>Artista:</strong> ${channel}</span>
+          <span class="song-meta"><strong>Duración:</strong> ${formatTime(duration)}</span>
+        </div>
+      `;
+
+      // Etiquetas Top 3
+      if (index < 3) {
+        const topLabel = document.createElement('div');
+        topLabel.classList.add('top-label');
+        topLabel.textContent = `Top ${index + 1}`;
+        if (index === 0) topLabel.classList.add('top-1');
+        else if (index === 1) topLabel.classList.add('top-2');
+        else if (index === 2) topLabel.classList.add('top-3');
+        li.appendChild(topLabel);
       }
 
-      for (let index = 0; index < data.items.length; index++) {
-        const video = data.items[index];
-        const videoId = video.id;
-        const title = video.snippet.title;
-        const channel = video.snippet.channelTitle;
-        const thumbnail = video.snippet.thumbnails.medium.url;
-        const duration = formatDuration(video.contentDetails.duration);
+      // Click para reproducir usando backend Banked
+      li.addEventListener('click', () => playTrackWithRetry({
+        videoId,
+        title,
+        author: channel,
+        thumbnail,
+        duration
+      }));
 
-        // Crear item lista
-        const li = document.createElement('li');
-        li.style.position = 'relative';
-        li.innerHTML = `
-          <img src="${thumbnail}" alt="${title}">
-          <div class="song-info">
-            <span class="song-title"><span class="scrolling-text">${title}</span></span>
-            <span class="song-meta"><strong>Artista:</strong> ${channel}</span>
-            <span class="song-meta"><strong>Duración:</strong> ${duration}</span>
-          </div>
-        `;
-
-        // Etiquetas top 3
-        if (index < 3) {
-          const topLabel = document.createElement('div');
-          topLabel.classList.add('top-label');
-          topLabel.textContent = `Top ${index + 1}`;
-          if (index === 0) topLabel.classList.add('top-1');
-          else if (index === 1) topLabel.classList.add('top-2');
-          else if (index === 2) topLabel.classList.add('top-3');
-          li.appendChild(topLabel);
-        }
-
-        // Al hacer click reproducir con backend banked (obtener url audio)
-        li.addEventListener('click', async () => {
-          try {
-            // Obtener URL audio desde backend
-            const streamRes = await fetch(`http://localhost:3000/stream/${videoId}`);
-            if (!streamRes.ok) throw new Error('No se pudo obtener la URL de audio');
-            const streamData = await streamRes.json();
-            if (!streamData.audioUrl) throw new Error('Audio no disponible');
-
-            // Reproducir con tu función playTrack, adaptala si es necesario
-            playTrack({
-              id: videoId,
-              title,
-              author: channel,
-              thumbnail,
-              audioUrl: streamData.audioUrl,
-              duration: isoDurationToSeconds(video.contentDetails.duration),
-            });
-          } catch (e) {
-            console.error(e);
-            alert('Error al reproducir la canción');
-          }
-        });
-
-        allItems.push(li);
-      }
-
-      renderList();
-
-      toggleButton.addEventListener('click', () => {
-        tendenciasContainer.classList.remove('animating-down', 'animating-up');
-        void tendenciasContainer.offsetWidth;
-
-        showingAll = !showingAll;
-        toggleButton.textContent = showingAll ? '▲ Ver menos' : '▼ Ver más';
-        tendenciasContainer.classList.add(showingAll ? 'animating-down' : 'animating-up');
-
-        setTimeout(renderList, 400);
-      });
-
-      tendenciasContainer.parentNode.appendChild(toggleButton);
-    })
-    .catch(error => {
-      console.error('Error al cargar tendencias:', error);
-      tendenciasContainer.innerHTML = '<p>Error al cargar tendencias.</p>';
+      allItems.push(li);
     });
 
-  function renderList() {
-    tendenciasContainer.innerHTML = '';
-    const itemsToShow = showingAll ? allItems : allItems.slice(0, 3);
-    itemsToShow.forEach(item => tendenciasContainer.appendChild(item));
+    renderList();
+    toggleButton.addEventListener('click', () => {
+      tendenciasContainer.classList.remove('animating-down', 'animating-up');
+      void tendenciasContainer.offsetWidth;
+      showingAll = !showingAll;
+      toggleButton.textContent = showingAll ? '▲ Ver menos' : '▼ Ver más';
+      tendenciasContainer.classList.add(showingAll ? 'animating-down' : 'animating-up');
+      setTimeout(renderList, 400);
+    });
+
+    tendenciasContainer.parentNode.appendChild(toggleButton);
+  })
+  .catch(error => {
+    console.error('Error al cargar tendencias:', error);
+    tendenciasContainer.innerHTML = '<p>Error al cargar tendencias.</p>';
+  });
+
+function renderList() {
+  tendenciasContainer.innerHTML = '';
+  const itemsToShow = showingAll ? allItems : allItems.slice(0, 3);
+  itemsToShow.forEach(item => tendenciasContainer.appendChild(item));
+}
+
+// --- FUNCIONES AUXILIARES ---
+function isoDurationToSeconds(iso) {
+  const match = iso.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+  if (!match) return 0;
+  const h = parseInt(match[1]) || 0;
+  const m = parseInt(match[2]) || 0;
+  const s = parseInt(match[3]) || 0;
+  return (h * 3600) + (m * 60) + s;
+}
+
+function formatTime(seconds) {
+  const min = Math.floor(seconds / 60);
+  const sec = Math.floor(seconds % 60);
+  return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+}
+
+// --- REPRODUCCIÓN CON RETRIES ---
+const audioPlayer = document.getElementById('audioPlayer') || (() => {
+  const a = document.createElement('audio');
+  a.id = 'audioPlayer';
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  return a;
+})();
+
+const audioUrlCache = new Map();
+async function playTrackWithRetry(track, retries = 3) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      await playTrack(track);
+      return;
+    } catch (err) {
+      console.warn(`Intento ${i+1} para "${track.title}" falló`, err.message);
+      if (i === retries - 1) alert(`No se pudo reproducir "${track.title}" después de ${retries} intentos.`);
+    }
   }
+}
 
-  // Convierte ISO 8601 duración a segundos
-  function isoDurationToSeconds(iso) {
-    const match = iso.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-    if (!match) return 0;
-    const h = parseInt(match[1]) || 0;
-    const m = parseInt(match[2]) || 0;
-    const s = parseInt(match[3]) || 0;
-    return (h * 3600) + (m * 60) + s;
-  }
+async function playTrack(track) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let audioUrl = audioUrlCache.get(track.videoId);
+      if (!audioUrl) {
+        const res = await fetch(`${BACKEND_URL}/audio?id=${track.videoId}`);
+        if (!res.ok) throw new Error('No se pudo obtener la URL de audio');
+        const data = await res.json();
+        if (!data.audioUrl) throw new Error('Audio no disponible');
+        audioUrl = data.audioUrl;
+        audioUrlCache.set(track.videoId, audioUrl);
+      }
 
-  // Formatea duración ISO 8601 a mm:ss o hh:mm:ss
-  function formatDuration(isoDuration) {
-    const match = isoDuration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-    if (!match) return '0:00';
+      audioPlayer.src = audioUrl;
+      audioPlayer.loop = true;
+      await audioPlayer.play();
 
-    const hours = (match[1] || '0H').slice(0, -1);
-    const minutes = (match[2] || '0M').slice(0, -1);
-    const seconds = (match[3] || '0S').slice(0, -1);
+      // Actualizar UI
+      document.getElementById('song-title').textContent = track.title;
+      document.getElementById('artist-name').textContent = track.author;
+      document.getElementById('youtube-player').innerHTML = `<img src="${track.thumbnail}" style="width:100%;height:100%;object-fit:cover;border-radius:10px">`;
 
-    const h = parseInt(hours);
-    const m = parseInt(minutes);
-    const s = parseInt(seconds);
+      resolve();
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
 
-    return h > 0
-      ? `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
-      : `${m}:${s.toString().padStart(2, '0')}`;
-  }
-
-  // Función para reproducir canción, adaptá a tu reproductor real
-  async function playTrack(track) {
-    const audioPlayer = document.getElementById('audioPlayer');
-    if (!audioPlayer) return;
-
-    audioPlayer.src = track.audioUrl;
-    await audioPlayer.play();
-
-    // Actualizar UI info
-    document.getElementById('song-title').textContent = track.title;
-    document.getElementById('artist-name').textContent = track.author;
-    document.getElementById('youtube-player').innerHTML = `<img src="${track.thumbnail}" style="width:100%;height:100%;object-fit:cover;border-radius:10px">`;
-
-    // Aquí puedes actualizar duración y barra de progreso
-  }
 
   // Mostrar versión y código país al lado
   const versionElement = document.getElementById('spottrack-version');
