@@ -1,5 +1,5 @@
 // Variables globales
-const BACKEND_URL = "https://mainline.proxy.rlwy.net"; // Proxy de Railway
+const BACKEND_URL = "https://banked-music-production.up.railway.app"; // Proxy de Railway
 const BACKEND_PORT = 8080;
 
 const searchInput = document.getElementById('search-input');
@@ -212,3 +212,4 @@ audioPlayer.addEventListener('play', () => {
     if(updateInterval) clearInterval(updateInterval);
     updateInterval = setInterval(updateProgress, 500);
 });
+
