@@ -1,10 +1,7 @@
 // ------------------- Configuración -------------------
-const BACKEND_URL = "https://banked-music-production.up.railway.app";
-
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
 const resultList = document.getElementById('result-list');
-const playerContainer = document.getElementById('player');
 const youtubePlayerDiv = document.getElementById('youtube-player');
 const songTitleEl = document.getElementById('song-title');
 const artistNameEl = document.getElementById('artist-name');
@@ -24,7 +21,6 @@ if (!audioPlayer) {
 
 let currentTrack = null;
 let updateInterval = null;
-const audioUrlCache = new Map();
 
 // ------------------- Funciones auxiliares -------------------
 function formatTime(seconds) {
@@ -68,91 +64,58 @@ function displayResults(tracks) {
             </div>
         `;
         li.style.cursor = 'pointer';
-        li.addEventListener('click', () => playTrackWithRetry(track));
+        li.addEventListener('click', () => requestAudioFromNative(track));
         resultList.appendChild(li);
     });
 }
 
-// ------------------- Búsqueda de canciones -------------------
-async function searchSongs(query) {
-    if (!query) {
-        showWarningMessage('Por favor ingresa un término de búsqueda.');
-        return;
-    }
+// ------------------- Buscador vía APK nativo -------------------
+function searchSongs(query) {
+    if (!query) return showWarningMessage('Por favor ingresa un término de búsqueda.');
 
     clearResults();
     resultList.innerHTML = '<p>Buscando...</p>';
 
-    try {
-        const res = await fetch(`${BACKEND_URL}/search?q=${encodeURIComponent(query)}`);
-        if (!res.ok) throw new Error('Error en la búsqueda');
-        const tracks = await res.json();
-
-        if (!tracks.length) {
-            clearResults();
-            resultList.innerHTML = '<p>No se encontraron resultados.</p>';
-            return;
-        }
-
-        displayResults(tracks);
-    } catch (error) {
-        clearResults();
-        resultList.innerHTML = '<p>Error al buscar. Intenta de nuevo.</p>';
-        console.error(error);
+    // Enviamos la query al APK
+    if (window.Android) {
+        window.Android.searchYT(query);
+    } else {
+        showWarningMessage('Función no disponible fuera del APK.');
     }
 }
 
-// ------------------- Reproducción con reintentos -------------------
-async function playTrackWithRetry(track, retries = 3) {
-    for (let i = 0; i < retries; i++) {
-        try {
-            await playTrack(track);
-            return;
-        } catch (err) {
-            console.warn(`Intento ${i+1} de reproducir "${track.title}" falló:`, err.message);
-            if (i === retries - 1) {
-                showWarningMessage(`No se pudo reproducir "${track.title}" después de ${retries} intentos.`);
-            }
-        }
+// Función que recibe resultados desde la app nativa
+function displayResultsFromNative(tracksJson) {
+    const tracks = JSON.parse(tracksJson);
+    displayResults(tracks);
+}
+
+// ------------------- Reproducción vía APK nativo -------------------
+function requestAudioFromNative(track) {
+    currentTrack = track;
+    if (window.Android) {
+        window.Android.getAudioURL(track.videoId);
+    } else {
+        showWarningMessage('Función no disponible fuera del APK.');
     }
 }
 
-// ------------------- Reproduce la canción usando Banked -------------------
-async function playTrack(track) {
-    return new Promise(async (resolve, reject) => {
-        try {
-            let audioUrl = audioUrlCache.get(track.videoId);
-            if (!audioUrl) {
-                const res = await fetch(`${BACKEND_URL}/audio?id=${track.videoId}`);
-                if (!res.ok) throw new Error('Error al obtener audio desde Banked');
-                const data = await res.json();
-                if (!data?.audioUrl) throw new Error('No se pudo obtener URL de audio');
+// Función que recibe el URL de audio desde la app nativa
+function playAudioFromNative(audioUrl) {
+    if (!audioUrl) return showWarningMessage('No se recibió URL de audio.');
 
-                audioUrl = data.audioUrl;
-                audioUrlCache.set(track.videoId, audioUrl);
-            }
+    audioPlayer.src = audioUrl;
+    audioPlayer.loop = true;
+    audioPlayer.play();
 
-            audioPlayer.src = audioUrl;
-            audioPlayer.loop = true;
-            await audioPlayer.play();
-            currentTrack = track;
+    songTitleEl.textContent = currentTrack.title;
+    artistNameEl.textContent = currentTrack.author;
+    youtubePlayerDiv.innerHTML = `<img src="${currentTrack.thumbnail}" alt="${currentTrack.title}" style="width:100%; height:100%; object-fit: cover; border-radius: 10px;">`;
 
-            songTitleEl.textContent = track.title;
-            artistNameEl.textContent = track.author;
-            youtubePlayerDiv.innerHTML = `<img src="${track.thumbnail}" alt="${track.title}" style="width:100%; height:100%; object-fit: cover; border-radius: 10px;">`;
+    playpauseButton.querySelector('i').className = 'fas fa-pause';
 
-            const icon = playpauseButton.querySelector('i');
-            if (icon) icon.className = 'fas fa-pause';
-
-            if (updateInterval) clearInterval(updateInterval);
-            updateInterval = setInterval(updateProgress, 500);
-
-            resolve();
-        } catch (error) {
-            console.error(`[ERROR /playTrack] "${track.title}":`, error);
-            reject(error);
-        }
-    });
+    if (updateInterval) clearInterval(updateInterval);
+    updateInterval = setInterval(updateProgress, 500);
 }
 
 // ------------------- Controles -------------------
@@ -184,7 +147,6 @@ document.getElementById('prev-button').addEventListener('click', () => {
     updateProgress();
 });
 
-// ------------------- Buscador -------------------
 searchButton.addEventListener('click', () => {
     const query = searchInput.value.trim();
     if (!query) return showWarningMessage('Por favor ingresa un término de búsqueda.');
