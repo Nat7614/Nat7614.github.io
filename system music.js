@@ -1,6 +1,5 @@
 // ------------------- Configuración -------------------
 const BACKEND_URL = "https://banked-music-production.up.railway.app";
-const INVIDIOUS_BASE = "https://inv.nadeko.net"; // Endpoint de Individuos/Invidious
 
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
@@ -85,7 +84,6 @@ async function searchSongs(query) {
     resultList.innerHTML = '<p>Buscando...</p>';
 
     try {
-        // Buscamos primero usando tu backend
         const res = await fetch(`${BACKEND_URL}/search?q=${encodeURIComponent(query)}`);
         if (!res.ok) throw new Error('Error en la búsqueda');
         const tracks = await res.json();
@@ -119,22 +117,18 @@ async function playTrackWithRetry(track, retries = 3) {
     }
 }
 
-// ------------------- Reproduce la canción usando Individuos -------------------
+// ------------------- Reproduce la canción usando Banked -------------------
 async function playTrack(track) {
     return new Promise(async (resolve, reject) => {
         try {
             let audioUrl = audioUrlCache.get(track.videoId);
             if (!audioUrl) {
-                // Llamada a Individuos/Invidious API
-                const res = await fetch(`${INVIDIOUS_BASE}/api/v1/videos/${track.videoId}`);
-                if (!res.ok) throw new Error('Error al obtener información del video desde Individuos');
+                const res = await fetch(`${BACKEND_URL}/audio?id=${track.videoId}`);
+                if (!res.ok) throw new Error('Error al obtener audio desde Banked');
                 const data = await res.json();
+                if (!data?.audioUrl) throw new Error('No se pudo obtener URL de audio');
 
-                // Buscar audio en formato m4a
-                const bestAudio = data?.adaptiveFormats?.find(f => f.type.includes('audio/mp4'));
-                if (!bestAudio?.url) throw new Error('No se pudo obtener URL de audio desde Individuos');
-
-                audioUrl = bestAudio.url;
+                audioUrl = data.audioUrl;
                 audioUrlCache.set(track.videoId, audioUrl);
             }
 
