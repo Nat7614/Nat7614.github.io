@@ -1,5 +1,6 @@
 // ------------------- Configuración -------------------
 const BACKEND_URL = "https://banked-music-production.up.railway.app";
+const INVIDIOUS_BASE = "https://inv.nadeko.net"; // Endpoint de Individuos/Invidious
 
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
@@ -24,8 +25,6 @@ if (!audioPlayer) {
 
 let currentTrack = null;
 let updateInterval = null;
-
-// Cache de URLs de audio para no golpear tanto el backend/Piped
 const audioUrlCache = new Map();
 
 // ------------------- Funciones auxiliares -------------------
@@ -86,6 +85,7 @@ async function searchSongs(query) {
     resultList.innerHTML = '<p>Buscando...</p>';
 
     try {
+        // Buscamos primero usando tu backend
         const res = await fetch(`${BACKEND_URL}/search?q=${encodeURIComponent(query)}`);
         if (!res.ok) throw new Error('Error en la búsqueda');
         const tracks = await res.json();
@@ -97,7 +97,6 @@ async function searchSongs(query) {
         }
 
         displayResults(tracks);
-
     } catch (error) {
         clearResults();
         resultList.innerHTML = '<p>Error al buscar. Intenta de nuevo.</p>';
@@ -110,7 +109,7 @@ async function playTrackWithRetry(track, retries = 3) {
     for (let i = 0; i < retries; i++) {
         try {
             await playTrack(track);
-            return; // Si funciona, salimos
+            return;
         } catch (err) {
             console.warn(`Intento ${i+1} de reproducir "${track.title}" falló:`, err.message);
             if (i === retries - 1) {
@@ -120,22 +119,23 @@ async function playTrackWithRetry(track, retries = 3) {
     }
 }
 
-// ------------------- Reproduce la canción usando Piped API -------------------
+// ------------------- Reproduce la canción usando Individuos -------------------
 async function playTrack(track) {
     return new Promise(async (resolve, reject) => {
         try {
             let audioUrl = audioUrlCache.get(track.videoId);
             if (!audioUrl) {
-                // Llamada a Piped API
-                const pipedRes = await fetch(`https://pipedapi.kavin.rocks/streams/${track.videoId}`);
-                if (!pipedRes.ok) throw new Error('Error al obtener audio desde Piped API');
-                const pipedData = await pipedRes.json();
+                // Llamada a Individuos/Invidious API
+                const res = await fetch(`${INVIDIOUS_BASE}/api/v1/videos/${track.videoId}`);
+                if (!res.ok) throw new Error('Error al obtener información del video desde Individuos');
+                const data = await res.json();
 
-                const bestAudio = pipedData.audio?.[0]; // el primer formato mp4a suele ser el mejor
-                if (!bestAudio?.url) throw new Error('No se pudo obtener URL de audio desde Piped');
+                // Buscar audio en formato m4a
+                const bestAudio = data?.adaptiveFormats?.find(f => f.type.includes('audio/mp4'));
+                if (!bestAudio?.url) throw new Error('No se pudo obtener URL de audio desde Individuos');
 
                 audioUrl = bestAudio.url;
-                audioUrlCache.set(track.videoId, audioUrl); // cachear URL
+                audioUrlCache.set(track.videoId, audioUrl);
             }
 
             audioPlayer.src = audioUrl;
@@ -153,10 +153,10 @@ async function playTrack(track) {
             if (updateInterval) clearInterval(updateInterval);
             updateInterval = setInterval(updateProgress, 500);
 
-            resolve(); // todo bien
+            resolve();
         } catch (error) {
             console.error(`[ERROR /playTrack] "${track.title}":`, error);
-            reject(error); // para reintentos
+            reject(error);
         }
     });
 }
