@@ -1,4 +1,4 @@
-// Variables globales
+// ------------------- Configuración -------------------
 const BACKEND_URL = "https://banked-music-production.up.railway.app";
 
 const searchInput = document.getElementById('search-input');
@@ -25,17 +25,16 @@ if (!audioPlayer) {
 let currentTrack = null;
 let updateInterval = null;
 
-// Cache de URLs de audio para no golpear tanto el backend
+// Cache de URLs de audio para no golpear tanto el backend/Piped
 const audioUrlCache = new Map();
 
-// Formatea segundos a mm:ss
+// ------------------- Funciones auxiliares -------------------
 function formatTime(seconds) {
     const min = Math.floor(seconds / 60);
     const sec = Math.floor(seconds % 60);
     return `${min}:${sec < 10 ? '0' : ''}${sec}`;
 }
 
-// Actualiza barra progreso
 function updateProgress() {
     if (!audioPlayer.duration) return;
     seekBar.max = Math.floor(audioPlayer.duration);
@@ -44,7 +43,6 @@ function updateProgress() {
     durationEl.textContent = formatTime(audioPlayer.duration);
 }
 
-// Muestra advertencia temporal
 function showWarningMessage(msg) {
     if (!warningMessageEl) return;
     warningMessageEl.textContent = msg;
@@ -54,12 +52,10 @@ function showWarningMessage(msg) {
     }, 4000);
 }
 
-// Limpia resultados
 function clearResults() {
     resultList.innerHTML = '';
 }
 
-// Muestra resultados con duración correcta
 function displayResults(tracks) {
     clearResults();
     tracks.forEach(track => {
@@ -79,7 +75,7 @@ function displayResults(tracks) {
     });
 }
 
-// Busca canciones rápido con yt-search
+// ------------------- Búsqueda de canciones -------------------
 async function searchSongs(query) {
     if (!query) {
         showWarningMessage('Por favor ingresa un término de búsqueda.');
@@ -109,7 +105,7 @@ async function searchSongs(query) {
     }
 }
 
-// Reintentos al reproducir la canción
+// ------------------- Reproducción con reintentos -------------------
 async function playTrackWithRetry(track, retries = 3) {
     for (let i = 0; i < retries; i++) {
         try {
@@ -124,19 +120,22 @@ async function playTrackWithRetry(track, retries = 3) {
     }
 }
 
-// Reproduce canción
+// ------------------- Reproduce la canción usando Piped API -------------------
 async function playTrack(track) {
     return new Promise(async (resolve, reject) => {
         try {
             let audioUrl = audioUrlCache.get(track.videoId);
             if (!audioUrl) {
-                const streamRes = await fetch(`${BACKEND_URL}/audio?id=${track.videoId}`);
-                if (!streamRes.ok) throw new Error('Error al obtener la URL de audio');
-                const streamData = await streamRes.json();
-                if (!streamData.audioUrl) throw new Error('No se pudo obtener la URL de audio.');
+                // Llamada a Piped API
+                const pipedRes = await fetch(`https://pipedapi.kavin.rocks/streams/${track.videoId}`);
+                if (!pipedRes.ok) throw new Error('Error al obtener audio desde Piped API');
+                const pipedData = await pipedRes.json();
 
-                audioUrl = streamData.audioUrl;
-                audioUrlCache.set(track.videoId, audioUrl); // cachear URL para no golpear backend
+                const bestAudio = pipedData.audio?.[0]; // el primer formato mp4a suele ser el mejor
+                if (!bestAudio?.url) throw new Error('No se pudo obtener URL de audio desde Piped');
+
+                audioUrl = bestAudio.url;
+                audioUrlCache.set(track.videoId, audioUrl); // cachear URL
             }
 
             audioPlayer.src = audioUrl;
@@ -157,12 +156,12 @@ async function playTrack(track) {
             resolve(); // todo bien
         } catch (error) {
             console.error(`[ERROR /playTrack] "${track.title}":`, error);
-            reject(error); // para que se pueda reintentar
+            reject(error); // para reintentos
         }
     });
 }
 
-// Play/pause
+// ------------------- Controles -------------------
 playpauseButton.addEventListener('click', () => {
     if (!audioPlayer.src) return showWarningMessage('No hay canción cargada.');
     if (audioPlayer.paused) {
@@ -174,14 +173,12 @@ playpauseButton.addEventListener('click', () => {
     }
 });
 
-// Barra progreso
 seekBar.addEventListener('input', () => {
     if (!audioPlayer.duration) return;
     audioPlayer.currentTime = seekBar.value;
     updateProgress();
 });
 
-// Botones next/prev 10s
 document.getElementById('next-button').addEventListener('click', () => {
     if (!audioPlayer.duration) return;
     audioPlayer.currentTime = Math.min(audioPlayer.currentTime + 10, audioPlayer.duration);
@@ -193,7 +190,7 @@ document.getElementById('prev-button').addEventListener('click', () => {
     updateProgress();
 });
 
-// Botón buscar
+// ------------------- Buscador -------------------
 searchButton.addEventListener('click', () => {
     const query = searchInput.value.trim();
     if (!query) return showWarningMessage('Por favor ingresa un término de búsqueda.');
@@ -201,7 +198,7 @@ searchButton.addEventListener('click', () => {
 });
 searchInput.addEventListener('keydown', e => { if(e.key==='Enter') searchButton.click(); });
 
-// Eventos audio
+// ------------------- Eventos de audio -------------------
 audioPlayer.addEventListener('ended', () => {
     playpauseButton.querySelector('i').className = 'fas fa-play';
     seekBar.value = 0;
