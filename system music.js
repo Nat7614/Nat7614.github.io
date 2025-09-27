@@ -87,7 +87,7 @@ async function searchSongs(query) {
         }
         displayResults(tracks);
     } catch (error) {
-        console.error(error);
+        console.error("Error al buscar canciones:", error);
         clearResults();
         resultList.innerHTML = '<p>Error al buscar canciones en Banked.</p>';
     }
@@ -96,23 +96,26 @@ async function searchSongs(query) {
 // ------------------- Reproducción vía APK nativo -------------------
 function requestAudioFromNative(track) {
     currentTrack = track;
-    console.log("Requesting audio for track:", track);
-    if (window.Android) {
+    console.log("Solicitando audio para videoId:", track.videoId);
+    if (window.AndroidBridge) {
         try {
-            window.Android.getAudioURL(track.videoId);
+            window.AndroidBridge.getAudioURL(track.videoId);
         } catch (e) {
             console.error("Error llamando AndroidBridge.getAudioURL:", e);
-            showWarningMessage('Error al solicitar audio desde APK.');
+            showWarningMessage(`No se pudo solicitar audio para ${track.title}.`);
         }
     } else {
         showWarningMessage('Función no disponible fuera del APK.');
     }
 }
 
-// Función que recibe el URL de audio desde la app nativa
+// ------------------- Recibir URL de audio -------------------
 function playAudioFromNative(audioUrl) {
     console.log("playAudioFromNative recibido:", audioUrl);
-    if (!audioUrl) return showWarningMessage('No se recibió URL de audio.');
+    if (!audioUrl) {
+        showWarningMessage('No se recibió URL de audio desde el APK.');
+        return;
+    }
 
     audioPlayer.src = audioUrl;
     audioPlayer.loop = true;
@@ -177,20 +180,26 @@ searchButton.addEventListener('click', () => {
     const query = searchInput.value.trim();
     searchSongs(query);
 });
-searchInput.addEventListener('keydown', e => { if(e.key==='Enter') searchButton.click(); });
+searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') searchButton.click(); });
 
 // ------------------- Función para recibir resultados desde APK -------------------
 function displayResultsFromNative(tracksJson) {
-    console.log("displayResultsFromNative recibido:", tracksJson);
-    const tracks = JSON.parse(tracksJson);
-    displayResults(tracks);
+    console.log("Resultados recibidos desde APK:", tracksJson);
+    try {
+        const tracks = JSON.parse(tracksJson);
+        displayResults(tracks);
+    } catch (e) {
+        console.error("Error parseando resultados del APK:", e);
+        showWarningMessage('Error al recibir resultados desde APK.');
+    }
 }
 
 // ------------------- Enviar búsqueda al APK -------------------
 function searchSongsInAPK(query) {
-    if (window.Android) {
+    if (window.AndroidBridge) {
         try {
-            window.Android.searchYT(query);
+            console.log("Enviando búsqueda al APK:", query);
+            window.AndroidBridge.searchYT(query);
         } catch (e) {
             console.error("Error llamando AndroidBridge.searchYT:", e);
             showWarningMessage('Función de búsqueda en APK no disponible.');
