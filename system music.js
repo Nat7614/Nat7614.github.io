@@ -1,4 +1,6 @@
 // ------------------- Configuración -------------------
+const BANKED_URL = "https://banked-music-production.up.railway.app";
+
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
 const resultList = document.getElementById('result-list');
@@ -69,25 +71,28 @@ function displayResults(tracks) {
     });
 }
 
-// ------------------- Buscador vía APK nativo -------------------
-function searchSongs(query) {
+// ------------------- Buscador vía Banked -------------------
+async function searchSongs(query) {
     if (!query) return showWarningMessage('Por favor ingresa un término de búsqueda.');
 
     clearResults();
     resultList.innerHTML = '<p>Buscando...</p>';
 
-    // Enviamos la query al APK
-    if (window.Android) {
-        window.Android.searchYT(query);
-    } else {
-        showWarningMessage('Función no disponible fuera del APK.');
+    try {
+        const res = await fetch(`${BANKED_URL}/search?q=${encodeURIComponent(query)}`);
+        if (!res.ok) throw new Error('Error en la búsqueda');
+        const tracks = await res.json();
+        if (!tracks.length) {
+            clearResults();
+            resultList.innerHTML = '<p>No se encontraron resultados.</p>';
+            return;
+        }
+        displayResults(tracks);
+    } catch (error) {
+        console.error(error);
+        clearResults();
+        resultList.innerHTML = '<p>Error al buscar canciones en Banked.</p>';
     }
-}
-
-// Función que recibe resultados desde la app nativa
-function displayResultsFromNative(tracksJson) {
-    const tracks = JSON.parse(tracksJson);
-    displayResults(tracks);
 }
 
 // ------------------- Reproducción vía APK nativo -------------------
@@ -147,13 +152,6 @@ document.getElementById('prev-button').addEventListener('click', () => {
     updateProgress();
 });
 
-searchButton.addEventListener('click', () => {
-    const query = searchInput.value.trim();
-    if (!query) return showWarningMessage('Por favor ingresa un término de búsqueda.');
-    searchSongs(query);
-});
-searchInput.addEventListener('keydown', e => { if(e.key==='Enter') searchButton.click(); });
-
 // ------------------- Eventos de audio -------------------
 audioPlayer.addEventListener('ended', () => {
     playpauseButton.querySelector('i').className = 'fas fa-play';
@@ -168,3 +166,16 @@ audioPlayer.addEventListener('play', () => {
     if(updateInterval) clearInterval(updateInterval);
     updateInterval = setInterval(updateProgress, 500);
 });
+
+// ------------------- Botón buscar -------------------
+searchButton.addEventListener('click', () => {
+    const query = searchInput.value.trim();
+    searchSongs(query);
+});
+searchInput.addEventListener('keydown', e => { if(e.key==='Enter') searchButton.click(); });
+
+// ------------------- Función para recibir resultados desde APK -------------------
+function displayResultsFromNative(tracksJson) {
+    const tracks = JSON.parse(tracksJson);
+    displayResults(tracks);
+}
